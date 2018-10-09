@@ -24,7 +24,7 @@ public class SelectionEpreuveController extends HttpServlet{
 			List<Epreuve> epreuves = epreuveManager.selectAll();
 			
 			req.setAttribute("epreuve", epreuves);
-			req.getRequestDispatcher("Welcome").forward(req, resp);
+			req.getRequestDispatcher("ListeEpreuve").forward(req, resp);
 		}
 		catch (Exception e) {
 			resp.sendError(500);

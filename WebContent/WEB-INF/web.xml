@@ -32,114 +32,118 @@
     <url-pattern>/Welcome/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>-->
-    <servlet>
-     <servlet-name></servlet-name>
-     <servlet-class></servlet-class>
-  </servlet>
+
   <servlet>
     <servlet-name>ArticleController</servlet-name>
     <servlet-class>fr.eni.ihm.controller.ArticleController</servlet-class>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>ArticleController</servlet-name>
     <url-pattern>/ArticleController</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>ListeArticleController</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.ListeArticleController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ListeArticleController</servlet-name>
-    <url-pattern>/ListeArticleController</url-pattern>
-  </servlet-mapping>
+  
   <servlet>
     <servlet-name>SelectionController</servlet-name>
     <servlet-class>fr.eni.ihm.controller.SelectionController</servlet-class>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>SelectionController</servlet-name>
     <url-pattern>/SelectionController</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>AjoutController</servlet-name>
     <servlet-class>fr.eni.ihm.controller.AjoutController</servlet-class>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>AjoutController</servlet-name>
     <url-pattern>/AjoutController</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>Welcome</servlet-name>
     <jsp-file>/WEB-INF/jsp/welcome.jsp</jsp-file>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>Welcome</servlet-name>
     <url-pattern>/Welcome</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>ListeArticles</servlet-name>
-    <jsp-file>/WEB-INF/jsp/listeArticles.jsp</jsp-file>
-  </servlet>
+
+	<servlet>
+    <servlet-name>ListeEpreuve</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.SelectionEpreuveController</servlet-class>
+ 	</servlet>
+  
   <servlet-mapping>
-    <servlet-name>ListeArticles</servlet-name>
-    <url-pattern>/ListeArticles</url-pattern>
+    <servlet-name>ListeEpreuve</servlet-name>
+    <url-pattern>/ListeEpreuve</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>Ajout</servlet-name>
-    <jsp-file>/WEB-INF/jsp/newListe.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Ajout</servlet-name>
-    <url-pattern>/Ajout</url-pattern>
-  </servlet-mapping>
+   
+  
   <error-page>
     <error-code>400</error-code>
     <location>/saisieError</location>
   </error-page>
+  
   <servlet>
     <servlet-name>SaisieError</servlet-name>
     <jsp-file>/WEB-INF/jsp/saisieError.jsp</jsp-file>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>SaisieError</servlet-name>
     <url-pattern>/saisieError</url-pattern>
   </servlet-mapping>
+  
   <error-page>
     <error-code>500</error-code>
     <location>/technicalError</location>
   </error-page>
+  
   <servlet>
     <servlet-name>TechnicalError</servlet-name>
     <jsp-file>/WEB-INF/jsp/technicalError.jsp</jsp-file>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>TechnicalError</servlet-name>
     <url-pattern>/technicalError</url-pattern>
   </servlet-mapping>
+  
   <error-page>
     <error-code>403</error-code>
     <location>/authorizationError</location>
   </error-page>
+  
   <servlet>
     <servlet-name>AuthorizationError</servlet-name>
     <jsp-file>/WEB-INF/jsp/authorizationError.jsp</jsp-file>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>AuthorizationError</servlet-name>
     <url-pattern>/authorizationError</url-pattern>
   </servlet-mapping>
+  
   <error-page>
     <error-code>404</error-code>
     <location>/notFound</location>
   </error-page>
+  
   <servlet>
     <servlet-name>NotFound</servlet-name>
     <jsp-file>/WEB-INF/jsp/notFound.jsp</jsp-file>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>NotFound</servlet-name>
     <url-pattern>/notFound</url-pattern>
   </servlet-mapping>
+  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>DefaultDenyJSP</web-resource-name>

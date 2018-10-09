@@ -1,6 +1,6 @@
 package fr.eni.bo;
 
-import org.apache.tomcat.jni.Time;
+import java.sql.Time;
 
 public class Test {
 	private int id;
