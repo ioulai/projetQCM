@@ -4,10 +4,11 @@
   <welcome-file-list>
     <welcome-file>ListeArticleController</welcome-file>
   </welcome-file-list>
+  <!--  
   <servlet>
     <servlet-name>ConditionsPostController</servlet-name>
     <servlet-class>fr.eni.ihm.controller.ConditionsPostController</servlet-class>
-  </servlet>
+  </servlet>  
   <servlet-mapping>
     <servlet-name>ConditionsPostController</servlet-name>
     <url-pattern>/ConditionsPostController</url-pattern>
@@ -30,7 +31,11 @@
     <url-pattern>/ListeArticleController/*</url-pattern>
     <url-pattern>/Welcome/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
-  </filter-mapping>
+  </filter-mapping>-->
+    <servlet>
+     <servlet-name></servlet-name>
+     <servlet-class></servlet-class>
+  </servlet>
   <servlet>
     <servlet-name>ArticleController</servlet-name>
     <servlet-class>fr.eni.ihm.controller.ArticleController</servlet-class>
