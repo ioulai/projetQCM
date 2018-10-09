@@ -1,211 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" id="WebApp_ID" version="3.1">
-  <display-name>UnPtitNom</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="3.1">
+  <display-name>QCM</display-name>
   <welcome-file-list>
     <welcome-file>ListeArticleController</welcome-file>
   </welcome-file-list>
-
-	<!-- Conditions controller -->
-	<servlet>
-	  <servlet-name>ConditionsPostController</servlet-name>
-	  <servlet-class>fr.eni.ihm.controller.ConditionsPostController</servlet-class>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>ConditionsPostController</servlet-name>
-    	<url-pattern>/ConditionsPostController</url-pattern>
-	</servlet-mapping>
-	
-	<!-- jsp conditions -->
-	<servlet>
-	  <servlet-name>Conditions</servlet-name>
-	  <jsp-file>/WEB-INF/jsp/conditions.jsp</jsp-file>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>Conditions</servlet-name>
-    	<url-pattern>/Conditions</url-pattern>
-	</servlet-mapping>
-
-	<!-- Filter -->
-	<filter>
-		<filter-name>FiltreConditions</filter-name>
-		<filter-class>fr.eni.ihm.controller.ConditionsController</filter-class>
-	</filter>
-	
-	<filter-mapping>
-		<filter-name>FiltreConditions</filter-name>
-		<dispatcher>REQUEST</dispatcher>
-		<url-pattern>/ArticleController/*</url-pattern>
-		<url-pattern>/ListeArticleController/*</url-pattern>
-		<url-pattern>/Welcome/*</url-pattern>
-	</filter-mapping>
-
-	<!-- Article controller -->
-	<servlet>
-	  <servlet-name>ArticleController</servlet-name>
-	  <servlet-class>fr.eni.ihm.controller.ArticleController</servlet-class>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>ArticleController</servlet-name>
-    	<url-pattern>/ArticleController</url-pattern>
-	</servlet-mapping>
-	
-	<!-- Liste controller -->
-	
-	<servlet>
-	  <servlet-name>ListeArticleController</servlet-name>
-	  <servlet-class>fr.eni.ihm.controller.ListeArticleController</servlet-class>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>ListeArticleController</servlet-name>
-    	<url-pattern>/ListeArticleController</url-pattern>
-	</servlet-mapping>
-	
-	<!-- Liste articles controller -->
-	
-	<servlet>
-	  <servlet-name>SelectionController</servlet-name>
-	  <servlet-class>fr.eni.ihm.controller.SelectionController</servlet-class>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>SelectionController</servlet-name>
-    	<url-pattern>/SelectionController</url-pattern>
-	</servlet-mapping>
-	
-	<!-- Ajout controller -->
-	
-	<servlet>
-	  <servlet-name>AjoutController</servlet-name>
-	  <servlet-class>fr.eni.ihm.controller.AjoutController</servlet-class>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>AjoutController</servlet-name>
-    	<url-pattern>/AjoutController</url-pattern>
-	</servlet-mapping>
-
-	<!-- jsp accueil -->
-	<servlet>
-	  <servlet-name>Welcome</servlet-name>
-	  <jsp-file>/WEB-INF/jsp/welcome.jsp</jsp-file>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>Welcome</servlet-name>
-    	<url-pattern>/Welcome</url-pattern>
-	</servlet-mapping>
-	
-	<!-- jsp liste articles -->
-	<servlet>
-	  <servlet-name>ListeArticles</servlet-name>
-	  <jsp-file>/WEB-INF/jsp/listeArticles.jsp</jsp-file>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>ListeArticles</servlet-name>
-    	<url-pattern>/ListeArticles</url-pattern>
-	</servlet-mapping>
-	
-	<!-- jsp ajout -->
-	<servlet>
-	  <servlet-name>Ajout</servlet-name>
-	  <jsp-file>/WEB-INF/jsp/newListe.jsp</jsp-file>
-	</servlet>
-	
-   	<servlet-mapping>
-    	<servlet-name>Ajout</servlet-name>
-    	<url-pattern>/Ajout</url-pattern>
-	</servlet-mapping>
-	
-	<!-- Erreur 400 -->
-	
-	<error-page>
-		<error-code>400</error-code>
-		<location>/saisieError</location>
-	</error-page>
-	
-    <servlet>
-    	<servlet-name>SaisieError</servlet-name>
-    	<jsp-file>/WEB-INF/jsp/saisieError.jsp</jsp-file>
-    </servlet>
-    
-    <servlet-mapping>
-       	<servlet-name>SaisieError</servlet-name>
-    	<url-pattern>/saisieError</url-pattern>
-    </servlet-mapping>
-	
-	<!-- Erreur 500 -->
-	
-	<error-page>
-		<error-code>500</error-code>
-		<location>/technicalError</location>
-	</error-page>
-	
-    <servlet>
-    	<servlet-name>TechnicalError</servlet-name>
-    	<jsp-file>/WEB-INF/jsp/technicalError.jsp</jsp-file>
-    </servlet>
-    
-    <servlet-mapping>
-       	<servlet-name>TechnicalError</servlet-name>
-    	<url-pattern>/technicalError</url-pattern>
-    </servlet-mapping>
-    
-   	<!-- Erreur 403 -->
-	
-	<error-page>
-		<error-code>403</error-code>
-		<location>/authorizationError</location>
-	</error-page>
-	
-    <servlet>
-    	<servlet-name>AuthorizationError</servlet-name>
-    	<jsp-file>/WEB-INF/jsp/authorizationError.jsp</jsp-file>
-    </servlet>
-    
-    <servlet-mapping>
-       	<servlet-name>AuthorizationError</servlet-name>
-    	<url-pattern>/authorizationError</url-pattern>
-    </servlet-mapping>
-    
-    <!-- Erreur 404 -->
-    
-   	<error-page>
-		<error-code>404</error-code>
-		<location>/notFound</location>
-	</error-page>
-	
-    <servlet>
-    	<servlet-name>NotFound</servlet-name>
-    	<jsp-file>/WEB-INF/jsp/notFound.jsp</jsp-file>
-    </servlet>
-    
-    <servlet-mapping>
-       	<servlet-name>NotFound</servlet-name>
-    	<url-pattern>/notFound</url-pattern>
-    </servlet-mapping>
-    
-    <!-- Sécurité -->
-	
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>DefaultDenyJSP</web-resource-name>
-			<url-pattern>*.jsp</url-pattern>
-		</web-resource-collection>
-		<web-resource-collection>
-			<web-resource-name>DefaultDenyTagLib</web-resource-name>
-			<url-pattern>/taglib/*</url-pattern>
-		</web-resource-collection>
-		<web-resource-collection>
-			<web-resource-name>DefaultDenyForwards</web-resource-name>
-			<url-pattern>/forward/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>NoAccess</role-name>
-		</auth-constraint>
-	</security-constraint>
-  </web-app>
+  <servlet>
+    <servlet-name>ConditionsPostController</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.ConditionsPostController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConditionsPostController</servlet-name>
+    <url-pattern>/ConditionsPostController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Conditions</servlet-name>
+    <jsp-file>/WEB-INF/jsp/conditions.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Conditions</servlet-name>
+    <url-pattern>/Conditions</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>FiltreConditions</filter-name>
+    <filter-class>fr.eni.ihm.controller.ConditionsController</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>FiltreConditions</filter-name>
+    <url-pattern>/ArticleController/*</url-pattern>
+    <url-pattern>/ListeArticleController/*</url-pattern>
+    <url-pattern>/Welcome/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>ArticleController</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.ArticleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleController</servlet-name>
+    <url-pattern>/ArticleController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ListeArticleController</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.ListeArticleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListeArticleController</servlet-name>
+    <url-pattern>/ListeArticleController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SelectionController</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.SelectionController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SelectionController</servlet-name>
+    <url-pattern>/SelectionController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AjoutController</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.AjoutController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjoutController</servlet-name>
+    <url-pattern>/AjoutController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Welcome</servlet-name>
+    <jsp-file>/WEB-INF/jsp/welcome.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Welcome</servlet-name>
+    <url-pattern>/Welcome</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ListeArticles</servlet-name>
+    <jsp-file>/WEB-INF/jsp/listeArticles.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListeArticles</servlet-name>
+    <url-pattern>/ListeArticles</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Ajout</servlet-name>
+    <jsp-file>/WEB-INF/jsp/newListe.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Ajout</servlet-name>
+    <url-pattern>/Ajout</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <error-code>400</error-code>
+    <location>/saisieError</location>
+  </error-page>
+  <servlet>
+    <servlet-name>SaisieError</servlet-name>
+    <jsp-file>/WEB-INF/jsp/saisieError.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaisieError</servlet-name>
+    <url-pattern>/saisieError</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/technicalError</location>
+  </error-page>
+  <servlet>
+    <servlet-name>TechnicalError</servlet-name>
+    <jsp-file>/WEB-INF/jsp/technicalError.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TechnicalError</servlet-name>
+    <url-pattern>/technicalError</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/authorizationError</location>
+  </error-page>
+  <servlet>
+    <servlet-name>AuthorizationError</servlet-name>
+    <jsp-file>/WEB-INF/jsp/authorizationError.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthorizationError</servlet-name>
+    <url-pattern>/authorizationError</url-pattern>
+  </servlet-mapping>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/notFound</location>
+  </error-page>
+  <servlet>
+    <servlet-name>NotFound</servlet-name>
+    <jsp-file>/WEB-INF/jsp/notFound.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NotFound</servlet-name>
+    <url-pattern>/notFound</url-pattern>
+  </servlet-mapping>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>DefaultDenyJSP</web-resource-name>
+      <url-pattern>*.jsp</url-pattern>
+    </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>DefaultDenyTagLib</web-resource-name>
+      <url-pattern>/taglib/*</url-pattern>
+    </web-resource-collection>
+    <web-resource-collection>
+      <web-resource-name>DefaultDenyForwards</web-resource-name>
+      <url-pattern>/forward/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>NoAccess</role-name>
+    </auth-constraint>
+  </security-constraint>
+</web-app>
