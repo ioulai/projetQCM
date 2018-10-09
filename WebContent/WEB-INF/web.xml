@@ -1,30 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>QCM</display-name>
   <welcome-file-list>
-    <welcome-file>ListeArticleController</welcome-file>
+    <welcome-file>AuthentificationController</welcome-file>
   </welcome-file-list>
-  <!--  
-  <servlet>
-    <servlet-name>ConditionsPostController</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.ConditionsPostController</servlet-class>
-  </servlet>  
-  <servlet-mapping>
-    <servlet-name>ConditionsPostController</servlet-name>
-    <url-pattern>/ConditionsPostController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>Conditions</servlet-name>
-    <jsp-file>/WEB-INF/jsp/conditions.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Conditions</servlet-name>
-    <url-pattern>/Conditions</url-pattern>
-  </servlet-mapping>
-  <filter>
-    <filter-name>FiltreConditions</filter-name>
-    <filter-class>fr.eni.ihm.controller.ConditionsController</filter-class>
-  </filter>
+  <!--
   <filter-mapping>
     <filter-name>FiltreConditions</filter-name>
     <url-pattern>/ArticleController/*</url-pattern>
@@ -32,10 +12,36 @@
     <url-pattern>/Welcome/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>-->
+  
     <servlet>
-     <servlet-name></servlet-name>
-     <servlet-class></servlet-class>
+     <servlet-name>AuthentificationPostController</servlet-name>
+     <servlet-class>fr.eni.ihm.controller.AuthentificationPostController</servlet-class>
   </servlet>
+   <servlet-mapping>
+  <servlet-name>AuthentificationPostController</servlet-name>
+  <url-pattern>/AuthentificationPostController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>authentification</servlet-name>
+  <jsp-file>/WEB-INF/jsp/authentification.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+   <servlet-name>authentification</servlet-name>
+   <url-pattern>/authentification</url-pattern>
+  </servlet-mapping>
+  
+    <filter>
+    <filter-name>AuthentificationController</filter-name>
+    <filter-class>fr.eni.ihm.controller.AuthentificationController</filter-class>
+  </filter>
+   <filter-mapping>
+    <filter-name>AuthentificationController</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  
+  <!--  -->
   <servlet>
     <servlet-name>ArticleController</servlet-name>
     <servlet-class>fr.eni.ihm.controller.ArticleController</servlet-class>

@@ -8,6 +8,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class AuthentificationController implements Filter{
 
@@ -18,10 +20,12 @@ public class AuthentificationController implements Filter{
 	}
 
 	@Override
-	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain arg2)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		
+		HttpServletRequest req = (HttpServletRequest)request;
+		HttpServletResponse resp = (HttpServletResponse)response;
+		req.getRequestDispatcher("/WEB-INF/jsp/authentification.jsp").forward(req, resp);
 	}
 
 	@Override
