@@ -2,6 +2,7 @@ package fr.eni.dal.factory;
 
 import fr.eni.dal.dao.ArticleDAO;
 import fr.eni.dal.dao.impl.ArticleDAOImpl;
+import fr.eni.dal.dao.impl.EpreuveDAOImpl;
 import fr.eni.dal.dao.impl.ListeArticleDAOImpl;
 import fr.eni.dal.dao.ListeArticleDAO;
 import fr.eni.dal.dao.EpreuveDAO;
