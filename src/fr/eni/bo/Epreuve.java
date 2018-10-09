@@ -1,10 +1,10 @@
 package fr.eni.bo;
 
+import java.sql.Time;
 import java.util.Date;
 
-import org.apache.tomcat.jni.Time;
 
-public class Epreuve {
+public class Epreuve{
 	private int idEpreuve;
 	private Date dateDebutValidite;
 	private Date dateFinValidite;
@@ -12,7 +12,17 @@ public class Epreuve {
 	private String etat;
 	private int noteObtenue;
 	private String niveauObtenu;
+	private Candidat candidat;
 	
+
+	public Candidat getCandidat() {
+		return candidat;
+	}
+
+	public void setCandidat(Candidat candidat) {
+		this.candidat = candidat;
+	}
+
 	public Epreuve() {
 		super();
 	}

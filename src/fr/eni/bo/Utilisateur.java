@@ -7,7 +7,7 @@ package fr.eni.bo;
  * @author ioulai2017
  *
  */
-public class Utilisateur {
+public abstract class Utilisateur{
 	private String nom;
 	private String prenom;
 	private String email;

@@ -7,86 +7,23 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.bo.Article;
-import fr.eni.bo.ListeArticle;
-import fr.eni.dal.dao.ArticleDAO;
+import fr.eni.bo.Epreuve;
+import fr.eni.dal.dao.EpreuveDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
 import fr.eni.tp.web.common.util.ResourceUtil;
 
-public class EpreuveDAOImpl {
-private static ArticleDAOImpl singleton;
+public class EpreuveDAOImpl implements EpreuveDAO{
+private static EpreuveDAOImpl singleton;
 	
-	private static final String SELECT_BY_ID_QUERY = "SELECT id, nom, selected FROM article WHERE id = ?";
-	private static final String SELECT_BY_ID_LISTE_QUERY = "SELECT id, nom, selected FROM article WHERE liste_article_id = ?";
-	private static final String INSERT_ARTICLE_QUERY = "INSERT INTO article(nom, selected, liste_article_id) VALUES(RTRIM(LTRIM(?)), ?, ?)";
-	private static final String DELETE_BY_ID_LISTE_QUERY = "DELETE FROM article WHERE liste_article_id = ?";
-	private static final String DELETE_BY_ID_QUERY = "DELETE FROM article WHERE id = ?";
-	private static final String UPDATE_SELECTED_QUERY = "UPDATE article SET selected = ? WHERE id = ?";
+	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM epreuve WHERE idEpreuve = ?";
+	private static final String SELECT_ALL = "SELECT * FROM epreuve";
 	
-	public static ArticleDAO getInstance() {
+	public static EpreuveDAO getInstance() {
 		if (singleton == null)
-			singleton = new ArticleDAOImpl();
+			singleton = new EpreuveDAOImpl();
 		
 		return singleton;
-	}
-	
-	@Override
-	public Article insert(Article element) throws DaoException {
-		Connection connexion = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			connexion = MSSQLConnectionFactory.get();
-			
-			connexion.setAutoCommit(false);
-			
-			statement = connexion.prepareStatement(INSERT_ARTICLE_QUERY, Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, element.getNom());
-			statement.setBoolean(2, false);
-			statement.setInt(3, element.getListeArticle().getId());
-
-			if (statement.executeUpdate() == 1) {
-				resultSet = statement.getGeneratedKeys();
-				
-				if (resultSet.next()) {
-					element.setId(resultSet.getInt(1));
-				}
-			}
-			
-			connexion.commit();
-
-		} catch (Exception e) {
-			throw new DaoException(e.getMessage(), e);
-		}
-		finally {
-			ResourceUtil.safeClose(resultSet, statement, connexion);
-		}
-		
-		return element;
-	}
-
-	@Override
-	public void delete(Integer id) throws DaoException {
-		Connection connexion = null;
-		PreparedStatement statement = null;
-		PreparedStatement statement2 = null;
-		ResultSet resultSet = null;
-		
-		try {
-			connexion = MSSQLConnectionFactory.get();
-			
-			statement = connexion.prepareStatement(DELETE_BY_ID_QUERY);
-			statement.setInt(1, id);
-
-			statement.executeUpdate();
-		} catch (Exception e) {
-			throw new DaoException(e.getMessage(), e);
-		}
-		finally {
-			ResourceUtil.safeClose(resultSet, statement, connexion, statement2);
-		}
 	}
 
 	@Override
@@ -123,31 +60,11 @@ private static ArticleDAOImpl singleton;
 		
 		return articles;
 	}
+	
 
 	@Override
-	public void deleteByIdListe(int id) throws DaoException {
-		Connection connexion = null;
-		PreparedStatement statement = null;
-		
-		try {
-			connexion = MSSQLConnectionFactory.get();
-			
-			statement = connexion.prepareStatement(DELETE_BY_ID_LISTE_QUERY);
-			statement.setInt(1, id);
-
-			statement.executeUpdate();
-
-		} catch (Exception e) {
-			throw new DaoException(e.getMessage(), e);
-		}
-		finally {
-			ResourceUtil.safeClose(statement, connexion);
-		}
-	}
-
-	@Override
-	public Article selectById(int id, ListeArticle liste) throws DaoException {
-		Article article = null;
+	public Epreuve selectById(int id, Epreuve epreuve) throws DaoException {
+		Epreuve epr = null;
 		Connection connexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -161,7 +78,17 @@ private static ArticleDAOImpl singleton;
 			resultSet = statement.executeQuery();
 			
 			if(resultSet.next()) {
-				article = new Article();
+				epr = new Epreuve();
+				epr.setIdEpreuve(resultSet.getInt("idEpreuve"));
+				epr.setDateDebutValidite(resultSet.getDate("dateDebutValidite"));
+				epr.setDateFinValidite(resultSet.getDate("dateDebutValidite"));
+				epr.setEtat(resultSet.getString("etat"));
+				epr.setNiveauObtenu(resultSet.getString("niveauObtenu"));
+				epr.setNoteObtenue(resultSet.getInt("noteObtenue"));
+				epr.setTempsEcoule(resultSet.getTime("tempsEcoule"));
+				ep
+				
+				
 				article.setId(resultSet.getInt("id"));
 				article.setNom(resultSet.getString("nom"));
 				article.setSelected(resultSet.getBoolean("selected"));
@@ -179,25 +106,9 @@ private static ArticleDAOImpl singleton;
 	}
 
 	@Override
-	public Article updateSelected(Article article) throws DaoException {
-		Connection connexion = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			connexion = MSSQLConnectionFactory.get();
-			
-			statement = connexion.prepareStatement(UPDATE_SELECTED_QUERY);
-			statement.setBoolean(1, article.isSelected());
-			statement.setInt(2, article.getId());
-			statement.executeUpdate();
-		} catch (Exception e) {
-			throw new DaoException(e.getMessage(), e);
-		}
-		finally {
-			ResourceUtil.safeClose(resultSet, statement, connexion);
-		}
-		
-		return article;
+	public List<Epreuve> selectAll() throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 }
