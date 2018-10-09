@@ -7,9 +7,9 @@ import fr.eni.tp.web.common.dal.exception.DaoException;
 
 public interface EpreuveDAO {
 	
-	List<Epreuve> selectAll() throws DaoException;
+	 List<Epreuve> selectAll() throws DaoException;
 	
-	Epreuve selectById(int id, Epreuve epreuve) throws DaoException;
+	Epreuve selectById(int id) throws DaoException;
 
 	//Epreuve update(Epreuve epreuve) throws DaoException;
 	
