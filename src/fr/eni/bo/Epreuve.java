@@ -13,13 +13,22 @@ public class Epreuve{
 	private int noteObtenue;
 	private String niveauObtenu;
 	private Candidat candidat;
+	private Test test;
 
-	public Candidat getcandidat() {
+	public Candidat getCandidat() {
 		return candidat;
 	}
 
-	public void setcandidat(Candidat candidat) {
+	public void setCandidat(Candidat candidat) {
 		this.candidat = candidat;
+	}
+
+	public Test getTest() {
+		return test;
+	}
+
+	public void setTest(Test test) {
+		this.test = test;
 	}
 
 	public Epreuve() {
