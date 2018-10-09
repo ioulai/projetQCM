@@ -1,21 +1,25 @@
 package fr.eni.dal.factory;
 
-import fr.eni.dal.dao.ArticleDAO;
 import fr.eni.dal.dao.impl.ArticleDAOImpl;
+import fr.eni.dal.dao.impl.EpreuveDAOImpl;
 import fr.eni.dal.dao.impl.ListeArticleDAOImpl;
-import fr.eni.dal.dao.ListeArticleDAO;
+import fr.eni.dal.dao.impl.QuestionDAOImpl;
+import fr.eni.dal.dao.impl.ThemeDAOImpl;
 import fr.eni.dal.dao.EpreuveDAO;
+import fr.eni.dal.dao.QuestionDAO;
+import fr.eni.dal.dao.ThemeDAO;
 
 public class DAOFactory {
-	public static ArticleDAO ArticleDAO() {
-		return ArticleDAOImpl.getInstance();
-	}
-	
-	public static ListeArticleDAO ListeArticleDAO() {
-		return ListeArticleDAOImpl.getInstance();
-	}
 	
 	public static EpreuveDAO EpreuveDAO() {
 		return EpreuveDAOImpl.getInstance();
+	}
+	
+	public static QuestionDAO QuestionDAO() {
+		return QuestionDAOImpl.getInstance();
+	}
+
+	public static ThemeDAO ThemeDAO() {
+		return ThemeDAOImpl.getInstance();
 	}
 }
