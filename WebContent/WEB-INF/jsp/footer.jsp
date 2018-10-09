@@ -3,6 +3,6 @@
     
 <footer class="footer bg-dark">
 	<div class="container">
-       	Copyright @ENI 2k18
+       	Copyright @TeamRocket
 	</div>
 </footer>
