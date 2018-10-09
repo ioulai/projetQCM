@@ -1,5 +1,7 @@
 package fr.eni.bll.manager.impl;
 
+import java.util.ArrayList;
+
 import fr.eni.bll.manager.QuestionManager;
 import fr.eni.bo.Question;
 import fr.eni.dal.dao.QuestionDAO;
@@ -32,5 +34,20 @@ public class QuestionManagerImpl implements QuestionManager {
 		}
 		
 		return question;
+	}
+	
+	@Override
+	public ArrayList<Question> selectByTheme(int id) throws ManagerException {
+		ArrayList<Question> questions = new ArrayList<Question>();
+		
+		ValidationUtil.checkNotNull(questions);
+		
+		try {
+			questions = questionDAO.selectByTheme(id);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return questions;
 	}
 }
