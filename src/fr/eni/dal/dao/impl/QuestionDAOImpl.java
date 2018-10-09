@@ -4,13 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-import fr.eni.bo.Epreuve;
 import fr.eni.bo.Question;
-import fr.eni.dal.dao.EpreuveDAO;
 import fr.eni.dal.dao.QuestionDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;

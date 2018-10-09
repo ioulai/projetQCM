@@ -1,12 +1,7 @@
 package fr.eni.bll.manager.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.eni.bll.manager.ListeArticleManager;
 import fr.eni.bll.manager.QuestionManager;
 import fr.eni.bo.Question;
-import fr.eni.dal.dao.ListeArticleDAO;
 import fr.eni.dal.dao.QuestionDAO;
 import fr.eni.dal.factory.DAOFactory;
 import fr.eni.tp.web.common.bll.exception.ManagerException;

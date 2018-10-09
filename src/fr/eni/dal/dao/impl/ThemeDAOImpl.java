@@ -3,12 +3,10 @@ package fr.eni.dal.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
-import fr.eni.bo.Epreuve;
-import fr.eni.dal.dao.EpreuveDAO;
+import fr.eni.bo.Theme;
 import fr.eni.dal.dao.ThemeDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
@@ -17,7 +15,7 @@ import fr.eni.tp.web.common.util.ResourceUtil;
 public class ThemeDAOImpl implements ThemeDAO{
 private static ThemeDAOImpl singleton;
 
-	private static final String SELECT_ALL = "SELECT * FROM epreuve";
+	private static final String SELECT_ALL = "SELECT * FROM theme";
 	
 	public static ThemeDAO getInstance() {
 		if (singleton == null)
@@ -27,35 +25,20 @@ private static ThemeDAOImpl singleton;
 	}
 
 	@Override
-	public Epreuve selectAll() throws DaoException {
+	public ArrayList<Theme> selectAll() throws DaoException {
 		Connection connexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
+		ArrayList<Theme> themes = new ArrayList<Theme>();
 		
 		try {
 			connexion = MSSQLConnectionFactory.get();
 			
-			statement = connexion.prepareStatement(SELECT_BY_ID_QUERY);
-			statement.setInt(1, id);
-			
+			statement = connexion.prepareStatement(SELECT_ALL);
 			resultSet = statement.executeQuery();
 			
 			if(resultSet.next()) {
-				epr = new Epreuve();
-				epr.setIdEpreuve(resultSet.getInt("idEpreuve"));
-				epr.setDateDebutValidite(resultSet.getDate("dateDebutValidite"));
-				epr.setDateFinValidite(resultSet.getDate("dateDebutValidite"));
-				epr.setEtat(resultSet.getString("etat"));
-				epr.setNiveauObtenu(resultSet.getString("niveauObtenu"));
-				epr.setNoteObtenue(resultSet.getInt("noteObtenue"));
-				epr.setTempsEcoule(resultSet.getTime("tempsEcoule"));
-				ep
-				
-				
-				article.setId(resultSet.getInt("id"));
-				article.setNom(resultSet.getString("nom"));
-				article.setSelected(resultSet.getBoolean("selected"));
-				article.setListeArticle(liste);
+				themes.add(map(resultSet));
 			}
 
 		} catch (Exception e) {
@@ -65,13 +48,14 @@ private static ThemeDAOImpl singleton;
 			ResourceUtil.safeClose(resultSet, statement, connexion);
 		}
 		
-		return article;
+		return themes;
 	}
 
-	@Override
-	public List<Epreuve> selectAll() throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+	public static Theme map(ResultSet resultSet) throws SQLException {
+		Theme theme = new Theme();
+		theme.setId(resultSet.getInt("idTheme"));
+		theme.setLibelle(resultSet.getString("libelle"));
+		
+		return theme;
 	}
-
 }
