@@ -32,7 +32,8 @@ public class ManagerFactory {
 
 	public static PromotionManager PromotionManager() {
 		return PromotionManagerImpl.getInstance();
-
+	}
+	
 	public static QuestionTirageManager questionTirageManager() {
 		return QuestionTirageManagerImpl.getInstance();
 	}
