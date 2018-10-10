@@ -16,10 +16,10 @@
 		<div id="content" style="text-align: center;">	
 
 			<c:forEach items="${epreuve}" var="epreuve">
-				<c:forEach items="${epreuve.test}" var="test">
-					<span id="nomListe">${test.libelle}</span>
-					<br><br>
-				</c:forEach>
+					<form method="GET" action="Questions">
+						<input type="hidden" value="${epreuve.test.id}" name="idTest"/>
+						<a href="" onclick="form.submit()"> ${epreuve.test.libelle}</a><br>
+					</form>
 			</c:forEach>	
 		</div>
 		
