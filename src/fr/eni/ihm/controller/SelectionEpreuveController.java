@@ -27,7 +27,7 @@ public class SelectionEpreuveController extends HttpServlet{
 		catch (Exception e) {
 			resp.sendError(500);
 		}
-			req.getRequestDispatcher("ListeEpreuve").forward(req, resp);
+			req.getRequestDispatcher("Epreuve").forward(req, resp);
 	}
 
 	/* SUPPRESSION LISTE */
