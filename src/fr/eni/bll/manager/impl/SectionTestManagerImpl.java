@@ -1,7 +1,6 @@
 package fr.eni.bll.manager.impl;
 
 import java.util.ArrayList;
-
 import fr.eni.bll.manager.SectionTestManager;
 import fr.eni.bo.SectionTest;
 import fr.eni.dal.dao.SectionTestDAO;

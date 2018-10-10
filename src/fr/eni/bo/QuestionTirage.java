@@ -4,7 +4,14 @@ public class QuestionTirage {
 	private boolean estMarquee;
 	private int numOrdre;
 	private Epreuve epreuve;
+	private Question question;
 	
+	public Question getQuestion() {
+		return question;
+	}
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
 	public boolean isEstMarquee() {
 		return estMarquee;
 	}

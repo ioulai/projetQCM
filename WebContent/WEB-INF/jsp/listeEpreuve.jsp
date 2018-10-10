@@ -20,7 +20,7 @@
 			<c:forEach items="${epreuve}" var="epreuve">
 					<form name="form" method="GET" action="Questions">
 						<input type="hidden" value="${epreuve.test.id}" name="idTest"/>
-						 <input type="submit" value="${epreuve.test.libelle}"><br>
+					 	<input type="submit" value="${epreuve.test.libelle}"><br>
 					</form>
 			</c:forEach>	
 		</div>

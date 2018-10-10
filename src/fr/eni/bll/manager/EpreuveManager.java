@@ -10,4 +10,6 @@ public interface EpreuveManager {
 	List<Epreuve> selectAll() throws ManagerException;
 	
 	Epreuve selectById(int id) throws ManagerException;
+	
+	Epreuve selectByIdTest(int id) throws ManagerException;
 }

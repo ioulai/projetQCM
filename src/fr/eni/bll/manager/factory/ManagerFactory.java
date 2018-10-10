@@ -5,9 +5,11 @@ import fr.eni.bll.manager.PromotionManager;
 import fr.eni.bll.manager.impl.EpreuveManagerImpl;
 import fr.eni.bll.manager.impl.PromotionManagerImpl;
 import fr.eni.bll.manager.QuestionManager;
+import fr.eni.bll.manager.QuestionTirageManager;
 import fr.eni.bll.manager.SectionTestManager;
 import fr.eni.bll.manager.ThemeManager;
 import fr.eni.bll.manager.impl.QuestionManagerImpl;
+import fr.eni.bll.manager.impl.QuestionTirageManagerImpl;
 import fr.eni.bll.manager.impl.SectionTestManagerImpl;
 import fr.eni.bll.manager.impl.ThemeManagerImpl;
 
@@ -27,8 +29,11 @@ public class ManagerFactory {
 	public static SectionTestManager sectionTestManager() {
 		return SectionTestManagerImpl.getInstance();
 	}
-	
+
 	public static PromotionManager PromotionManager() {
 		return PromotionManagerImpl.getInstance();
+
+	public static QuestionTirageManager questionTirageManager() {
+		return QuestionTirageManagerImpl.getInstance();
 	}
 }
