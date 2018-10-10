@@ -41,7 +41,7 @@ private static EpreuveDAOImpl singleton;
 			resultSet = statement.executeQuery();
 			
 			if(resultSet.next()) {
-				epr = setEpreuve(resultSet);
+				epr = map(resultSet);
 			}
 
 		} catch (Exception e) {
@@ -72,7 +72,7 @@ private static EpreuveDAOImpl singleton;
 			while(resultSet.next()) {
 				
 				epr = new Epreuve();
-				epr = setEpreuve(resultSet);
+				epr = map(resultSet);
 				
 				epreuves.add(epr);
 			}
@@ -87,7 +87,7 @@ private static EpreuveDAOImpl singleton;
 		return epreuves;
 	}
 
-	public static Epreuve setEpreuve(ResultSet resultSet) throws DaoException {
+	public static Epreuve map(ResultSet resultSet) throws DaoException {
 		Epreuve epr = null;
 
 		try {
@@ -101,7 +101,7 @@ private static EpreuveDAOImpl singleton;
 			epr.setTempsEcoule(resultSet.getTime("tempsEcoule"));
 			
 			epr.setTest(TestDAOImpl.map(resultSet));
-			epr.setCandidat(CandidatDAOImpl.setCandidat(resultSet));
+			epr.setCandidat(CandidatDAOImpl.map(resultSet));
 			
 		} catch (Exception e) {
 			throw new DaoException(e.getMessage(), e);

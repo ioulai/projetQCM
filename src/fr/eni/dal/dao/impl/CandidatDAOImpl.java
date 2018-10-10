@@ -39,7 +39,7 @@ private static CandidatDAOImpl singleton;
 			resultSet = statement.executeQuery();
 			
 			if(resultSet.next()) {
-				candidat = setCandidat(resultSet);
+				candidat = map(resultSet);
 			}
 
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ private static CandidatDAOImpl singleton;
 		return candidat;
 	}
 
-	public static Candidat setCandidat(ResultSet resultSet) throws DaoException {
+	public static Candidat map(ResultSet resultSet) throws DaoException {
 		Candidat candidat = null;
 		
 		try {

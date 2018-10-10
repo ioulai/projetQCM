@@ -1,7 +1,9 @@
 package fr.eni.bll.manager.factory;
 
 import fr.eni.bll.manager.EpreuveManager;
+import fr.eni.bll.manager.PromotionManager;
 import fr.eni.bll.manager.impl.EpreuveManagerImpl;
+import fr.eni.bll.manager.impl.PromotionManagerImpl;
 import fr.eni.bll.manager.QuestionManager;
 import fr.eni.bll.manager.SectionTestManager;
 import fr.eni.bll.manager.ThemeManager;
@@ -24,5 +26,9 @@ public class ManagerFactory {
 	
 	public static SectionTestManager sectionTestManager() {
 		return SectionTestManagerImpl.getInstance();
+	}
+	
+	public static PromotionManager PromotionManager() {
+		return PromotionManagerImpl.getInstance();
 	}
 }

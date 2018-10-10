@@ -79,7 +79,33 @@
 		<servlet-name>question</servlet-name>
 		<url-pattern>/question</url-pattern>
 	</servlet-mapping>
-
+	<!-- Clément -->
+	<servlet>
+		<servlet-name>AjoutPromotion</servlet-name>
+		<jsp-file>/WEB-INF/jsp/ajoutPromotion.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjoutPromotion</servlet-name>
+		<url-pattern>/AjoutPromotion</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AjoutCandidat</servlet-name>
+		<jsp-file>/WEB-INF/jsp/ajoutCandidat.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjoutCandidat</servlet-name>
+		<url-pattern>/AjoutCandidat</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    <servlet-name>AjoutPromo</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.AjoutPromotionController</servlet-class>
+ 	</servlet>
+ 	<servlet-mapping>
+		<servlet-name>AjoutPromo</servlet-name>
+		<url-pattern>/AjoutPromo</url-pattern>
+	</servlet-mapping>
 	<!-- gestion erreur -->
 	<error-page>
 		<error-code>400</error-code>
