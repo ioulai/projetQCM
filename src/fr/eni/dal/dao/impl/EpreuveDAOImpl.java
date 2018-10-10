@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.bo.Candidat;
 import fr.eni.bo.Epreuve;
-import fr.eni.bo.Test;
 import fr.eni.dal.dao.EpreuveDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
@@ -17,8 +15,8 @@ import fr.eni.tp.web.common.util.ResourceUtil;
 public class EpreuveDAOImpl implements EpreuveDAO{
 private static EpreuveDAOImpl singleton;
 	
-	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM epreuve INNER JOIN Candidat ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest WHERE idEpreuve = ?";
-	private static final String SELECT_ALL = "SELECT * FROM epreuve INNER JOIN Candidat ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest";
+	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur WHERE idEpreuve = ?";
+	private static final String SELECT_ALL = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur";
 	
 	public static EpreuveDAO getInstance() {
 		if (singleton == null)
@@ -91,8 +89,7 @@ private static EpreuveDAOImpl singleton;
 
 	public static Epreuve setEpreuve(ResultSet resultSet) throws DaoException {
 		Epreuve epr = null;
-		Candidat candidat = null;
-		Test test = null;
+
 		try {
 			epr = new Epreuve();
 			epr.setIdEpreuve(resultSet.getInt("idEpreuve"));
@@ -103,22 +100,8 @@ private static EpreuveDAOImpl singleton;
 			epr.setNoteObtenue(resultSet.getInt("noteObtenue"));
 			epr.setTempsEcoule(resultSet.getTime("tempsEcoule"));
 			
-			candidat = new Candidat();
-			candidat.setEmail(resultSet.getString("email"));
-			candidat.setNom(resultSet.getString("nom"));
-			candidat.setPassword(resultSet.getString("password"));
-			candidat.setPrenom(resultSet.getString("prenom"));
-			
-			test = new Test();
-			test.setDescription(resultSet.getString("description"));
-			test.setDuree(resultSet.getTime("duree"));
-			test.setId(resultSet.getInt("idTest"));
-			test.setLibelle(resultSet.getString("libelle"));
-			test.setSeuilBas(resultSet.getString("seuilBas"));
-			test.setSeuilHaut(resultSet.getString("seuilHaut"));
-			
-			epr.setTest(test);
-			epr.setCandidat(candidat);
+			epr.setTest(TestDAOImpl.setTest(resultSet));
+			epr.setCandidat(CandidatDAOImpl.setCandidat(resultSet));
 			
 		} catch (Exception e) {
 			throw new DaoException(e.getMessage(), e);

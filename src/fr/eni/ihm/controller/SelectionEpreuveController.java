@@ -22,13 +22,12 @@ public class SelectionEpreuveController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			List<Epreuve> epreuves = epreuveManager.selectAll();
-			
 			req.setAttribute("epreuve", epreuves);
-			req.getRequestDispatcher("ListeEpreuve").forward(req, resp);
 		}
 		catch (Exception e) {
 			resp.sendError(500);
 		}
+			req.getRequestDispatcher("ListeEpreuve").forward(req, resp);
 	}
 
 	/* SUPPRESSION LISTE */
