@@ -16,6 +16,7 @@ public class EpreuveDAOImpl implements EpreuveDAO{
 private static EpreuveDAOImpl singleton;
 	
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur WHERE idEpreuve = ?";
+	private static final String SELECT_BY_ID_TEST_QUERY = "SELECT * FROM epreuve INNER JOIN test ON test_idTest = idTest WHERE idTest = ?";
 	private static final String SELECT_ALL = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur";
 	
 	public static EpreuveDAO getInstance() {
@@ -36,6 +37,35 @@ private static EpreuveDAOImpl singleton;
 			connexion = MSSQLConnectionFactory.get();
 			
 			statement = connexion.prepareStatement(SELECT_BY_ID_QUERY);
+			statement.setInt(1, id);
+			
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				epr = setEpreuve(resultSet);
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return epr;
+	}
+	
+	@Override
+	public Epreuve selectByIdTest(int id) throws DaoException {
+		Epreuve epr = null;
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_BY_ID_TEST_QUERY);
 			statement.setInt(1, id);
 			
 			resultSet = statement.executeQuery();

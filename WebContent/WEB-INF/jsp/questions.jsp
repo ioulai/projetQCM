@@ -17,16 +17,18 @@
 			<h1>Listes des questions</h1><br><br>
 			
 			<c:set var="count" value="0" scope="page" />
+			| 
 			<c:forEach items="${questions}" var="question">
 				<c:set var="count" value="${count + 1}" scope="page"/>
 				
-				<form method="POST" action="SelectionController">
-					<input type="hidden" value="${question.idQuestion}" name="idQuestion">
-					
-					<span id="nomListe">Question ${count}</span>
-					<br><br>
+				<form method="GET" action="Questions">
+					<input type="hidden" value="${idTest}" name="idTest">
+					<input type="hidden" value="${question.id}" name="idQuestion">
+					<input type="submit" id="nomListe" value="Q${count}"> |
 				</form>
-			</c:forEach>	
+			</c:forEach>
+			
+			<c:out value="${questionEnCours.enonce}"></c:out>
 		</div>
 		
 		<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>

@@ -10,10 +10,6 @@ public interface EpreuveDAO {
 	List<Epreuve> selectAll() throws DaoException;
 	
 	Epreuve selectById(int id) throws DaoException;
-
-	//Epreuve update(Epreuve epreuve) throws DaoException;
 	
-	//Epreuve insert(Epreuve epreuve) throws DaoException;
-	
-	//void delete(Integer id) throws DaoException;
+	Epreuve selectByIdTest(int id) throws DaoException;
 }

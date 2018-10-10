@@ -24,6 +24,7 @@ public abstract class Robot {
 				index = (int)(Math.random() * questionsThemes.size());
 				questionsTirees.add(questionsThemes.get(index));
 				questionsThemes.remove(questionsThemes.get(index));
+				nbATirer--;
 			}
 		} catch (ManagerException e) {
 			e.printStackTrace();

@@ -18,7 +18,7 @@
 			<c:forEach items="${epreuve}" var="epreuve">
 					<form method="GET" action="Questions">
 						<input type="hidden" value="${epreuve.test.id}" name="idTest"/>
-						<a href="" onclick="form.submit()"> ${epreuve.test.libelle}</a><br>
+						<input type="submit" value="${epreuve.test.libelle}"><br>
 					</form>
 			</c:forEach>	
 		</div>
