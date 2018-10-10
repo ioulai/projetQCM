@@ -40,7 +40,7 @@ public class DAOFactory {
 	public static QuestionTirageDAO QuestionTirageDAO() {
 		return QuestionTirageDAOImpl.getInstance();
 
-	
+	}
 	public static CandidatDAO candidatDAO(){
 		return CandidatDAOImpl.getInstance();
 

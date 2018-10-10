@@ -42,7 +42,7 @@ public class ManagerFactory {
 	
 	public static QuestionTirageManager questionTirageManager() {
 		return QuestionTirageManagerImpl.getInstance();
-
+	}
 	
 	public static CandidatManager candidatManager(){
 		return CandidatManagerImpl.getInstance();
