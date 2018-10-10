@@ -32,7 +32,8 @@ public class QuestionController extends HttpServlet{
 			}
 			
 			req.setAttribute("questions", questions);
-			req.getRequestDispatcher("toto").forward(req, resp);
+			
+			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
 			resp.sendError(500);
 		}
