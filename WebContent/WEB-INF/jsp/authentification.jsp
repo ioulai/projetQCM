@@ -10,8 +10,7 @@
 <title>Authentification</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/style.css">
+
 <style type="text/css">
 :root { -
 	-input-padding-x: .75rem; -
@@ -62,17 +61,17 @@ body {
 	border-radius: .25rem;
 	transition: all .1s ease-in-out;
 }
-}
 </style>
 </head>
 <body>
-	<form class="form-signin" method="get"
+	<form class="form-signin" method="POST"
 		action="AuthentificationPostController">
 		<div class="text-center mb-4">
 			<img class="mb-4" src="<%=request.getContextPath()%>/img/rocket.png"
 				alt="" width="72" height="72">
 			<h1 class="h3 mb-3 font-weight-normal">QCM</h1>
 		</div>
+			${messageErreur}
 		<label for="inputEmail">Email address</label>
 		<div class="form-label-group">
 
@@ -88,8 +87,11 @@ body {
 		</div>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
 			in</button>
+			
 		<p class="mt-5 mb-3 text-muted text-center">&copy; TEAMROCKET
 			2018-2019</p>
+			
 	</form>
+
 </body>
 </html>

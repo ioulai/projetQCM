@@ -1,94 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-
-  <display-name>QCM</display-name>
-  <welcome-file-list>
-    <welcome-file>AuthentificationController</welcome-file>
-  </welcome-file-list>
-  <!--
-  <filter-mapping>
-    <filter-name>FiltreConditions</filter-name>
-    <url-pattern>/ArticleController/*</url-pattern>
-    <url-pattern>/ListeArticleController/*</url-pattern>
-    <url-pattern>/Welcome/*</url-pattern>
-    <dispatcher>REQUEST</dispatcher>
-  </filter-mapping>-->
-  
-    <servlet>
-     <servlet-name>AuthentificationPostController</servlet-name>
-     <servlet-class>fr.eni.ihm.controller.AuthentificationPostController</servlet-class>
-  </servlet>
-   <servlet-mapping>
-  <servlet-name>AuthentificationPostController</servlet-name>
-  <url-pattern>/AuthentificationPostController</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  <servlet-name>authentification</servlet-name>
-  <jsp-file>/WEB-INF/jsp/authentification.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-   <servlet-name>authentification</servlet-name>
-   <url-pattern>/authentification</url-pattern>
-  </servlet-mapping>
-  
-    <filter>
-    <filter-name>AuthentificationController</filter-name>
-    <filter-class>fr.eni.ihm.controller.AuthentificationController</filter-class>
-  </filter>
-   <filter-mapping>
-    <filter-name>AuthentificationController</filter-name>
-    <url-pattern>/*</url-pattern>
-    <dispatcher>REQUEST</dispatcher>
-  </filter-mapping>
-  <!-- 
-   -->
-
-  <servlet>
-    <servlet-name>ArticleController</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.ArticleController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>ArticleController</servlet-name>
-    <url-pattern>/ArticleController</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>SelectionController</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.SelectionController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>SelectionController</servlet-name>
-    <url-pattern>/SelectionController</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>AjoutController</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.AjoutController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>AjoutController</servlet-name>
-    <url-pattern>/AjoutController</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>Welcome</servlet-name>
-    <jsp-file>/WEB-INF/jsp/welcome.jsp</jsp-file>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>Welcome</servlet-name>
-    <url-pattern>/Welcome</url-pattern>
-  </servlet-mapping>
-=======
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	id="WebApp_ID" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" id="WebApp_ID" version="3.1">
 	<display-name>QCM</display-name>
 	<welcome-file-list>
 		<welcome-file>authentification</welcome-file>
@@ -109,28 +20,25 @@
 		<servlet-name>authentification</servlet-name>
 		<url-pattern>/authentification</url-pattern>
 	</servlet-mapping>
->>>>>>> f510ca5bb24f4cea43af11d9108ea4213b522cee
-
 	<filter>
 		<filter-name>AuthentificationController</filter-name>
 		<filter-class>fr.eni.ihm.controller.AuthentificationController</filter-class>
 	</filter>
+	<servlet>
+		<servlet-name>ListeEpreuve</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.SelectionEpreuveController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListeEpreuve</servlet-name>
+		<url-pattern>/ListeEpreuve</url-pattern>
+	</servlet-mapping>
+<!-- gestion filtre -->
 	<filter-mapping>
 		<filter-name>AuthentificationController</filter-name>
-		<url-pattern>/AuthentificationController/*</url-pattern>
-		<url-pattern>/authentification/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
+		<url-pattern>/AuthentificationController/*</url-pattern>
+		<url-pattern>/authentification/*</url-pattern>		
 	</filter-mapping>
-	
-	<servlet>
-    <servlet-name>ListeEpreuve</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.SelectionEpreuveController</servlet-class>
- 	</servlet>
-  
-  <servlet-mapping>
-    <servlet-name>ListeEpreuve</servlet-name>
-    <url-pattern>/ListeEpreuve</url-pattern>
-  </servlet-mapping>
 	<!-- gestion erreur -->
 	<error-page>
 		<error-code>400</error-code>
