@@ -1,11 +1,13 @@
 package fr.eni.dal.factory;
 
+import fr.eni.dal.dao.impl.CandidatDAOImpl;
 import fr.eni.dal.dao.impl.EpreuveDAOImpl;
 import fr.eni.dal.dao.impl.PromotionDAOImpl;
 import fr.eni.dal.dao.impl.QuestionDAOImpl;
 import fr.eni.dal.dao.impl.QuestionTirageDAOImpl;
 import fr.eni.dal.dao.impl.ThemeDAOImpl;
 import fr.eni.dal.dao.impl.SectionTestDAOImpl;
+import fr.eni.dal.dao.CandidatDAO;
 import fr.eni.dal.dao.EpreuveDAO;
 import fr.eni.dal.dao.PromotionDAO;
 import fr.eni.dal.dao.QuestionDAO;
@@ -37,5 +39,10 @@ public class DAOFactory {
 	
 	public static QuestionTirageDAO QuestionTirageDAO() {
 		return QuestionTirageDAOImpl.getInstance();
+
+	
+	public static CandidatDAO candidatDAO(){
+		return CandidatDAOImpl.getInstance();
+
 	}
 }

@@ -3,6 +3,10 @@
     
 <footer class="footer bg-dark">
 	<div class="container">
-       	Copyright @TeamRocket
+       	Copyright &copy TeamRocket
 	</div>
 </footer>
+ <script src="<%=request.getContextPath()%>/js/popper.min.js"></script>
+ <script src="<%=request.getContextPath()%>/js/jquery-3.2.1.min.js"></script>
+ <script src="<%=request.getContextPath()%>/js/bootstrap.js"></script>
+ 

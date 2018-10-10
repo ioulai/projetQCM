@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" id="WebApp_ID" version="3.1">
 
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	id="WebApp_ID" version="3.1">
 	<display-name>QCM</display-name>
 	<welcome-file-list>
 		<welcome-file>authentification</welcome-file>
@@ -32,11 +29,20 @@
 		<filter-name>AuthentificationController</filter-name>
 		<filter-class>fr.eni.ihm.controller.AuthentificationController</filter-class>
 	</filter>
+	<servlet>
+		<servlet-name>ListeEpreuve</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.SelectionEpreuveController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListeEpreuve</servlet-name>
+		<url-pattern>/ListeEpreuve</url-pattern>
+	</servlet-mapping>
+<!-- gestion filtre -->
 	<filter-mapping>
 		<filter-name>AuthentificationController</filter-name>
-		<url-pattern>/AuthentificationController/*</url-pattern>
-		<url-pattern>/authentification/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
+		<url-pattern>/AuthentificationController/*</url-pattern>
+		<url-pattern>/authentification/*</url-pattern>		
 	</filter-mapping>
 
 	<servlet>
