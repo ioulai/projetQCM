@@ -26,6 +26,9 @@ public class AuthentificationPostController extends HttpServlet{
 			
 			ValidationUtil.checkNotBlank(email);
 			ValidationUtil.checkNotBlank(password);
+			
+			System.out.println(email);
+			System.out.println(password);
 			/** ici verif avec la bdd **/
 			
 			req.getRequestDispatcher("Welcome").forward(req, resp);
