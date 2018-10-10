@@ -100,7 +100,7 @@ private static EpreuveDAOImpl singleton;
 			epr.setNoteObtenue(resultSet.getInt("noteObtenue"));
 			epr.setTempsEcoule(resultSet.getTime("tempsEcoule"));
 			
-			epr.setTest(TestDAOImpl.setTest(resultSet));
+			epr.setTest(TestDAOImpl.map(resultSet));
 			epr.setCandidat(CandidatDAOImpl.setCandidat(resultSet));
 			
 		} catch (Exception e) {

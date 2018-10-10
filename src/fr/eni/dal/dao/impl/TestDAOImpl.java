@@ -3,6 +3,7 @@ package fr.eni.dal.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import fr.eni.bo.Test;
 import fr.eni.dal.dao.TestDAO;
@@ -39,7 +40,7 @@ private static TestDAOImpl singleton;
 			resultSet = statement.executeQuery();
 			
 			if(resultSet.next()) {
-				test = setTest(resultSet);
+				test = map(resultSet);
 			}
 
 		} catch (Exception e) {
@@ -52,22 +53,16 @@ private static TestDAOImpl singleton;
 		return test;
 	}
 
-	public static Test setTest(ResultSet resultSet) throws DaoException {
-		Test test = null;
+	public static Test map(ResultSet resultSet) throws SQLException {
+		Test test = new Test();
+		test.setDescription(resultSet.getString("description"));
+		test.setDuree(resultSet.getTime("duree"));
+		test.setId(resultSet.getInt("idTest"));
+		test.setLibelle(resultSet.getString("libelle"));
+		test.setSeuilBas(resultSet.getString("seuilBas"));
+		test.setSeuilHaut(resultSet.getString("seuilHaut"));
 		
-		try {
-			test = new Test();
-			test.setDescription(resultSet.getString("description"));
-			test.setDuree(resultSet.getTime("duree"));
-			test.setId(resultSet.getInt("idTest"));
-			test.setLibelle(resultSet.getString("libelle"));
-			test.setSeuilBas(resultSet.getString("seuilBas"));
-			test.setSeuilHaut(resultSet.getString("seuilHaut"));
-			
-		} catch (Exception e) {
-			throw new DaoException(e.getMessage(), e);
-		}
-
 		return test;
 	}
+	
 }

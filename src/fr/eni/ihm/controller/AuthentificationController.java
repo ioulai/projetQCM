@@ -25,7 +25,7 @@ public class AuthentificationController implements Filter{
 		// TODO Auto-generated method stub
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
-		req.getRequestDispatcher("/WEB-INF/jsp/authentification.jsp").forward(req, resp);
+		req.getRequestDispatcher("authentification").forward(req, resp);
 	}
 
 	@Override
