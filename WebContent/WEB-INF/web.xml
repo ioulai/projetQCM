@@ -45,6 +45,28 @@
     <servlet-name>ListeEpreuve</servlet-name>
     <url-pattern>/ListeEpreuve</url-pattern>
   </servlet-mapping>
+  
+  <!--  Audric -->
+  	<servlet>
+    <servlet-name>Questions</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.QuestionController</servlet-class>
+ 	</servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Questions</servlet-name>
+    <url-pattern>/Questions</url-pattern>
+  </servlet-mapping>
+  
+  	<!-- Audric -->
+		<servlet>
+		<servlet-name>question</servlet-name>
+		<jsp-file>/WEB-INF/jsp/questions.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>question</servlet-name>
+		<url-pattern>/question</url-pattern>
+	</servlet-mapping>
+  
 	<!-- gestion erreur -->
 	<error-page>
 		<error-code>400</error-code>
