@@ -87,7 +87,7 @@ private static QuestionDAOImpl singleton;
 		return questions;
 	}
 	
-	private static Question map(ResultSet rst) throws SQLException {
+	public static Question map(ResultSet rst) throws SQLException {
 		Question question = new Question();
 		question.setId(rst.getInt("idQuestion"));
 		question.setMedia(rst.getString("media"));

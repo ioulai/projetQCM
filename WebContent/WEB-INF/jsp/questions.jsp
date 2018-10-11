@@ -17,18 +17,33 @@
 			<h1>Listes des questions</h1><br><br>
 			
 			<c:set var="count" value="0" scope="page" />
-			| 
-			<c:forEach items="${questions}" var="question">
+
+			<c:forEach items="${listeQuestions}" var="question">
 				<c:set var="count" value="${count + 1}" scope="page"/>
 				
 				<form method="GET" action="Questions">
 					<input type="hidden" value="${idTest}" name="idTest">
-					<input type="hidden" value="${question.id}" name="idQuestion">
-					<input type="submit" id="nomListe" value="Q${count}"> |
+					<input type="hidden" value="${question.id}" name="idQuestionCourante">
+					<input type="submit" id="nomListe" value="Q${count}">
 				</form>
-			</c:forEach>
+			</c:forEach><br><br>
 			
-			<c:out value="${questionEnCours.enonce}"></c:out>
+			<h3><c:out value="${questionEnCours.enonce}"></c:out></h3><br><br>
+			
+			<form method="POST" action="Questions">	
+				<c:forEach items="${propositions}" var="proposition">
+				<c:if test="${proposition.id == propSelected}">
+					<input type="radio" name="idPropositionUser" value="${proposition.id}" checked>	 
+				</c:if>
+				<c:if test="${proposition.id != propSelected}">
+					<input type="radio" name="idPropositionUser" value="${proposition.id}">	 
+				</c:if> 	
+					${proposition.enonce}<br>
+				</c:forEach>
+				<br><br>
+				<input type="hidden" value="${idTest}" name="idTest">
+				<input type="submit" value="Valider">
+			</form>
 		</div>
 		
 		<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
