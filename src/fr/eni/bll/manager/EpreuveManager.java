@@ -12,4 +12,6 @@ public interface EpreuveManager {
 	Epreuve selectById(int id) throws ManagerException;
 	
 	Epreuve selectByIdTest(int id) throws ManagerException;
+	
+	Epreuve insert(int idCandidat, int idTest) throws ManagerException;
 }

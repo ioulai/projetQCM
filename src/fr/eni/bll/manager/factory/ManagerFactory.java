@@ -2,12 +2,13 @@ package fr.eni.bll.manager.factory;
 
 import fr.eni.bll.manager.CandidatManager;
 import fr.eni.bll.manager.EpreuveManager;
-
+import fr.eni.bll.manager.ProfilManager;
 import fr.eni.bll.manager.PromotionManager;
 
 import fr.eni.bll.manager.impl.CandidatManagerImpl;
 
 import fr.eni.bll.manager.impl.EpreuveManagerImpl;
+import fr.eni.bll.manager.impl.ProfilManagerImpl;
 import fr.eni.bll.manager.impl.PromotionManagerImpl;
 import fr.eni.bll.manager.QuestionManager;
 import fr.eni.bll.manager.QuestionTirageManager;
@@ -46,6 +47,11 @@ public class ManagerFactory {
 	
 	public static CandidatManager candidatManager(){
 		return CandidatManagerImpl.getInstance();
+
+	}
+	
+	public static ProfilManager ProfilManager(){
+		return ProfilManagerImpl.getInstance();
 
 	}
 }

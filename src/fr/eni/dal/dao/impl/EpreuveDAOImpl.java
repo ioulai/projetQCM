@@ -139,4 +139,10 @@ private static EpreuveDAOImpl singleton;
 
 		return epr;
 	}
+
+	@Override
+	public Epreuve insert(int idCandidat, int idTest) throws DaoException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

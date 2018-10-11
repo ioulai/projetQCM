@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import fr.eni.bo.Promotion;
 import fr.eni.bo.Test;
 import fr.eni.dal.dao.TestDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
@@ -16,6 +19,7 @@ public class TestDAOImpl implements TestDAO{
 private static TestDAOImpl singleton;
 
 	private static final String SELECT_BY_ID = "SELECT * FROM test WHERE idTest = ?";
+	private static final String SELECT_ALL = "SELECT * FROM test";
 	
 	public static TestDAO getInstance() {
 		if (singleton == null)
@@ -63,6 +67,39 @@ private static TestDAOImpl singleton;
 		test.setSeuilHaut(resultSet.getString("seuilHaut"));
 		
 		return test;
+	}
+
+	@Override
+	public List<Test> selectAll(int id) throws DaoException {
+		Test test = null;
+		List<Test> tests = new ArrayList<Test>();
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_ALL);
+			
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				test = new Test();
+				test = map(resultSet);
+				
+				tests.add(test);
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return tests;
 	}
 	
 }

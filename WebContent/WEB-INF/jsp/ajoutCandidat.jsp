@@ -8,29 +8,50 @@
 		<meta charset="ISO-8859-1">
 		<title>Ajout d'un utilisateur</title>
 		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="css/style.css"> 
+		<link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript">
+		    function affichePromo() {
+		    	var idx = profilbox.selectedIndex;
+		    	var content = profilbox.options[idx].innerHTML;
+		    	var doc = document.getElementById("div");
+		    	
+		    	if(content == "Candidat"){
+		    		doc.style.visibility = 'visible';   
+		    	}else{
+		    		doc.style.visibility = 'hidden';  
+		    	}
+		    }
+		</script> 
 	</head>
 	<body>
 		<jsp:include page="/WEB-INF/jsp/navbar.jsp"></jsp:include>
 		<br>
-		<center><h1>Ajout d'un utilisateur</h1></center>
-		
-		<div id="content" style="text-align: center;">	
-
-				<form name="form" method="Post" action="AjoutPromo">
+		<div style="text-align:center;">
+			<h1>Ajout d'un utilisateur</h1>
+			<h5 style="color: red;">${error}</h5>
+		</div>
+		<div id="content" style="display: block;width: 150px;float: left; margin-left:45%;">	
+				<form name="form" method="Post" action="AjoutUtilisateur">
 				Nom
-					<input type="text" name="Nom"><br>
+					<input type="text" name="Nom" required><br>
 				Prénom
-					<input type="text" name="Prenom"><br>
+					<input type="text" name="Prenom" required><br>
 				Email
-					<input type="text" name="Email"><br>
+					<input type="text" name="Email" required><br>
 				Mot de passe
-					<input type="text" name="mdp"><br>
-				<c:forEach var="profile" items="${profile}">
-			        <tr>
-			            <td>${profile.libelle}</td>
-			        </tr>
-			    </c:forEach>
+					<input type="password" name="mdp" required><br>
+					Profil <select id="profilbox" name="profilbox" onclick="affichePromo()">	
+					<c:forEach var="profil" items="${profil}">
+				            <option>${profil.libelle}</option>
+				    </c:forEach>
+				    </select><br><br>
+				    <div id ="div" style="visibility:hidden;">
+					Promo <select name="promotionbox">	
+					<c:forEach var="promotion" items="${promotion}">
+				            <option>${promotion.libelle}</option>
+				    </c:forEach>
+				    </select><br><br>
+				    </div>
 					<input type="submit" value="Ajouter"><br>
 				</form>	
 		</div>

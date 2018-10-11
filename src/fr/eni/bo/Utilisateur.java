@@ -8,10 +8,12 @@ package fr.eni.bo;
  *
  */
 public abstract class Utilisateur{
+	private int id;
 	private String nom;
 	private String prenom;
 	private String email;
 	private String password;
+	private Profil profil;
 
 	/**
 	 * 
@@ -32,6 +34,23 @@ public abstract class Utilisateur{
 		this.prenom = prenom;
 		this.email = email;
 		this.password = password;
+	}
+
+	
+	public Profil getProfil() {
+		return profil;
+	}
+
+	public void setProfil(Profil profil) {
+		this.profil = profil;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**

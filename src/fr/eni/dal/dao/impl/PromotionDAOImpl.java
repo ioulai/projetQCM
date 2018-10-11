@@ -7,10 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.bo.Candidat;
-import fr.eni.bo.Epreuve;
 import fr.eni.bo.Promotion;
-import fr.eni.dal.dao.CandidatDAO;
 import fr.eni.dal.dao.PromotionDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
@@ -22,6 +19,7 @@ private static PromotionDAOImpl singleton;
 
 	private static final String INSERT_QUERY = "INSERT INTO promotion(libelle) VALUES (RTRIM(LTRIM(?)))";
 	private static final String SELECT_ALL = "SELECT * FROM promotion";
+	private static final String SELECT_BY_NAME = "SELECT * FROM promotion WHERE libelle = ?";
 	
 	public static PromotionDAO getInstance() {
 		if (singleton == null)
@@ -110,6 +108,35 @@ private static PromotionDAOImpl singleton;
 			throw new DaoException(e.getMessage(), e);
 		}
 
+		return promo;
+	}
+
+	@Override
+	public Promotion selectByName(String name) throws DaoException {
+		Promotion promo = null;
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_BY_NAME);
+			statement.setString(1, name);
+			
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				promo = map(resultSet);
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
 		return promo;
 	}
 	

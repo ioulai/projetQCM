@@ -10,4 +10,5 @@ public interface PromotionDAO {
 	List<Promotion> selectAll() throws DaoException;
 	
 	Promotion insert(Promotion promotion) throws DaoException;
+	Promotion selectByName(String name) throws DaoException;
 }

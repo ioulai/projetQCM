@@ -86,12 +86,30 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>InscriptionCandidat</servlet-name>
+		<jsp-file>/WEB-INF/jsp/ajoutCandidatTest.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InscriptionCandidat</servlet-name>
+		<url-pattern>/InscriptionCandidat</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>AjoutCandidat</servlet-name>
 		<jsp-file>/WEB-INF/jsp/ajoutCandidat.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AjoutCandidat</servlet-name>
 		<url-pattern>/AjoutCandidat</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    <servlet-name>AjoutUtilisateur</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.AjoutUtilisateurController</servlet-class>
+ 	</servlet>
+ 	<servlet-mapping>
+		<servlet-name>AjoutUtilisateur</servlet-name>
+		<url-pattern>/AjoutUtilisateur</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

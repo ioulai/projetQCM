@@ -51,4 +51,17 @@ public class PromotionManagerImpl implements PromotionManager{
 		return promo;
 	}
 
+	@Override
+	public Promotion selectByName(String name) throws ManagerException {
+		Promotion promotion = null;
+		
+		try {
+			promotion = promotionDAO.selectByName(name);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return promotion;
+	}
+
 }
