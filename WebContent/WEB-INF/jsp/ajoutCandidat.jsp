@@ -6,14 +6,14 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Ajout d'un Candidat</title>
+		<title>Ajout d'un utilisateur</title>
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="css/style.css"> 
 	</head>
 	<body>
 		<jsp:include page="/WEB-INF/jsp/navbar.jsp"></jsp:include>
 		<br>
-		<center><h1>Ajout d'un Candidat</h1></center>
+		<center><h1>Ajout d'un utilisateur</h1></center>
 		
 		<div id="content" style="text-align: center;">	
 
