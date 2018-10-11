@@ -16,7 +16,7 @@ public class EpreuveDAOImpl implements EpreuveDAO{
 private static EpreuveDAOImpl singleton;
 	
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur WHERE idEpreuve = ?";
-	private static final String SELECT_BY_ID_TEST_QUERY = "SELECT * FROM epreuve INNER JOIN test ON test_idTest = idTest WHERE idTest = ?";
+	private static final String SELECT_BY_ID_TEST_QUERY = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur WHERE idTest = ?";
 	private static final String SELECT_ALL = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur";
 	
 	public static EpreuveDAO getInstance() {
@@ -72,6 +72,8 @@ private static EpreuveDAOImpl singleton;
 			
 			if(resultSet.next()) {
 				epr = map(resultSet);
+				epr.setTest(TestDAOImpl.map(resultSet));
+				epr.setCandidat(CandidatDAOImpl.map(resultSet));
 			}
 
 		} catch (Exception e) {
@@ -103,6 +105,8 @@ private static EpreuveDAOImpl singleton;
 				
 				epr = new Epreuve();
 				epr = map(resultSet);
+				epr.setTest(TestDAOImpl.map(resultSet));
+				epr.setCandidat(CandidatDAOImpl.map(resultSet));
 				
 				epreuves.add(epr);
 			}
@@ -129,9 +133,6 @@ private static EpreuveDAOImpl singleton;
 			epr.setNiveauObtenu(resultSet.getString("niveauObtenu"));
 			epr.setNoteObtenue(resultSet.getInt("noteObtenue"));
 			epr.setTempsEcoule(resultSet.getTime("tempsEcoule"));
-			
-			epr.setTest(TestDAOImpl.map(resultSet));
-			epr.setCandidat(CandidatDAOImpl.map(resultSet));
 			
 		} catch (Exception e) {
 			throw new DaoException(e.getMessage(), e);

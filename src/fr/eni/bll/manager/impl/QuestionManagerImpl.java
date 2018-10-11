@@ -25,8 +25,6 @@ public class QuestionManagerImpl implements QuestionManager {
 	public Question selectById(int id) throws ManagerException {
 		Question question = null;
 		
-		ValidationUtil.checkNotNull(question);
-		
 		try {
 			question = questionDAO.selectById(id);
 		} catch (DaoException e) {
