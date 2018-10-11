@@ -7,13 +7,13 @@
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="css/style.css"> 
 	</head>
-	<body>
-		<jsp:include page="/WEB-INF/jsp/navbar.jsp"></jsp:include>
+	<body>		
 
 		<div id="content" style="text-align: center;">	
 			<h1>Erreur technique (500)</h1><br>
+			<a href="<%=request.getContextPath()%>/authentification"><button>Retour</button></a>
 		</div>
 		
-		<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+		
 	</body>
 </html>

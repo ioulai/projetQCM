@@ -5,20 +5,18 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class AuthentificationController implements Filter {
 
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-
-	}
+	private ServletContext context;
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -26,8 +24,15 @@ public class AuthentificationController implements Filter {
 		// TODO Auto-generated method stub
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-		HttpSession session = req.getSession();		
-		req.getRequestDispatcher("authentification").forward(req, resp);
+		HttpSession session = req.getSession();
+		Cookie[] cookies = req.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				this.context
+						.log(req.getRemoteAddr() + "::Cookie::{" + cookie.getName() + "," + cookie.getValue() + "}");
+			}
+		}
+//		req.getRequestDispatcher("authentification").forward(req, resp);
 		if (session != null) {
 			chain.doFilter(request, response);
 		}
@@ -35,7 +40,14 @@ public class AuthentificationController implements Filter {
 	}
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
+	public void init(FilterConfig filterConfig) throws ServletException {
+		// TODO Auto-generated method stub
+		this.context = filterConfig.getServletContext();
+		this.context.log("RequestLoggingFilter initialized");
+	}
+
+	@Override
+	public void destroy() {
 		// TODO Auto-generated method stub
 
 	}

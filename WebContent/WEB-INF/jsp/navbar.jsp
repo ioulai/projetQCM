@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	if (session.getAttribute("candidatConnecter") == null) {
+		response.sendRedirect("authentification");
+	}
+%>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<a class="navbar-brand" href="ListeArticleController">QCM</a>
+	<a class="navbar-brand" href="accueil">QCM</a>
 
 	<div class="collapse navbar-collapse justify-content-end"
 		id="navbarNav">
@@ -20,9 +26,15 @@
 		<ul class="navbar-nav">
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="dropdown01"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${candidatConnecter.nom}</a>
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+					class="far fa-user"></i></a>
 				<div class="dropdown-menu" aria-labelledby="dropdown01">
-					 <a	class="dropdown-item" href="#"><button class="btn btn-danger">Deconnecter</button></a></button>
+					<i class="dropdown-item">${candidatConnecter.nom}
+						${candidatConnecter.prenom}</i> 
+						<form action="deconnecter" method="post">
+						<button class="btn btn-danger" type="submit">Deconnecter</button>
+					</button>
+					</form>
 				</div></li>
 		</ul>
 	</div>
