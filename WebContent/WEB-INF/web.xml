@@ -45,16 +45,6 @@
 		<url-pattern>/authentification/*</url-pattern>		
 	</filter-mapping>
 
-	<servlet>
-    <servlet-name>ListeEpreuve</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.SelectionEpreuveController</servlet-class>
- 	</servlet>
-  
-  <servlet-mapping>
-    <servlet-name>ListeEpreuve</servlet-name>
-    <url-pattern>/ListeEpreuve</url-pattern>
-  </servlet-mapping>
-
   <servlet>
   <servlet-name>Epreuve</servlet-name>
 		<jsp-file>/WEB-INF/jsp/listeEpreuve.jsp</jsp-file>
