@@ -18,6 +18,7 @@ private static ReponseTirageDAOImpl singleton;
 	private static final String INSERT_QUERY = "INSERT INTO reponseTirage VALUES (?, ?, ?)";
 	private static final String SELECT_BY_ALL_QUERY = "SELECT * FROM reponseTirage rt INNER JOIN proposition p ON p.idProposition = rt.proposition_idProposition INNER JOIN question q ON q.idQuestion = rt.proposition_question_idQuestion INNER JOIN epreuve e ON e.idEpreuve = rt.questionTirage_epreuve_idEpreuve WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_question_idQuestion = ?";
 	private static final String UPDATE_QUERY = "UPDATE reponseTirage SET proposition_idProposition = ? WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_question_idQuestion = ?";
+	private static final String DELETE_QUERY = "DELETE FROM reponseTirage";
 	
 	public static ReponseTirageDAO getInstance() {
 		if (singleton == null)
@@ -85,7 +86,6 @@ private static ReponseTirageDAOImpl singleton;
 	public void update(ReponseTirage reponseTirage) throws DaoException {
 		Connection connexion = null;
 		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 		
 		try {
 			connexion = MSSQLConnectionFactory.get();
@@ -100,7 +100,25 @@ private static ReponseTirageDAOImpl singleton;
 			throw new DaoException(e.getMessage(), e);
 		}
 		finally {
-			ResourceUtil.safeClose(resultSet, statement, connexion);
+			ResourceUtil.safeClose(statement, connexion);
+		}
+	}
+
+	@Override
+	public void deleteAll() throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(DELETE_QUERY);
+			statement.execute();
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(statement, connexion);
 		}
 	}
 }

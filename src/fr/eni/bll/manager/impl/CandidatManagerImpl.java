@@ -5,7 +5,6 @@ import java.util.List;
 
 import fr.eni.bll.manager.CandidatManager;
 import fr.eni.bo.Candidat;
-import fr.eni.bo.Promotion;
 import fr.eni.dal.dao.CandidatDAO;
 import fr.eni.dal.factory.DAOFactory;
 import fr.eni.tp.web.common.bll.exception.ManagerException;

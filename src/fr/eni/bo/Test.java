@@ -7,8 +7,8 @@ public class Test {
 	private String libelle;
 	private String description;
 	private Time duree;
-	private String seuilHaut;
-	private String seuilBas;
+	private int seuilHaut;
+	private int seuilBas;
 	
 	public int getId() {
 		return id;
@@ -34,16 +34,16 @@ public class Test {
 	public void setDuree(Time duree) {
 		this.duree = duree;
 	}
-	public String getSeuilHaut() {
+	public int getSeuilHaut() {
 		return seuilHaut;
 	}
-	public void setSeuilHaut(String seuilHaut) {
+	public void setSeuilHaut(int seuilHaut) {
 		this.seuilHaut = seuilHaut;
 	}
-	public String getSeuilBas() {
+	public int getSeuilBas() {
 		return seuilBas;
 	}
-	public void setSeuilBas(String seuilBas) {
+	public void setSeuilBas(int seuilBas) {
 		this.seuilBas = seuilBas;
 	}
 }

@@ -10,7 +10,7 @@ public class Epreuve{
 	private Date dateFinValidite;
 	private Time tempsEcoule;
 	private String etat;
-	private int noteObtenue;
+	private float noteObtenue;
 	private String niveauObtenu;
 	private Candidat candidat;
 	private Test test;
@@ -75,11 +75,11 @@ public class Epreuve{
 		this.etat = etat;
 	}
 	
-	public int getNoteObtenue() {
+	public float getNoteObtenue() {
 		return noteObtenue;
 	}
 	
-	public void setNoteObtenue(int noteObtenue) {
+	public void setNoteObtenue(float noteObtenue) {
 		this.noteObtenue = noteObtenue;
 	}
 	

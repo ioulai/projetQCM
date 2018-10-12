@@ -9,4 +9,6 @@ public interface ReponseTirageDAO {
 	ReponseTirage selectByAll(int idEpreuve, int idQuestion) throws DaoException;
 
 	void update(ReponseTirage reponseTirage) throws DaoException;
+
+	void deleteAll() throws DaoException;
 }

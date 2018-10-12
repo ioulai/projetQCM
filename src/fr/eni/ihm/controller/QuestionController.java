@@ -106,6 +106,10 @@ public class QuestionController extends HttpServlet{
 			// Libellé du test à afficher
 			String libelle = epreuve.getTest().getLibelle();
 			
+			// Check si question marquée
+			QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
+			boolean isMarquee = questionTirage.isEstMarquee();
+			
 			// Attributs à envoyer
 			req.setAttribute("propositions", propositions);
 			req.setAttribute("listeQuestions", questions);
@@ -113,6 +117,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("idTest", idTest);
 			req.setAttribute("propSelected", propSelected);
 			req.setAttribute("libelle", libelle);
+			req.setAttribute("isMarquee", isMarquee);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		}

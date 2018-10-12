@@ -10,4 +10,6 @@ public interface ReponseTirageManager {
 	ReponseTirage selectByAll(int idEpreuve, int idQuestion) throws ManagerException;
 
 	void update(ReponseTirage reponseTirage) throws ManagerException;
+
+	void deleteAll() throws ManagerException;
 }
