@@ -86,8 +86,18 @@
 	</servlet-mapping>
 	
 	<servlet>
+    <servlet-name>Inscription</servlet-name>
+    <servlet-class>fr.eni.ihm.controller.InscriptionTestController</servlet-class>
+    
+ 	</servlet>
+ 	<servlet-mapping>
+		<servlet-name>Inscription</servlet-name>
+		<url-pattern>/Inscription</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>InscriptionCandidat</servlet-name>
-		<jsp-file>/WEB-INF/jsp/ajoutCandidatTest.jsp</jsp-file>
+		<jsp-file>/WEB-INF/jsp/inscriptionCandidatTest.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>InscriptionCandidat</servlet-name>

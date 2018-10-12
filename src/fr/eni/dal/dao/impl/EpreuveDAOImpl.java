@@ -3,7 +3,9 @@ package fr.eni.dal.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.eni.bo.Epreuve;
@@ -18,6 +20,7 @@ private static EpreuveDAOImpl singleton;
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur WHERE idEpreuve = ?";
 	private static final String SELECT_BY_ID_TEST_QUERY = "SELECT * FROM epreuve INNER JOIN test ON test_idTest = idTest WHERE idTest = ?";
 	private static final String SELECT_ALL = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur";
+	private static final String INSERT_QUERY = "INSERT INTO Epreuve (dateDebutValidite,dateFinValidite,etat,utilisateur_idUtilisateur,test_idTest) VALUES (?,?,?,?,?)";
 	
 	public static EpreuveDAO getInstance() {
 		if (singleton == null)
@@ -141,8 +144,42 @@ private static EpreuveDAOImpl singleton;
 	}
 
 	@Override
-	public Epreuve insert(int idCandidat, int idTest) throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
+	public Epreuve insert(int idCandidat, int idTest,Date debutValidite,Date finValidite) throws DaoException {
+		Epreuve epr = null;
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			epr = new Epreuve();
+			connexion = MSSQLConnectionFactory.get();
+			
+			connexion.setAutoCommit(false);
+			
+			statement = connexion.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
+			statement.setDate(1, new java.sql.Date(debutValidite.getTime()));
+			statement.setDate(2, new java.sql.Date(finValidite.getTime()));
+			statement.setString(3, "EA");
+			statement.setInt(4, idCandidat);
+			statement.setInt(5, idTest);
+
+			if (statement.executeUpdate() == 1) {
+				resultSet = statement.getGeneratedKeys();
+				
+				if (resultSet.next()) {
+					epr.setIdEpreuve(resultSet.getInt(1));
+				}
+			}
+			
+			connexion.commit();
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return epr;
 	}
 }
