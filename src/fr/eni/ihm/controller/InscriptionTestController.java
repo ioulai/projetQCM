@@ -16,6 +16,7 @@ import fr.eni.bll.manager.EpreuveManager;
 import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Candidat;
+import fr.eni.bo.Epreuve;
 import fr.eni.bo.Test;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 
@@ -52,36 +53,59 @@ public class InscriptionTestController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Test> tests = null;
 		List<Candidat> candidats = null;
-		
-		
+		List<Epreuve> epreuves = null;
+		Date debutdate = null;
+		Date findate = null;
+		final Date date = new Date();
+	    boolean inscription = true;
+	    
 		try {
 			tests = testManager.selectAll();
 			candidats = candidatManager.selectAllCandidat();
 			req.setAttribute("candidat", candidats);
 			req.setAttribute("test",tests);	
 			
-			
 			int idcandida = Integer.parseInt(req.getParameter("candidatbox"));
 			int idtest = Integer.parseInt(req.getParameter("testbox"));
-			Date debut;
-			Date fin;
+
+			String debut = req.getParameter("debutdate");
+			String fin = req.getParameter("findate");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
 			try {
-				debut = new SimpleDateFormat("dd/MM/yyyy").parse(req.getParameter("debutdate"));
-				fin = new SimpleDateFormat("dd/MM/yyyy").parse(req.getParameter("findate"));
-				epreuveManager.insert(idcandida, idtest, debut, fin);
+				 debutdate = sdf.parse(debut);
+				 findate = sdf.parse(fin);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+			if(findate.after(debutdate)){
+				epreuves = epreuveManager.selectByIdCandidatTest(idcandida, idtest);
+				
+				for(Epreuve epr : epreuves)
+				{
+					if(epr.getEtat().equals("EA") && date.before(epr.getDateFinValidite()))
+					{
+						inscription = false;
+					}
+				}
+				
+				if(inscription == false || epreuves.isEmpty())
+				{
+					epreuveManager.insert(idcandida, idtest, debutdate, findate);
+					req.getRequestDispatcher("InscriptionCandidat").forward(req, resp);
+				}else
+				{
+					req.setAttribute("error","Utilisateur déjà inscrit");
+					req.getRequestDispatcher("InscriptionCandidat").forward(req, resp);
+				}
+			}else{
+				req.setAttribute("error","Selectionner une date cohérente");
+			}
 		} catch (ManagerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
-		req.getRequestDispatcher("InscriptionCandidat").forward(req, resp);
 	}
 
 }
