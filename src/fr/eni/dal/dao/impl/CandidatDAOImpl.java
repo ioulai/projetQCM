@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.bo.Candidat;
+import fr.eni.bo.Epreuve;
 import fr.eni.dal.dao.CandidatDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
@@ -22,6 +25,7 @@ private static CandidatDAOImpl singleton;
 	private static final String INSERT_UTILISATEUR = "INSERT INTO utilisateur(nom,prenom,email,password,profil_codeProfil) VALUES (RTRIM(LTRIM(?)),RTRIM(LTRIM(?)),RTRIM(LTRIM(?)),?,?)";
 	private static final String INSERT_CANDIDAT = "INSERT INTO candidat(idUtilisateur,codePromo) VALUES (?,?)";
 	private static final String INSERT_COLLABO = "INSERT INTO collaborateur VALUES (?)";
+	private static final String SELECT_ALL_CANDIDAT = "SELECT * FROM utilisateur as util INNER JOIN Candidat as ca ON util.idUtilisateur = ca.idUtilisateur";
 	
 	public static CandidatDAO getInstance() {
 		if (singleton == null)
@@ -87,6 +91,7 @@ private static CandidatDAOImpl singleton;
 	public static Candidat map(ResultSet resultSet) throws SQLException {
 		Candidat candidat = new Candidat();
 		
+		candidat.setId(resultSet.getInt("idUtilisateur"));
 		candidat.setEmail(resultSet.getString("email"));
 		candidat.setNom(resultSet.getString("nom"));
 		candidat.setPassword(resultSet.getString("password"));
@@ -208,6 +213,40 @@ private static CandidatDAOImpl singleton;
 			throw new DaoException(e.getMessage(), e);
 		}
 		return candidat;
+	}
+
+	@Override
+	public List<Candidat> selectAllCandidat() throws DaoException {
+		Candidat candidat = null;
+		List<Candidat> candidats = new ArrayList<Candidat>();
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_ALL_CANDIDAT);
+			
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				candidat = new Candidat();
+				candidat = map(resultSet);
+				candidat.setCodepromo(resultSet.getInt("codePromo"));
+				
+				candidats.add(candidat);
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return candidats;
 	}
 
 

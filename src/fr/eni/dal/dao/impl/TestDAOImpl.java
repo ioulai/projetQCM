@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.bo.Promotion;
 import fr.eni.bo.Test;
 import fr.eni.dal.dao.TestDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
@@ -70,7 +69,7 @@ private static TestDAOImpl singleton;
 	}
 
 	@Override
-	public List<Test> selectAll(int id) throws DaoException {
+	public List<Test> selectAll() throws DaoException {
 		Test test = null;
 		List<Test> tests = new ArrayList<Test>();
 		Connection connexion = null;
