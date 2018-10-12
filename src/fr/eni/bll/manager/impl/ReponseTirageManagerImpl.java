@@ -53,4 +53,13 @@ public class ReponseTirageManagerImpl implements ReponseTirageManager {
 			throw new ManagerException("Erreur DAO", e);
 		}
 	}
+
+	@Override
+	public void deleteAll() throws ManagerException {
+		try {
+			reponseTirageDAO.deleteAll();
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	}
 }

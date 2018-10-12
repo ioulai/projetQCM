@@ -16,4 +16,6 @@ public interface QuestionTirageManager {
 	QuestionTirage selectByIds(Epreuve epreuve, Question questionEnCours) throws ManagerException;
 
 	void update(QuestionTirage questionTirage) throws ManagerException;
+
+	void deleteAll() throws ManagerException;
 }

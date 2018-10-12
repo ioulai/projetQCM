@@ -62,8 +62,8 @@ private static TestDAOImpl singleton;
 		test.setDuree(resultSet.getTime("duree"));
 		test.setId(resultSet.getInt("idTest"));
 		test.setLibelle(resultSet.getString("libelle"));
-		test.setSeuilBas(resultSet.getString("seuilBas"));
-		test.setSeuilHaut(resultSet.getString("seuilHaut"));
+		test.setSeuilBas(resultSet.getInt("seuilBas"));
+		test.setSeuilHaut(resultSet.getInt("seuilHaut"));
 		
 		return test;
 	}

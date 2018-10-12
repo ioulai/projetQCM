@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.bll.manager.EpreuveManager;
 import fr.eni.bll.manager.QuestionTirageManager;
 import fr.eni.bll.manager.ReponseTirageManager;
+import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Epreuve;
 import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
+import fr.eni.bo.Test;
 
 public class FinEpreuveController extends HttpServlet{
 	private static final long serialVersionUID = -6970893575378675464L;
@@ -31,6 +33,7 @@ public class FinEpreuveController extends HttpServlet{
 			EpreuveManager em = ManagerFactory.epreuveManager();
 			QuestionTirageManager qtm = ManagerFactory.questionTirageManager();
 			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
+			TestManager tm = ManagerFactory.TestManager();
 			
 			// Recherche de l'épreuve du test
 			epreuve = em.selectByIdTest(idTest);
@@ -47,6 +50,37 @@ public class FinEpreuveController extends HttpServlet{
 				}
 			}
 			
+			// Selection du test
+			Test test = tm.selectById(idTest);
+			
+			// Modif de la note
+			epreuve.setNoteObtenue(note);
+			
+			// Modif du niveau obtenu
+			String niveau;
+			
+			if (note < test.getSeuilBas()) {
+				epreuve.setNiveauObtenu("NA");
+				niveau = "Non acquis";
+			}
+			else if (note >= test.getSeuilBas() && note < test.getSeuilHaut()) {
+				epreuve.setNiveauObtenu("ECA");
+				niveau = "En cours d'acquisition";
+			}
+			else {
+				epreuve.setNiveauObtenu("A");
+				niveau = "Acquis";
+			}
+			
+			// Modif des resultats
+			em.update(epreuve);
+			
+			// On vide les tables tampons de tirage
+			rtm.deleteAll();
+			qtm.deleteAll();
+			
+			req.setAttribute("niveau", niveau);
+			req.setAttribute("note", epreuve.getNoteObtenue());
 			req.getRequestDispatcher("finEpreuve").forward(req, resp);
 		} catch (Exception e) {
 			resp.sendError(500);

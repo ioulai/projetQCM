@@ -22,6 +22,7 @@ private static QuestionTirageDAOImpl singleton;
 	private static final String SELECT_BY_ID_EPREUVE_QUERY = "SELECT * FROM questionTirage qt INNER JOIN epreuve e ON e.idEpreuve = qt.epreuve_idEpreuve INNER JOIN question q ON q.idQuestion = qt.question_idQuestion WHERE epreuve_idEpreuve = ? ORDER BY numOrdre ASC";
 	private static final String SELECT_BY_IDS_QUERY = "SELECT * FROM questionTirage qt INNER JOIN epreuve e ON e.idEpreuve = qt.epreuve_idEpreuve INNER JOIN question q ON q.idQuestion = qt.question_idQuestion WHERE epreuve_idEpreuve = ? AND question_idQuestion = ?";
 	private static final String UPDATE_QUERY = "UPDATE questionTirage SET estMarquee = ?, numOrdre = ? WHERE epreuve_idEpreuve = ? AND question_idQuestion = ?";
+	private static final String DELETE_QUERY = "DELETE FROM questionTirage";
 	
 	public static QuestionTirageDAO getInstance() {
 		if (singleton == null)
@@ -139,6 +140,24 @@ private static QuestionTirageDAOImpl singleton;
 		}
 		finally {
 			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+	}
+	
+	@Override
+	public void deleteAll() throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(DELETE_QUERY);
+			statement.execute();
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(statement, connexion);
 		}
 	}
 	

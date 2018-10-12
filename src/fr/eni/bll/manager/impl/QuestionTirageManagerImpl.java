@@ -72,4 +72,13 @@ public class QuestionTirageManagerImpl implements QuestionTirageManager {
 		}
 		
 	}
+
+	@Override
+	public void deleteAll() throws ManagerException {
+		try {
+			questionTirageDAO.deleteAll();
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	}
 }

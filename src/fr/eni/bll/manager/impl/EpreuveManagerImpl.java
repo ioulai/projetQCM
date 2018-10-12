@@ -66,8 +66,6 @@ public class EpreuveManagerImpl implements EpreuveManager{
 
 	@Override
 	public Epreuve insert(int idCandidat, int idTest, Date debutValidite, Date finValidite) throws ManagerException {
-		ValidationUtil.checkNotNull(idCandidat);
-		ValidationUtil.checkNotNull(idTest);
 		ValidationUtil.checkNotNull(debutValidite);
 		ValidationUtil.checkNotNull(finValidite);
 		
@@ -97,7 +95,7 @@ public class EpreuveManagerImpl implements EpreuveManager{
 
 	@Override
 	public List<Epreuve> selectByUserId(int id) throws ManagerException {
-List<Epreuve> epr = null;
+		List<Epreuve> epr = null;
 		
 		try {
 			epr = epreuveDAO.selectByUserId(id);
@@ -107,5 +105,12 @@ List<Epreuve> epr = null;
 		
 		return epr;
 	}
-
+	
+	public void update(Epreuve epreuve) throws ManagerException {
+		try {
+			epreuveDAO.update(epreuve);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	}
 }

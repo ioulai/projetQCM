@@ -15,4 +15,6 @@ public interface QuestionTirageDAO {
 	QuestionTirage selectByIds(Epreuve epreuve, Question questionEnCours) throws DaoException;
 
 	void update(QuestionTirage questionTirage) throws DaoException;
+
+	void deleteAll() throws DaoException;
 }
