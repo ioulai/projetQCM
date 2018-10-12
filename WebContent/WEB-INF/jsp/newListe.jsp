@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="css/style.css"> 
 	</head>
 	<body>
-		<jsp:include page="/WEB-INF/jsp/navbar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 		
 		<div id="content" style="text-align: center;">	
 			<h1>Ajouter une liste</h1><br><br>
@@ -51,6 +51,6 @@
 			</form>
 		</div>
 		
-		<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/jsp/template/footer.jsp"></jsp:include>
 	</body>
 </html>

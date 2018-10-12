@@ -1,6 +1,7 @@
 package fr.eni.bll.manager.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.eni.bll.manager.EpreuveManager;
@@ -10,6 +11,7 @@ import fr.eni.dal.dao.EpreuveDAO;
 import fr.eni.dal.factory.DAOFactory;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 import fr.eni.tp.web.common.dal.exception.DaoException;
+import fr.eni.tp.web.common.util.ValidationUtil;
 
 public class EpreuveManagerImpl implements EpreuveManager{
 
@@ -63,9 +65,34 @@ public class EpreuveManagerImpl implements EpreuveManager{
 	}
 
 	@Override
-	public Epreuve insert(int idCandidat, int idTest) throws ManagerException {
-		// TODO Auto-generated method stub
-		return null;
+	public Epreuve insert(int idCandidat, int idTest, Date debutValidite, Date finValidite) throws ManagerException {
+		ValidationUtil.checkNotNull(idCandidat);
+		ValidationUtil.checkNotNull(idTest);
+		ValidationUtil.checkNotNull(debutValidite);
+		ValidationUtil.checkNotNull(finValidite);
+		
+		Epreuve epr = null;
+		
+		try {
+			epr = epreuveDAO.insert(idCandidat, idTest, debutValidite, finValidite);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return epr;
+	}
+
+	@Override
+	public List<Epreuve> selectByIdCandidatTest(int idCandidat, int idTest) throws ManagerException {
+		List<Epreuve> epr = null;
+		
+		try {
+			epr = epreuveDAO.selectByIdCandidatTest(idCandidat, idTest);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return epr;
 	}
 
 }

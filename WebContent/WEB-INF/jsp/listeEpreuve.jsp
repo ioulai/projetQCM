@@ -11,10 +11,11 @@
 		<link rel="stylesheet" href="css/style.css"> 
 	</head>
 	<body>
-		<jsp:include page="/WEB-INF/jsp/navbar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 		<br>
-		<center><h1>Liste des epreuves</h1></center>
-		
+		<div style="text-align:center;">
+			<h1>Liste des epreuves</h1>
+		</div>
 		<div id="content" style="text-align: center;">	
 
 			<c:forEach items="${epreuve}" var="epreuve">
@@ -25,6 +26,6 @@
 			</c:forEach>	
 		</div>
 		
-		<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/jsp/template/footer.jsp"></jsp:include>
 	</body>
 </html>

@@ -1,5 +1,6 @@
 package fr.eni.bll.manager;
 
+import java.util.Date;
 import java.util.List;
 
 import fr.eni.bo.Epreuve;
@@ -13,5 +14,7 @@ public interface EpreuveManager {
 	
 	Epreuve selectByIdTest(int id) throws ManagerException;
 	
-	Epreuve insert(int idCandidat, int idTest) throws ManagerException;
+	List<Epreuve> selectByIdCandidatTest(int idCandidat, int idTest) throws ManagerException;
+	
+	Epreuve insert(int idCandidat, int idTest,Date debutValidite,Date finValidite) throws ManagerException;
 }
