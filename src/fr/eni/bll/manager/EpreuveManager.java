@@ -17,4 +17,6 @@ public interface EpreuveManager {
 	List<Epreuve> selectByIdCandidatTest(int idCandidat, int idTest) throws ManagerException;
 	
 	Epreuve insert(int idCandidat, int idTest,Date debutValidite,Date finValidite) throws ManagerException;
+	
+	List<Epreuve> selectByUserId(int id) throws ManagerException;
 }

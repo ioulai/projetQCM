@@ -95,4 +95,17 @@ public class EpreuveManagerImpl implements EpreuveManager{
 		return epr;
 	}
 
+	@Override
+	public List<Epreuve> selectByUserId(int id) throws ManagerException {
+List<Epreuve> epr = null;
+		
+		try {
+			epr = epreuveDAO.selectByUserId(id);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return epr;
+	}
+
 }

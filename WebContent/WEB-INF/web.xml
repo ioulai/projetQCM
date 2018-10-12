@@ -75,6 +75,7 @@
 		<servlet-name>ListeEpreuve</servlet-name>
 		<url-pattern>/ListeEpreuve</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Epreuve</servlet-name>
 		<jsp-file>/WEB-INF/jsp/listeEpreuve.jsp</jsp-file>
@@ -145,6 +146,7 @@
 		<servlet-name>AjoutPromotion</servlet-name>
 		<jsp-file>/WEB-INF/jsp/ajoutPromotion.jsp</jsp-file>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>AjoutPromotion</servlet-name>
 		<url-pattern>/AjoutPromotion</url-pattern>
@@ -152,9 +154,9 @@
 
 	<servlet>
     <servlet-name>Inscription</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.InscriptionTestController</servlet-class>
-    
+    <servlet-class>fr.eni.ihm.controller.InscriptionTestController</servlet-class> 
  	</servlet>
+ 
  	<servlet-mapping>
 		<servlet-name>Inscription</servlet-name>
 		<url-pattern>/Inscription</url-pattern>
@@ -164,11 +166,32 @@
 		<servlet-name>InscriptionCandidat</servlet-name>
 		<jsp-file>/WEB-INF/jsp/inscriptionCandidatTest.jsp</jsp-file>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>InscriptionCandidat</servlet-name>
 		<url-pattern>/InscriptionCandidat</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>DesinscriptionCandidat</servlet-name>
+		<jsp-file>/WEB-INF/jsp/desinscrireCandidat.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>DesinscriptionCandidat</servlet-name>
+		<url-pattern>/DesinscriptionCandidat</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+    	<servlet-name>Desinscription</servlet-name>
+    	<servlet-class>fr.eni.ihm.controller.DesinscriptionCandidatController</servlet-class>
+ 	</servlet>
+ 	
+ 	<servlet-mapping>
+		<servlet-name>Desinscription</servlet-name>
+		<url-pattern>/Desinscription</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>AjoutCandidat</servlet-name>
 		<jsp-file>/WEB-INF/jsp/ajoutCandidat.jsp</jsp-file>
