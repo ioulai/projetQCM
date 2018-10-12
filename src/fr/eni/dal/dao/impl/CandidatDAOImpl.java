@@ -20,7 +20,7 @@ public class CandidatDAOImpl implements CandidatDAO{
 private static CandidatDAOImpl singleton;
 
 	private static final String SELECT_BY_ID = "SELECT * FROM utilisateur WHERE idUtilisateur = ?";
-	private static final String SELECT_BY_EMAIL_PASSWORD = " select * from utilisateur where email = ? and password = ? ";
+	private static final String SELECT_BY_EMAIL_PASSWORD = " select * from utilisateur as util INNER JOIN Candidat as ca ON util.idUtilisateur = ca.idUtilisateur join promotion p on p.codePromo=ca.codePromo where email = ? and password = ? ";
 	private static final String SELECT_BY_EMAIL = " select * from utilisateur where email = ?";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO utilisateur(nom,prenom,email,password,profil_codeProfil) VALUES (RTRIM(LTRIM(?)),RTRIM(LTRIM(?)),RTRIM(LTRIM(?)),?,?)";
 	private static final String INSERT_CANDIDAT = "INSERT INTO candidat(idUtilisateur,codePromo) VALUES (?,?)";
@@ -81,6 +81,8 @@ private static CandidatDAOImpl singleton;
 			
 			if (resultSet.next()) {
 				candidat = map(resultSet);
+				candidat.setCodepromo(resultSet.getInt("codePromo"));
+				
 			}
 		} catch (SQLException e) {
 			throw new DaoException(e.getMessage(), e);

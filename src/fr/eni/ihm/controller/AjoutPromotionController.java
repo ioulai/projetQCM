@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.bll.manager.PromotionManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
@@ -17,7 +18,7 @@ public class AjoutPromotionController extends HttpServlet{
 	private PromotionManager promotionManager = ManagerFactory.PromotionManager();
 	
 	private static final long serialVersionUID = -6970893575378675464L;
-
+	private Object utilisateurConnecte = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -27,7 +28,11 @@ public class AjoutPromotionController extends HttpServlet{
 	/* AJOUT PROMOTION */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		utilisateurConnecte = session.getAttribute("utilisateurConnecte");
+		if(utilisateurConnecte != null){
 			
+		
 			Promotion promo = new Promotion();
 			try {
 				ValidationUtil.checkNotBlank(req.getParameter("message"));
@@ -38,5 +43,8 @@ public class AjoutPromotionController extends HttpServlet{
 			}
 				
 			req.getRequestDispatcher("ListeEpreuve").forward(req, resp);
+		}else{
+			req.getRequestDispatcher("authentification").forward(req, resp);
+		}
 	}
 }

@@ -43,7 +43,7 @@ public class AuthentificationController implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// TODO Auto-generated method stub
 		this.context = filterConfig.getServletContext();
-		this.context.log("RequestLoggingFilter initialized");
+		this.context.log("AuthentificationController initialiser");
 	}
 
 	@Override

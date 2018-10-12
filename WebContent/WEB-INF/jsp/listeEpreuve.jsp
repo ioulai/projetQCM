@@ -7,8 +7,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Liste des epreuves</title>
-		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="css/style.css"> 
+	<jsp:include page="/WEB-INF/jsp/template/header.jsp"></jsp:include>
 	</head>
 	<body>
 		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
