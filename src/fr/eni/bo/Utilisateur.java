@@ -115,7 +115,9 @@ public abstract class Utilisateur{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Utilisateur [");
+		builder.append("Utilisateur [id=");
+		builder.append(id);
+		builder.append(", ");
 		if (nom != null) {
 			builder.append("nom=");
 			builder.append(nom);
@@ -134,10 +136,17 @@ public abstract class Utilisateur{
 		if (password != null) {
 			builder.append("password=");
 			builder.append(password);
+			builder.append(", ");
+		}
+		if (profil != null) {
+			builder.append("profil=");
+			builder.append(profil);
 		}
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 	
 	
 

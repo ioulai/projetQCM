@@ -7,11 +7,10 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Inscription d'un candidat</title>
-		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="css/style.css">
+	<jsp:include page="/WEB-INF/jsp/template/header.jsp"></jsp:include>
 	</head>
 	<body>
-		<jsp:include page="/WEB-INF/jsp/navbar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 		<br>
 		<div style="text-align:center;">
 			<h1>Inscription d'un candidat</h1>
@@ -37,6 +36,6 @@
 				</form>	
 		</div>
 		
-		<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/jsp/template/footer.jsp"></jsp:include>
 	</body>
 </html>

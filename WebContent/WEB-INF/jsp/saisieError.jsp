@@ -8,12 +8,11 @@
 		<link rel="stylesheet" href="css/style.css"> 
 	</head>
 	<body>
-		<jsp:include page="/WEB-INF/jsp/navbar.jsp"></jsp:include>
-
 		<div id="content" style="text-align: center;">	
 			<h1>Saisie invalide (400)</h1><br>
+			<a href="<%=request.getContextPath()%>/authentification"><button>Retour</button></a>
 		</div>
 		
-		<jsp:include page="/WEB-INF/jsp/footer.jsp"></jsp:include>
+		
 	</body>
 </html>

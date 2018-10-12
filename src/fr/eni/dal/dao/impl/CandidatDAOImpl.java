@@ -87,6 +87,7 @@ private static CandidatDAOImpl singleton;
 	public static Candidat map(ResultSet resultSet) throws SQLException {
 		Candidat candidat = new Candidat();
 		
+		candidat.setId(resultSet.getInt("idUtilisateur"));
 		candidat.setEmail(resultSet.getString("email"));
 		candidat.setNom(resultSet.getString("nom"));
 		candidat.setPassword(resultSet.getString("password"));
