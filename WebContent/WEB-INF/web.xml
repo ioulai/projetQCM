@@ -96,7 +96,41 @@
 		<servlet-name>Questions</servlet-name>
 		<url-pattern>/Questions</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Audric -->
+	<servlet>
+		<servlet-name>Marquage</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.MarquageController
+		</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>Marquage</servlet-name>
+		<url-pattern>/Marquage</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Audric -->
+	<servlet>
+		<servlet-name>FinEpreuve</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.FinEpreuveController
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FinEpreuve</servlet-name>
+		<url-pattern>/FinEpreuve</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Audric -->
+	<servlet>
+		<servlet-name>finEpreuve</servlet-name>
+		<jsp-file>/WEB-INF/jsp/finEpreuve.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>finEpreuve</servlet-name>
+		<url-pattern>/finEpreuve</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Audric -->
 	<servlet>
 		<servlet-name>question</servlet-name>

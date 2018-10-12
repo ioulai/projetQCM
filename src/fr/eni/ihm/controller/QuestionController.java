@@ -22,6 +22,7 @@ import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.bo.SectionTest;
 import fr.eni.robot.Robot;
+import fr.eni.tp.web.common.bll.exception.ManagerException;
 
 public class QuestionController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -46,15 +47,25 @@ public class QuestionController extends HttpServlet{
 			// On obtient la question
 			Question questionRepondue = proposition.getQuestion();
 			
-			// TODO : tester si existe, alors supprimer puis recréer ou update
-			
-			// On insert la réponse en base
+			// On test si il y a déjà une réponse en base
 			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
-			ReponseTirage reponseTirage = new ReponseTirage();
-			reponseTirage.setEpreuve(epreuve);
-			reponseTirage.setProposition(proposition);
-			reponseTirage.setQuestion(questionRepondue);
-			rtm.insert(reponseTirage);
+			ReponseTirage reponseEnBase = rtm.selectByAll(epreuve.getIdEpreuve(), questionRepondue.getId());
+			
+			// On insert la réponse en base si existe pas
+			if (reponseEnBase == null) {
+				ReponseTirage reponseTirage = new ReponseTirage();
+				reponseTirage.setEpreuve(epreuve);
+				reponseTirage.setProposition(proposition);
+				reponseTirage.setQuestion(questionRepondue);
+				rtm.insert(reponseTirage);
+			}
+			else { // Si réponse déjà en base
+				// Si réponse différente de celle en base
+				if (reponseEnBase.getProposition().getId() != proposition.getId()) {
+					reponseEnBase.setProposition(proposition);
+					rtm.update(reponseEnBase);
+				}
+			}
 			
 			/* GESTION DES DONNEES A ENVOYER A L'IHM */
 			
@@ -89,12 +100,19 @@ public class QuestionController extends HttpServlet{
 			// Recherche des propositions de la prochaine question
 			ArrayList<Proposition> propositions = pm.selectByIdQuestion(questionSuivante.getId());
 			
+			// Cochage de la prochaine question
+			propSelected = searchPropSelected(epreuve, questionSuivante);
+			
+			// Libellé du test à afficher
+			String libelle = epreuve.getTest().getLibelle();
+			
 			// Attributs à envoyer
 			req.setAttribute("propositions", propositions);
 			req.setAttribute("listeQuestions", questions);
 			req.setAttribute("questionEnCours", questionSuivante);
 			req.setAttribute("idTest", idTest);
 			req.setAttribute("propSelected", propSelected);
+			req.setAttribute("libelle", libelle);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		}
@@ -123,7 +141,6 @@ public class QuestionController extends HttpServlet{
 			SectionTestManager stm = ManagerFactory.sectionTestManager();
 			QuestionManager qm = ManagerFactory.questionManager();
 			PropositionManager pm = ManagerFactory.propositionManager();
-			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
 			
 			Epreuve epreuve = null;
 			Question questionEnCours = null;
@@ -181,9 +198,16 @@ public class QuestionController extends HttpServlet{
 				}
 			}
 			
-			// TODO : Rechercher si réponseTirage existant avec même epreuve et question, et cocher en fonction la réponse en base
-			// TODO : Faire l'update ou supprimer / recréer si on change de réponse
+			// Check si question marquée
+			QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionEnCours);
+			boolean isMarquee = questionTirage.isEstMarquee();
+			
+			// Recherche proposition sélectionnée
+			propSelected = searchPropSelected(epreuve, questionEnCours);
 
+			// Libellé du test à afficher
+			String libelle = epreuve.getTest().getLibelle();
+			
 			// Recherche des propositions
 			ArrayList<Proposition> propositions = pm.selectByIdQuestion(questionEnCours.getId());
 			req.setAttribute("propositions", propositions);
@@ -193,10 +217,28 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("questionEnCours", questionEnCours);
 			req.setAttribute("idTest", idTest);
 			req.setAttribute("propSelected", propSelected);
+			req.setAttribute("libelle", libelle);
+			req.setAttribute("isMarquee", isMarquee);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
 			resp.sendError(500);
 		}
+	}
+
+	// Chercher la reponseTirage de la question en cours
+	private int searchPropSelected(Epreuve epreuve, Question questionEnCours) throws ManagerException {
+		ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
+
+		int propSelected = 0;
+		ReponseTirage reponseTirage;
+		reponseTirage = rtm.selectByAll(epreuve.getIdEpreuve(), questionEnCours.getId());
+		
+		// Permet la sélection de la réponse entrée
+		if (reponseTirage != null) {
+			propSelected = reponseTirage.getProposition().getId();
+		}
+		
+		return propSelected;
 	}
 }

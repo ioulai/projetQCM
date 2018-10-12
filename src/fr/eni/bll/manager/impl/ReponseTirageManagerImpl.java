@@ -1,8 +1,6 @@
 package fr.eni.bll.manager.impl;
 
 import fr.eni.bll.manager.ReponseTirageManager;
-import fr.eni.bo.Proposition;
-import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.dal.dao.ReponseTirageDAO;
 import fr.eni.dal.factory.DAOFactory;
@@ -33,18 +31,26 @@ public class ReponseTirageManagerImpl implements ReponseTirageManager {
 	}
 
 	@Override
-	public ReponseTirage selectByAll(QuestionTirage questionTirage, Proposition proposition) throws ManagerException {
-		ValidationUtil.checkNotNull(questionTirage);
-		ValidationUtil.checkNotNull(proposition);
-		
+	public ReponseTirage selectByAll(int idEpreuve, int idQuestion) throws ManagerException {
 		ReponseTirage reponseTirage;
 		
 		try {
-			reponseTirage = reponseTirageDAO.selectByAll(questionTirage, proposition);
+			reponseTirage = reponseTirageDAO.selectByAll(idEpreuve, idQuestion);
 		} catch (DaoException e) {
 			throw new ManagerException("Erreur DAO", e);
 		}
 		
 		return reponseTirage;
+	}
+
+	@Override
+	public void update(ReponseTirage reponseTirage) throws ManagerException {
+		ValidationUtil.checkNotNull(reponseTirage);
+		
+		try {
+			reponseTirageDAO.update(reponseTirage);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
 	}
 }

@@ -13,8 +13,21 @@
 	<body>
 		<jsp:include page="/WEB-INF/jsp/navbar.jsp"></jsp:include>
 		
-		<div id="content" style="text-align: center;">	
-			<h1>Listes des questions</h1><br><br>
+		<div id="content" style="margin-left:30%;">	
+			<h1>${libelle}</h1><br><br>
+			
+			<form method="POST" action="Marquage">
+				<input type="hidden" value="${idTest}" name="idTest">
+				<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
+				<c:if test="${isMarquee == false}">
+					<input type="submit" id="marquage" value="Marquer">
+				</c:if>
+				<c:if test="${isMarquee == true}">
+					<input type="submit" id="marquage" value="Démarquer">
+				</c:if>
+			</form>
+			
+			<br>
 			
 			<c:set var="count" value="0" scope="page" />
 
@@ -43,6 +56,11 @@
 				<br><br>
 				<input type="hidden" value="${idTest}" name="idTest">
 				<input type="submit" value="Valider">
+			</form>
+			<br>
+			<form method="POST" action="FinEpreuve">	
+				<input type="hidden" value="${idTest}" name="idTest">
+				<input type="submit" value="Terminer l'épreuve">
 			</form>
 		</div>
 		

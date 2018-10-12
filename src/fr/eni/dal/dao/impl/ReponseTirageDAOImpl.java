@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import fr.eni.bo.Proposition;
-import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.dal.dao.ReponseTirageDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
@@ -18,7 +16,8 @@ public class ReponseTirageDAOImpl implements ReponseTirageDAO{
 private static ReponseTirageDAOImpl singleton;
 	
 	private static final String INSERT_QUERY = "INSERT INTO reponseTirage VALUES (?, ?, ?)";
-	private static final String SELECT_BY_ALL_QUERY = "SELECT * FROM reponseTirage WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_idProposition = ? AND proposition_question_idQuestion = ?";
+	private static final String SELECT_BY_ALL_QUERY = "SELECT * FROM reponseTirage rt INNER JOIN proposition p ON p.idProposition = rt.proposition_idProposition INNER JOIN question q ON q.idQuestion = rt.proposition_question_idQuestion INNER JOIN epreuve e ON e.idEpreuve = rt.questionTirage_epreuve_idEpreuve WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_question_idQuestion = ?";
+	private static final String UPDATE_QUERY = "UPDATE reponseTirage SET proposition_idProposition = ? WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_question_idQuestion = ?";
 	
 	public static ReponseTirageDAO getInstance() {
 		if (singleton == null)
@@ -50,7 +49,7 @@ private static ReponseTirageDAOImpl singleton;
 	}
 
 	@Override
-	public ReponseTirage selectByAll(QuestionTirage questionTirage, Proposition proposition) throws DaoException {
+	public ReponseTirage selectByAll(int idEpreuve, int idQuestion) throws DaoException {
 		ReponseTirage reponseTirage = null;
 		Connection connexion = null;
 		PreparedStatement statement = null;
@@ -60,17 +59,16 @@ private static ReponseTirageDAOImpl singleton;
 			connexion = MSSQLConnectionFactory.get();
 			
 			statement = connexion.prepareStatement(SELECT_BY_ALL_QUERY);
-			statement.setInt(1, questionTirage.getEpreuve().getIdEpreuve());
-			statement.setInt(2, proposition.getId());
-			statement.setInt(3, questionTirage.getQuestion().getId());
+			statement.setInt(1, idEpreuve);
+			statement.setInt(2, idQuestion);
 			
 			resultSet = statement.executeQuery();
 			
 			if(resultSet.next()) {
 				reponseTirage = new ReponseTirage();
-				reponseTirage.setEpreuve(questionTirage.getEpreuve());
-				reponseTirage.setQuestion(questionTirage.getQuestion());
-				reponseTirage.setProposition(proposition);
+				reponseTirage.setEpreuve(EpreuveDAOImpl.map(resultSet));
+				reponseTirage.setQuestion(QuestionDAOImpl.map(resultSet));
+				reponseTirage.setProposition(PropositionDAOImpl.map(resultSet));
 			}
 
 		} catch (Exception e) {
@@ -81,5 +79,28 @@ private static ReponseTirageDAOImpl singleton;
 		}
 		
 		return reponseTirage;
+	}
+
+	@Override
+	public void update(ReponseTirage reponseTirage) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(UPDATE_QUERY);
+			statement.setInt(1, reponseTirage.getProposition().getId());
+			statement.setInt(2, reponseTirage.getEpreuve().getIdEpreuve());
+			statement.setInt(3, reponseTirage.getQuestion().getId());
+			
+			statement.execute();
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
 	}
 }
