@@ -13,8 +13,9 @@
 	<body>
 		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 		<br>
-		<center><h1>Liste des epreuves</h1></center>
-		
+		<div style="text-align:center;">
+			<h1>Liste des epreuves</h1>
+		</div>
 		<div id="content" style="text-align: center;">	
 
 			<c:forEach items="${epreuve}" var="epreuve">

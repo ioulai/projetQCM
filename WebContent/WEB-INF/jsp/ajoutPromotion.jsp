@@ -12,8 +12,9 @@
 	<body>
 		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 		<br>
-		<center><h1>Ajout de promotion</h1></center>
-		
+		<div style="text-align:center;">
+			<h1>Ajout de promotion</h1>
+		</div>
 		<div id="content" style="text-align: center;">	
 
 				<form name="form" method="Post" action="AjoutPromo">

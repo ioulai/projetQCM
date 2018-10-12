@@ -15,4 +15,6 @@ public interface EpreuveDAO {
 	Epreuve selectByIdTest(int id) throws DaoException;
 	
 	Epreuve insert(int idCandidat, int idTest,Date debutValidite,Date finValidite) throws DaoException;
+	
+	List<Epreuve> selectByIdCandidatTest(int idCandidat, int idTest) throws DaoException;
 }
