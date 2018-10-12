@@ -14,11 +14,13 @@ import fr.eni.bll.manager.QuestionManager;
 import fr.eni.bll.manager.QuestionTirageManager;
 import fr.eni.bll.manager.ReponseTirageManager;
 import fr.eni.bll.manager.SectionTestManager;
+import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.ThemeManager;
 import fr.eni.bll.manager.impl.QuestionManagerImpl;
 import fr.eni.bll.manager.impl.QuestionTirageManagerImpl;
 import fr.eni.bll.manager.impl.ReponseTirageManagerImpl;
 import fr.eni.bll.manager.impl.SectionTestManagerImpl;
+import fr.eni.bll.manager.impl.TestManagerImpl;
 import fr.eni.bll.manager.impl.ThemeManagerImpl;
 
 public class ManagerFactory {
@@ -60,5 +62,9 @@ public class ManagerFactory {
 	
 	public static ProfilManager ProfilManager(){
 		return ProfilManagerImpl.getInstance();
+	}
+	
+	public static TestManager TestManager(){
+		return TestManagerImpl.getInstance();
 	}
 }

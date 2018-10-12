@@ -1,5 +1,8 @@
 package fr.eni.bll.manager.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.eni.bll.manager.CandidatManager;
 import fr.eni.bo.Candidat;
 import fr.eni.bo.Promotion;
@@ -79,6 +82,19 @@ public class CandidatManagerImpl implements CandidatManager {
 			throw new ManagerException("Erreur DAO", e);
 		}
 		return candidat;
+	}
+
+	@Override
+	public List<Candidat> selectAllCandidat() throws ManagerException {
+		List<Candidat> liste = new ArrayList<Candidat>();
+		
+		try {
+			liste = candidatDAO.selectAllCandidat();
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	
+		return liste;
 	}
 
 }

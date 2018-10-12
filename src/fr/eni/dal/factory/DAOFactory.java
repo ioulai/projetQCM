@@ -11,6 +11,7 @@ import fr.eni.dal.dao.impl.ReponseTirageDAOImpl;
 import fr.eni.dal.dao.ReponseTirageDAO;
 import fr.eni.dal.dao.impl.ThemeDAOImpl;
 import fr.eni.dal.dao.impl.SectionTestDAOImpl;
+import fr.eni.dal.dao.impl.TestDAOImpl;
 import fr.eni.dal.dao.CandidatDAO;
 import fr.eni.dal.dao.EpreuveDAO;
 import fr.eni.dal.dao.ProfilDAO;
@@ -20,6 +21,7 @@ import fr.eni.dal.dao.QuestionDAO;
 import fr.eni.dal.dao.QuestionTirageDAO;
 import fr.eni.dal.dao.ThemeDAO;
 import fr.eni.dal.dao.SectionTestDAO;
+import fr.eni.dal.dao.TestDAO;
 
 public class DAOFactory {
 	
@@ -62,4 +64,8 @@ public class DAOFactory {
 	public static ReponseTirageDAO ReponseTirageDAO() {
 		return ReponseTirageDAOImpl.getInstance();
 	}
+	public static TestDAO TestDAO(){
+		return TestDAOImpl.getInstance();
+	}
+
 }
