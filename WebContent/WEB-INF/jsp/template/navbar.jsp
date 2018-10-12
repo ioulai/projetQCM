@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%
-	if (session.getAttribute("candidatConnecter") == null) {
+	if (session.getAttribute("utilisateurConnecte") == null) {
 		response.sendRedirect("authentification");
 	}
 %>
@@ -29,8 +29,8 @@
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
 					class="far fa-user"></i></a>
 				<div class="dropdown-menu" aria-labelledby="dropdown01">
-					<i class="dropdown-item">${candidatConnecter.nom}
-						${candidatConnecter.prenom}</i> 
+					<i class="dropdown-item">${utilisateurConnecte.nom}
+						${utilisateurConnecte.prenom}</i> 
 						<form action="deconnecter" method="post">
 						<button class="btn btn-danger" type="submit">Deconnecter</button>
 					</button>

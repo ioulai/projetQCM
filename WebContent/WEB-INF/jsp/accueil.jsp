@@ -15,9 +15,10 @@
 			<div class="card col-lg-6" style="width: 18rem;">
 				<div class="card-body">
 					<h5 class="card-title">Profil</h5>
-					<i>${candidatConnecter.nom}	${candidatConnecter.prenom}</i> 
-					<p class="card-text"> Afficher le.s épreuve.s ci-dessous </p>
-					<a href="Epreuve" class="btn btn-primary">Afficher</a>
+<%-- 					${utilisateurConnecte} --%>
+					<i>${utilisateurConnecte.nom}	${utilisateurConnecte.prenom}</i> 
+					<p class="card-text"> Afficher le.s épreuve·s ci-dessous </p>
+					<a href="ListeEpreuve" class="btn btn-primary">Afficher</a>
 				</div>
 			</div>
 		</div>

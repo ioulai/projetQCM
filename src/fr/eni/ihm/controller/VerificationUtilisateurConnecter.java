@@ -32,9 +32,10 @@ public class VerificationUtilisateurConnecter implements Filter {
 		String uri = req.getRequestURI();
 		this.context.log("chemin demandé::" + uri);
 		HttpSession session = req.getSession(false);
-		if (session == null && !(uri.endsWith("jsp") || uri.endsWith("AuthentificationPostController"))) {
-			this.context.log("acces non autoriser");
+//		System.out.println("candidatConnecter" + session.getAttribute("candidatConnecter"));
+		if (session == null) {			
 			req.getRequestDispatcher("authentification").forward(req, res);
+			this.context.log("acces non autoriser");
 		}else{
 			chain.doFilter(request, response);
 		}
