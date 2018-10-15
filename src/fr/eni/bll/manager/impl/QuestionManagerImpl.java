@@ -48,4 +48,19 @@ public class QuestionManagerImpl implements QuestionManager {
 		
 		return questions;
 	}
+
+	@Override
+	public ArrayList<Question> selectByIdTest(int id) throws ManagerException {
+		ArrayList<Question> questions = new ArrayList<Question>();
+		
+		ValidationUtil.checkNotNull(questions);
+		
+		try {
+			questions = questionDAO.selectByIdTest(id);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return questions;
+	}
 }

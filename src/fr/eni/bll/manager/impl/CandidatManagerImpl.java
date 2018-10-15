@@ -96,4 +96,26 @@ public class CandidatManagerImpl implements CandidatManager {
 		return liste;
 	}
 
+	@Override
+	public List<Candidat> selectAllCollaborateur() throws ManagerException {
+		List<Candidat> liste = new ArrayList<Candidat>();
+		
+		try {
+			liste = candidatDAO.selectAllCollaborateur();
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	
+		return liste;
+	}
+
+	@Override
+	public void deleteCollaborateur(int id) throws ManagerException {
+		try {
+			candidatDAO.deleteCollaborateur(id);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	}
+
 }

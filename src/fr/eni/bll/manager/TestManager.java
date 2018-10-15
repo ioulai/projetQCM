@@ -9,4 +9,6 @@ public interface TestManager {
 	Test selectById(int id) throws ManagerException;
 	
 	List<Test> selectAll() throws ManagerException;
+	
+	void deleteById(int id) throws ManagerException;
 }

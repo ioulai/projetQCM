@@ -17,6 +17,7 @@ private static QuestionDAOImpl singleton;
 	
 	private static final String SELECT_BY_ID_QUERY = "SELECT * FROM question q INNER JOIN theme t ON q.theme_idTheme = t.idTheme WHERE idQuestion = ?";
 	private static final String SELECT_BY_THEME_QUERY = "SELECT * FROM question q INNER JOIN theme t ON q.theme_idTheme = t.idTheme WHERE idTheme = ?";
+	private static final String SELECT_BY_TEST_QUERY = "SELECT * FROM question q INNER JOIN theme t ON q.theme_idTheme = t.idTheme INNER JOIN sectionTest se ON t.idTheme = se.theme_idTheme INNER JOIN test ON test_idTest = idTest WHERE idTest = ?";
 	
 	public static QuestionDAO getInstance() {
 		if (singleton == null)
@@ -95,5 +96,38 @@ private static QuestionDAOImpl singleton;
 		question.setPoints(rst.getFloat("points"));
 		
 		return question;
+	}
+
+	@Override
+	public ArrayList<Question> selectByIdTest(int id) throws DaoException {
+		ArrayList<Question> questions = new ArrayList<Question>();
+		Question question = null;
+		
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_BY_TEST_QUERY);
+			statement.setInt(1, id);
+			
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				question = map(resultSet);
+				question.setTheme(ThemeDAOImpl.map(resultSet));
+				questions.add(question);
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return questions;
 	}
 }

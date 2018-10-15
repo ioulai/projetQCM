@@ -21,7 +21,6 @@ import fr.eni.bo.Epreuve;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 
 public class DesinscriptionCandidatController extends HttpServlet{
-	private  TestManager testManager = ManagerFactory.TestManager();
 	private CandidatManager candidatManager = ManagerFactory.candidatManager();
 	private EpreuveManager epreuveManager = ManagerFactory.epreuveManager();
 	
@@ -46,24 +45,26 @@ public class DesinscriptionCandidatController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Epreuve> epr = new ArrayList<>();
 		List<Candidat> candidats = new ArrayList<>();
+		
 		try {
 			candidats = candidatManager.selectAllCandidat();
 			req.setAttribute("candidat", candidats);
 			
 			if(req.getParameter("testbox") == null)
 			{
-				int idCandidat = Integer.parseInt(req.getParameter("candidatbox"));
 				epr = new ArrayList<>();
 				//selection des tests en fonctions de l' utilisateurs
+				int idCandidat = Integer.parseInt(req.getParameter("candidatbox"));
+				req.setAttribute("selectionid", idCandidat);
 				epr = epreuveManager.selectByUserId(idCandidat);
 				req.setAttribute("epreuve", epr);
-				req.setAttribute("selectionid", idCandidat);
 				req.getRequestDispatcher("DesinscriptionCandidat").forward(req, resp);
 			}else{
-				//suppresion de l'inscription
+				//suppression de l'inscription
 				int idTest = Integer.parseInt(req.getParameter("testbox"));
-				//testManager.s
+				epreuveManager.deleteById(idTest);
 				
+				req.getRequestDispatcher("DesinscriptionCandidat").forward(req, resp);
 			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block

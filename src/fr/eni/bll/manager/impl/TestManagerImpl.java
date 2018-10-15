@@ -49,4 +49,14 @@ public class TestManagerImpl implements TestManager {
 		return tests;
 	}
 
+	@Override
+	public void deleteById(int id) throws ManagerException {
+		try {
+			testDAO.deleteById(id);;
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+	}
+
 }

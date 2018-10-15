@@ -21,4 +21,6 @@ public interface EpreuveManager {
 	List<Epreuve> selectByUserId(int id) throws ManagerException;
 
 	void update(Epreuve epreuve) throws ManagerException;
+	
+	void deleteById(int id) throws ManagerException;
 }

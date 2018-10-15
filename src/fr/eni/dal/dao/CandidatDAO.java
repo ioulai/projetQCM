@@ -10,7 +10,10 @@ public interface CandidatDAO {
 	Candidat selectByEmailPassword(String email, String password) throws DaoException;
 	Candidat selectByEmail(String email) throws DaoException;
 	List<Candidat> selectAllCandidat() throws DaoException;
+	List<Candidat> selectAllCollaborateur() throws DaoException;
 	void insertCandidat(Candidat candidat,int codePromo) throws DaoException;
 	void insertCollaborateur(Candidat candidat) throws DaoException;
 	Candidat insertUtilisateur(Candidat candidat) throws DaoException;
+	void deleteCollaborateur(int id) throws DaoException;
+	void deleteUtilisateur(int id) throws DaoException;
 }

@@ -210,7 +210,45 @@
 		<servlet-name>AjoutUtilisateur</servlet-name>
 		<url-pattern>/AjoutUtilisateur</url-pattern>
 	</servlet-mapping>
-
+	
+	<servlet>
+		<servlet-name>ListeTest</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.AfficheListeTestController
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListeTest</servlet-name>
+		<url-pattern>/ListeTest</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AfficheListe</servlet-name>
+		<jsp-file>/WEB-INF/jsp/listeTest.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AfficheListe</servlet-name>
+		<url-pattern>/AfficheListe</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AjoutTest</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.AjoutQuestionController
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjoutTest</servlet-name>
+		<url-pattern>/AjoutTest</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AjouterTest</servlet-name>
+		<jsp-file>/WEB-INF/jsp/listeTest.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjouterTest</servlet-name>
+		<url-pattern>/AjouterTest</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>AjoutPromo</servlet-name>
 		<servlet-class>fr.eni.ihm.controller.AjoutPromotionController
@@ -219,6 +257,25 @@
 	<servlet-mapping>
 		<servlet-name>AjoutPromo</servlet-name>
 		<url-pattern>/AjoutPromo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SupprimerUtilisateur</servlet-name>
+		<jsp-file>/WEB-INF/jsp/suppressionUtilisateur.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SupprimerUtilisateur</servlet-name>
+		<url-pattern>/SupprimerUtilisateur</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SupprUtilisateur</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.SupprUtilisateurController
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SupprUtilisateur</servlet-name>
+		<url-pattern>/SupprUtilisateur</url-pattern>
 	</servlet-mapping>
 	<!-- gestion erreur -->
 	<error-page>

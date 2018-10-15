@@ -28,13 +28,16 @@ public class AjoutUtilisateurController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			List<Profil> profils = null;
 			List<Promotion> promotions = null;
+			List<Candidat> candidats = null;
 			try {
+				candidats = candidatManager.selectAllCandidat();
 				promotions = promotionManager.selectAll();
 				profils = profilManager.selectAll();
 			} catch (ManagerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			req.setAttribute("candidat", candidats);
 			req.setAttribute("promotion",promotions);
 			req.setAttribute("profil",profils);
 			req.getRequestDispatcher("AjoutCandidat").forward(req, resp);
@@ -48,9 +51,11 @@ public class AjoutUtilisateurController extends HttpServlet{
 			Candidat candidat = null;
 			List<Profil> profils = null;
 			List<Promotion> promotions = null;
+			List<Candidat> candidats = null;
 			try {
 				promotions = promotionManager.selectAll();
 				profils = profilManager.selectAll();
+				
 				req.setAttribute("profil",profils);
 				req.setAttribute("promotion",promotions);
 				
@@ -75,6 +80,8 @@ public class AjoutUtilisateurController extends HttpServlet{
 					}else{
 						candidatManager.insertCollaborateur(candidat);
 					}
+					candidats = candidatManager.selectAllCandidat();
+					req.setAttribute("candidat", candidats);
 					
 					req.getRequestDispatcher("AjoutCandidat").forward(req, resp);
 				}else{

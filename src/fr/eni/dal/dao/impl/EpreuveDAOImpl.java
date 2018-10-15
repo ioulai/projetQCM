@@ -24,6 +24,7 @@ private static EpreuveDAOImpl singleton;
 	private static final String SELECT_BY_ID_UTILISATEUR_TEST = "SELECT * FROM epreuve WHERE utilisateur_idUtilisateur = ? AND test_idTest = ?";
 	private static final String SELECT_BY_ID_UTILISATEUR = "SELECT * FROM epreuve INNER JOIN Test ON test_idTest = idTest WHERE utilisateur_idUtilisateur = ? AND etat = 'EA'";
 	private static final String UPDATE_QUERY = "UPDATE epreuve SET noteObtenue = ?, niveauObtenu = ? WHERE idEpreuve = ?";
+	private static final String DELETE_QUERY_BY_ID = "DELETE FROM epreuve WHERE test_idTest = ?";
 	
 	public static EpreuveDAO getInstance() {
 		if (singleton == null)
@@ -272,5 +273,25 @@ private static EpreuveDAOImpl singleton;
 		}
 		
 		return epreuves;
+	}
+
+	@Override
+	public void deleteById(int id) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+	
+			statement = connexion.prepareStatement(DELETE_QUERY_BY_ID);
+			statement.setInt(1, id);
+			
+			statement.execute();
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(statement, connexion);
+		}
 	}
 }

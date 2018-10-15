@@ -9,4 +9,6 @@ public interface TestDAO {
 	Test selectById(int id) throws DaoException;
 	
 	List<Test> selectAll() throws DaoException;
+	
+	void deleteById(int id) throws DaoException;
 }
