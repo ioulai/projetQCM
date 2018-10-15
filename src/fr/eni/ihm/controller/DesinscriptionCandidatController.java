@@ -52,13 +52,17 @@ public class DesinscriptionCandidatController extends HttpServlet{
 			
 			if(req.getParameter("testbox") == null)
 			{
+				int idCandidat = Integer.parseInt(req.getParameter("candidatbox"));
 				epr = new ArrayList<>();
 				//selection des tests en fonctions de l' utilisateurs
-				epr = epreuveManager.selectByUserId(Integer.parseInt(req.getParameter("candidatbox")));
+				epr = epreuveManager.selectByUserId(idCandidat);
 				req.setAttribute("epreuve", epr);
+				req.setAttribute("selectionid", idCandidat);
 				req.getRequestDispatcher("DesinscriptionCandidat").forward(req, resp);
 			}else{
 				//suppresion de l'inscription
+				int idTest = Integer.parseInt(req.getParameter("testbox"));
+				//testManager.s
 				
 			}
 		} catch (NumberFormatException e) {
