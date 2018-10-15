@@ -32,7 +32,6 @@ public class AuthentificationPostController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Candidat candidat = null;
 		String messageErreur = "";
-		Cookie[] cookies = req.getCookies();
 		Cookie cookieUtilisateurCourant = null;
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
