@@ -21,4 +21,6 @@ public interface EpreuveDAO {
 	List<Epreuve> selectByUserId(int id) throws DaoException;
 
 	void update(Epreuve epreuve) throws DaoException;
+	
+	void deleteById(int id) throws DaoException;
 }

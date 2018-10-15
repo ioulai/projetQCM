@@ -113,4 +113,13 @@ public class EpreuveManagerImpl implements EpreuveManager{
 			throw new ManagerException("Erreur DAO", e);
 		}
 	}
+
+	@Override
+	public void deleteById(int id) throws ManagerException {
+		try {
+			epreuveDAO.deleteById(id);;
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	}
 }

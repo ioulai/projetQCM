@@ -19,6 +19,7 @@ private static TestDAOImpl singleton;
 
 	private static final String SELECT_BY_ID = "SELECT * FROM test WHERE idTest = ?";
 	private static final String SELECT_ALL = "SELECT * FROM test";
+	private static final String DELETE_QUERY_BY_ID = "DELETE FROM test WHERE idTest = ?";
 	
 	public static TestDAO getInstance() {
 		if (singleton == null)
@@ -99,6 +100,27 @@ private static TestDAOImpl singleton;
 		}
 		
 		return tests;
+	}
+
+	@Override
+	public void deleteById(int id) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+	
+			statement = connexion.prepareStatement(DELETE_QUERY_BY_ID);
+			statement.setInt(1, id);
+			
+			statement.execute();
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(statement, connexion);
+		}
+		
 	}
 	
 }

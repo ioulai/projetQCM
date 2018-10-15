@@ -9,4 +9,6 @@ public interface QuestionManager {
 	Question selectById(int id) throws ManagerException;
 	
 	ArrayList<Question> selectByTheme(int id) throws ManagerException;
+	
+	ArrayList<Question> selectByIdTest(int id)throws ManagerException;
 }

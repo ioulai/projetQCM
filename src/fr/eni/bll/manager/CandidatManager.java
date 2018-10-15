@@ -13,4 +13,6 @@ public interface CandidatManager {
 	void insertCollaborateur(Candidat candidat) throws ManagerException;
 	Candidat insertUtilisateur(Candidat candidat) throws ManagerException;
 	List<Candidat> selectAllCandidat() throws ManagerException;
+	List<Candidat> selectAllCollaborateur() throws ManagerException;
+	void deleteCollaborateur(int id) throws ManagerException;
 }

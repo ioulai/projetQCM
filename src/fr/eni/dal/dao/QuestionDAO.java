@@ -9,4 +9,6 @@ public interface QuestionDAO {
 	Question selectById(int id) throws DaoException;
 
 	ArrayList<Question> selectByTheme(int id) throws DaoException;
+	
+	ArrayList<Question> selectByIdTest(int id)throws DaoException;
 }

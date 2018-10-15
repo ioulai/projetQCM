@@ -25,6 +25,10 @@ private static CandidatDAOImpl singleton;
 	private static final String INSERT_CANDIDAT = "INSERT INTO candidat(idUtilisateur,codePromo) VALUES (?,?)";
 	private static final String INSERT_COLLABO = "INSERT INTO collaborateur VALUES (?)";
 	private static final String SELECT_ALL_CANDIDAT = "SELECT * FROM utilisateur as util INNER JOIN Candidat as ca ON util.idUtilisateur = ca.idUtilisateur";
+	private static final String SELECT_ALL_COLLABORATEUR = "SELECT * FROM utilisateur as util INNER JOIN collaborateur as co ON util.idUtilisateur = co.idUtilisateur";
+	private static final String DELETE_COLLABORATEUR_BY_ID = "DELETE FROM collaborateur WHERE idUtilisateur = ?";
+	private static final String DELETE_UTILISATEUR_BY_ID = "DELETE FROM utilisateur WHERE idUtilisateur = ?";
+	
 	
 	public static CandidatDAO getInstance() {
 		if (singleton == null)
@@ -250,5 +254,82 @@ private static CandidatDAOImpl singleton;
 		return candidats;
 	}
 
+	@Override
+	public List<Candidat> selectAllCollaborateur() throws DaoException {
+		Candidat candidat = null;
+		List<Candidat> candidats = new ArrayList<Candidat>();
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_ALL_COLLABORATEUR);
+			
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				candidat = new Candidat();
+				candidat = map(resultSet);
+				
+				candidats.add(candidat);
+			}
 
-}
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return candidats;
+	}
+
+	@Override
+	public void deleteCollaborateur(int id) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+	
+			statement = connexion.prepareStatement(DELETE_COLLABORATEUR_BY_ID);
+			statement.setInt(1, id);
+			
+			statement.execute();
+			
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(statement, connexion);
+		}
+		this.deleteUtilisateur(id);
+	}
+
+	@Override
+	public void deleteUtilisateur(int id) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+	
+			statement = connexion.prepareStatement(DELETE_UTILISATEUR_BY_ID);
+			statement.setInt(1, id);
+			
+			statement.execute();
+			
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(statement, connexion);
+		}
+		
+	}
+		
+	}
+
