@@ -11,12 +11,13 @@
 		<script type="text/javascript"></script>
 		<jsp:include page="/WEB-INF/jsp/template/header.jsp"></jsp:include>
 	</head>
-	<body>
+	<body onload="IndiquerMinutes(${duree}); DemarrerChrono();">	
 		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 		
 		<div id="content" style="margin-left:30%;">	
 			<h1>${libelle}</h1><br><br>
-			
+
+			<p id="chrono"></p>
 			<form method="POST" action="Marquage">
 				<input type="hidden" value="${idTest}" name="idTest">
 				<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">

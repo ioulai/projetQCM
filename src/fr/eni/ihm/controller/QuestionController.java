@@ -14,6 +14,7 @@ import fr.eni.bll.manager.QuestionManager;
 import fr.eni.bll.manager.QuestionTirageManager;
 import fr.eni.bll.manager.ReponseTirageManager;
 import fr.eni.bll.manager.SectionTestManager;
+import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Epreuve;
 import fr.eni.bo.Proposition;
@@ -21,6 +22,7 @@ import fr.eni.bo.Question;
 import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.bo.SectionTest;
+import fr.eni.bo.Test;
 import fr.eni.robot.Robot;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 
@@ -138,6 +140,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("propSelected", propSelected);
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
+			//req.setAttribute("duree", arg1);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		}
@@ -168,6 +171,7 @@ public class QuestionController extends HttpServlet{
 			SectionTestManager stm = ManagerFactory.sectionTestManager();
 			QuestionManager qm = ManagerFactory.questionManager();
 			PropositionManager pm = ManagerFactory.propositionManager();
+			TestManager tm = ManagerFactory.TestManager();
 			
 			Epreuve epreuve = null;
 			Question questionEnCours = null;
@@ -260,6 +264,8 @@ public class QuestionController extends HttpServlet{
 			if (count > 1) {
 				isMulti = true;
 			}
+			//Récupération de la durée du test
+			Test test = tm.selectById(idTest);
 			
 			req.setAttribute("propositions", propositions);
 			
@@ -271,6 +277,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
 			req.setAttribute("isMulti", isMulti);
+			req.setAttribute("duree", test.getDuree().getMinutes());
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
