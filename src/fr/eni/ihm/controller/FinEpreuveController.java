@@ -85,6 +85,8 @@ public class FinEpreuveController extends HttpServlet{
 				niveau = "Acquis";
 			}
 			
+			epreuve.setEtat("T");
+			
 			// Modif des resultats
 			em.update(epreuve);
 			
