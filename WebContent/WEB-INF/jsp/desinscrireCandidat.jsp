@@ -20,7 +20,12 @@
 				<form name="form" method="Post" action="Desinscription">
 						Candidat <select name="candidatbox" id="candidatbox" onchange="this.form.submit()">	
 						<c:forEach var="candidat"  items="${candidat}">
+								<c:if test="${candidat.id == selectionid}">
+					            <option  value="${candidat.id}" selected="selected">${candidat.nom} ${candidat.prenom}</option>
+					            </c:if>
+					            <c:if  test="${candidat.id != selectionid}">
 					            <option  value="${candidat.id}">${candidat.nom} ${candidat.prenom}</option>
+					            </c:if>
 					    </c:forEach>
 					    </select><br><br>
 				    </form>
