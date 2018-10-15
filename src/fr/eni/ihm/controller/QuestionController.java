@@ -142,7 +142,7 @@ public class QuestionController extends HttpServlet{
 			req.getRequestDispatcher("question").forward(req, resp);
 		}
 		catch (Exception e) {
-			resp.sendError(500);
+			e.printStackTrace();
 		}
 	}
 
@@ -180,7 +180,7 @@ public class QuestionController extends HttpServlet{
 			epreuve = em.selectByIdTest(idTest);
 			
 			// Test si reprise en cours de route
-			if (epreuve.getEtat().equals("EC")) {
+			if (epreuve.getEtat().equals("EC") && strIdQuestion != null) {
 				ArrayList<QuestionTirage> lstQuestionTirage = null;
 				
 				questionEnCours = qm.selectById(idQuestion);
@@ -198,6 +198,10 @@ public class QuestionController extends HttpServlet{
 				ArrayList<SectionTest> sectionTests = stm.selectByIdTest(idTest);
 				
 				QuestionTirage questionTirage;
+				
+				// Mise à "en cours" de l'épreuve
+				epreuve.setEtat("EC");
+				em.update(epreuve);
 				
 				// Pour chaque sections dans le test
 				for (SectionTest st : sectionTests) {
@@ -274,7 +278,8 @@ public class QuestionController extends HttpServlet{
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
-			resp.sendError(500);
+			e.printStackTrace();
+			//resp.sendError(500);
 		}
 	}
 
