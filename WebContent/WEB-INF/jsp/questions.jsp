@@ -7,6 +7,8 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Questions</title>
+		 <script src="<%=request.getContextPath()%>/js/chrono.js"></script>
+		<script type="text/javascript"></script>
 		<jsp:include page="/WEB-INF/jsp/template/header.jsp"></jsp:include>
 	</head>
 	<body>

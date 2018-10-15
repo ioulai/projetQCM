@@ -1,10 +1,7 @@
 package fr.eni.ihm.controller;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.bll.manager.CandidatManager;
 import fr.eni.bll.manager.EpreuveManager;
-import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Candidat;
 import fr.eni.bo.Epreuve;
