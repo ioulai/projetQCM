@@ -1,5 +1,7 @@
 package fr.eni.bll.manager.impl;
 
+import java.util.ArrayList;
+
 import fr.eni.bll.manager.ReponseTirageManager;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.dal.dao.ReponseTirageDAO;
@@ -31,16 +33,16 @@ public class ReponseTirageManagerImpl implements ReponseTirageManager {
 	}
 
 	@Override
-	public ReponseTirage selectByAll(int idEpreuve, int idQuestion) throws ManagerException {
-		ReponseTirage reponseTirage;
+	public ArrayList<ReponseTirage> selectByAll(int idEpreuve, int idQuestion) throws ManagerException {
+		ArrayList<ReponseTirage> reponseTirages;
 		
 		try {
-			reponseTirage = reponseTirageDAO.selectByAll(idEpreuve, idQuestion);
+			reponseTirages = reponseTirageDAO.selectByAll(idEpreuve, idQuestion);
 		} catch (DaoException e) {
 			throw new ManagerException("Erreur DAO", e);
 		}
 		
-		return reponseTirage;
+		return reponseTirages;
 	}
 
 	@Override
@@ -58,6 +60,15 @@ public class ReponseTirageManagerImpl implements ReponseTirageManager {
 	public void deleteAll() throws ManagerException {
 		try {
 			reponseTirageDAO.deleteAll();
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	}
+
+	@Override
+	public void deleteByIds(int idEpreuve, int idQuestion) throws ManagerException {
+		try {
+			reponseTirageDAO.deleteByIds(idEpreuve, idQuestion);
 		} catch (DaoException e) {
 			throw new ManagerException("Erreur DAO", e);
 		}

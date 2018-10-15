@@ -29,7 +29,7 @@ public class MarquageController extends HttpServlet{
 		try {
 			int idQuestion = Integer.parseInt(req.getParameter("idQuestionCourante"));
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
-			int propSelected = 0;
+			ArrayList<Integer> propSelected = new ArrayList<Integer>();
 			
 			Question question;
 			Epreuve epreuve = null;
@@ -88,18 +88,16 @@ public class MarquageController extends HttpServlet{
 	}
 	
 	// Chercher la reponseTirage de la question en cours
-	private int searchPropSelected(Epreuve epreuve, Question questionEnCours) throws ManagerException {
+	private ArrayList<Integer> searchPropSelected(Epreuve epreuve, Question questionEnCours) throws ManagerException {
 		ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
+		ArrayList<Integer> liste = new ArrayList<Integer>();
 
-		int propSelected = 0;
-		ReponseTirage reponseTirage;
-		reponseTirage = rtm.selectByAll(epreuve.getIdEpreuve(), questionEnCours.getId());
+		ArrayList<ReponseTirage> reponseTirages = rtm.selectByAll(epreuve.getIdEpreuve(), questionEnCours.getId());
 		
-		// Permet la sélection de la réponse entrée
-		if (reponseTirage != null) {
-			propSelected = reponseTirage.getProposition().getId();
+		for (ReponseTirage rt : reponseTirages) {
+			liste.add(rt.getProposition().getId());
 		}
 		
-		return propSelected;
+		return liste;
 	}
 }

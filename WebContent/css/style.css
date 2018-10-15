@@ -40,3 +40,10 @@ form {
 img {
 	cursor: pointer;
 }
+
+th, td {
+	border:solid #e0e0dc;
+	border-width:1px 1px 1px 1px;
+	padding:6px 8px;
+	text-align:left;
+}

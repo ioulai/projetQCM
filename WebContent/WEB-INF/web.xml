@@ -132,6 +132,28 @@
 		<url-pattern>/finEpreuve</url-pattern>
 	</servlet-mapping>
 	
+		<!-- Audric -->
+	<servlet>
+		<servlet-name>PreResultats</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.PreResultatsController
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>PreResultats</servlet-name>
+		<url-pattern>/PreResultats</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Audric -->
+	<servlet>
+		<servlet-name>preResultats</servlet-name>
+		<jsp-file>/WEB-INF/jsp/preResultats.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>preResultats</servlet-name>
+		<url-pattern>/preResultats</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Audric -->
 	<servlet>
 		<servlet-name>question</servlet-name>

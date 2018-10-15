@@ -43,9 +43,18 @@ public class FinEpreuveController extends HttpServlet{
 			
 			// Calcul de la note /20
 			for (QuestionTirage qt : questionTirages) {
-				ReponseTirage reponseTirage = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
+				boolean isValid = true;
 				
-				if (reponseTirage.getProposition().isEstBonne()) {
+				ArrayList<ReponseTirage> reponseTirages = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
+				
+				for (ReponseTirage reponseTirage : reponseTirages) {
+					if (!reponseTirage.getProposition().isEstBonne()) {
+						isValid = false;
+						break;
+					}
+				}
+				
+				if (isValid) {
 					note += qt.getQuestion().getPoints();
 				}
 			}

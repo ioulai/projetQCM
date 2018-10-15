@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.bll.manager.CandidatManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
-import fr.eni.bo.Candidat;
 import fr.eni.bo.Utilisateur;
 import fr.eni.tp.web.common.util.ValidationUtil;
 

@@ -30,9 +30,18 @@ public class QuestionController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			int propSelected = 0;
-			int idPropositionValidee = Integer.parseInt(req.getParameter("idPropositionUser"));
+			ArrayList<Integer> propSelected = new ArrayList<Integer>();
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
+			
+			// Gestion des ids propositions
+			String[] idsProposition = req.getParameterValues("idPropositionUser");
+			ArrayList<Integer> idsIntProposition = new ArrayList<Integer>();
+			
+			for (String id : idsProposition) {
+				idsIntProposition.add(Integer.parseInt(id));
+			}
+			
+			boolean isMulti = false;
 			
 			// On cherche l'épreuve du test
 			EpreuveManager em = ManagerFactory.epreuveManager();
@@ -41,30 +50,29 @@ public class QuestionController extends HttpServlet{
 
 			// On cherche la proposition pour prendre la question
 			PropositionManager pm = ManagerFactory.propositionManager();
-			Proposition proposition = null;
-			proposition = pm.selectById(idPropositionValidee);
+			ArrayList<Proposition> propositionsUser = new ArrayList<Proposition>();
 			
-			// On obtient la question
-			Question questionRepondue = proposition.getQuestion();
-			
-			// On test si il y a déjà une réponse en base
-			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
-			ReponseTirage reponseEnBase = rtm.selectByAll(epreuve.getIdEpreuve(), questionRepondue.getId());
-			
-			// On insert la réponse en base si existe pas
-			if (reponseEnBase == null) {
-				ReponseTirage reponseTirage = new ReponseTirage();
-				reponseTirage.setEpreuve(epreuve);
-				reponseTirage.setProposition(proposition);
-				reponseTirage.setQuestion(questionRepondue);
-				rtm.insert(reponseTirage);
+			for (int i : idsIntProposition) {
+				propositionsUser.add(pm.selectById(i));
 			}
-			else { // Si réponse déjà en base
-				// Si réponse différente de celle en base
-				if (reponseEnBase.getProposition().getId() != proposition.getId()) {
-					reponseEnBase.setProposition(proposition);
-					rtm.update(reponseEnBase);
-				}
+			
+			String strIdQuestion = req.getParameter("idQuestionCourante");
+			int idQuestion = Integer.parseInt(strIdQuestion);
+			
+			// Supprime les reponsesTirages pour cette question
+			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
+			rtm.deleteByIds(epreuve.getIdEpreuve(), idQuestion);
+			
+			QuestionManager qm = ManagerFactory.questionManager();
+			Question questionValidee = qm.selectById(idQuestion);
+			
+			// Pour chaque id proposition, on ajoute une ligne dans ReponseTirage
+			for (Proposition p : propositionsUser) {
+				ReponseTirage rt = new ReponseTirage();
+				rt.setEpreuve(epreuve);
+				rt.setProposition(p);
+				rt.setQuestion(questionValidee);
+				rtm.insert(rt);
 			}
 			
 			/* GESTION DES DONNEES A ENVOYER A L'IHM */
@@ -79,7 +87,7 @@ public class QuestionController extends HttpServlet{
 
 			for (QuestionTirage qt : questionTirages) {
 				// Si c'est la questionTirage précédent, on recup son ordre pour trouver la question suivante
-				if (qt.getEpreuve().getIdEpreuve() == epreuve.getIdEpreuve() && qt.getQuestion().getId() == questionRepondue.getId()) {
+				if (qt.getEpreuve().getIdEpreuve() == epreuve.getIdEpreuve() && qt.getQuestion().getId() == idQuestion) {
 					ordreQuestPrec = qt.getNumOrdre();
 				}
 				// On a besoin de la liste des questions
@@ -99,6 +107,17 @@ public class QuestionController extends HttpServlet{
 			
 			// Recherche des propositions de la prochaine question
 			ArrayList<Proposition> propositions = pm.selectByIdQuestion(questionSuivante.getId());
+			int count = 0;
+			
+			for (Proposition p : propositions) {
+				if (p.isEstBonne()) {
+					count++;
+				}
+			}
+			
+			if (count > 1) {
+				isMulti = true;
+			}
 			
 			// Cochage de la prochaine question
 			propSelected = searchPropSelected(epreuve, questionSuivante);
@@ -111,6 +130,7 @@ public class QuestionController extends HttpServlet{
 			boolean isMarquee = questionTirage.isEstMarquee();
 			
 			// Attributs à envoyer
+			req.setAttribute("isMulti", isMulti);
 			req.setAttribute("propositions", propositions);
 			req.setAttribute("listeQuestions", questions);
 			req.setAttribute("questionEnCours", questionSuivante);
@@ -133,9 +153,11 @@ public class QuestionController extends HttpServlet{
 			String strIdQuestion = req.getParameter("idQuestionCourante");
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
 			
-			int propSelected = 0;
+			ArrayList<Integer> propSelected = new ArrayList<Integer>();
 			int idQuestion = 0;
 			int compteurQuestion = 1;
+			
+			boolean isMulti = false;
 			
 			ArrayList<Question> questions = new ArrayList<Question>();
 			ArrayList<Question> questionsTemp = new ArrayList<Question>();
@@ -215,6 +237,18 @@ public class QuestionController extends HttpServlet{
 			
 			// Recherche des propositions
 			ArrayList<Proposition> propositions = pm.selectByIdQuestion(questionEnCours.getId());
+			int count = 0;
+			
+			for (Proposition p : propositions) {
+				if (p.isEstBonne()) {
+					count++;
+				}
+			}
+			
+			if (count > 1) {
+				isMulti = true;
+			}
+			
 			req.setAttribute("propositions", propositions);
 			
 			// Attributs à envoyer
@@ -224,6 +258,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("propSelected", propSelected);
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
+			req.setAttribute("isMulti", isMulti);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
@@ -232,18 +267,16 @@ public class QuestionController extends HttpServlet{
 	}
 
 	// Chercher la reponseTirage de la question en cours
-	private int searchPropSelected(Epreuve epreuve, Question questionEnCours) throws ManagerException {
+	private ArrayList<Integer> searchPropSelected(Epreuve epreuve, Question questionEnCours) throws ManagerException {
 		ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
+		ArrayList<Integer> liste = new ArrayList<Integer>();
 
-		int propSelected = 0;
-		ReponseTirage reponseTirage;
-		reponseTirage = rtm.selectByAll(epreuve.getIdEpreuve(), questionEnCours.getId());
+		ArrayList<ReponseTirage> reponseTirages = rtm.selectByAll(epreuve.getIdEpreuve(), questionEnCours.getId());
 		
-		// Permet la sélection de la réponse entrée
-		if (reponseTirage != null) {
-			propSelected = reponseTirage.getProposition().getId();
+		for (ReponseTirage rt : reponseTirages) {
+			liste.add(rt.getProposition().getId());
 		}
 		
-		return propSelected;
+		return liste;
 	}
 }
