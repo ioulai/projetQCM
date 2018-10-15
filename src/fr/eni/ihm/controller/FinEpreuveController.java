@@ -54,6 +54,10 @@ public class FinEpreuveController extends HttpServlet{
 					}
 				}
 				
+				if (reponseTirages.isEmpty()) {
+					isValid = false;
+				}
+				
 				if (isValid) {
 					note += qt.getQuestion().getPoints();
 				}

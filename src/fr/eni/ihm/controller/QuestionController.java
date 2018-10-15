@@ -179,8 +179,20 @@ public class QuestionController extends HttpServlet{
 			// Recherche de l'épreuve du test
 			epreuve = em.selectByIdTest(idTest);
 			
+			// Test si reprise en cours de route
+			if (epreuve.getEtat().equals("EC")) {
+				ArrayList<QuestionTirage> lstQuestionTirage = null;
+				
+				questionEnCours = qm.selectById(idQuestion);
+				lstQuestionTirage = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
+				
+				for (QuestionTirage qt : lstQuestionTirage) {
+					questions.add(qt.getQuestion());
+				}
+			}
+			
 			// Tirage au sort et insertion si les questions n'ont pas été tirées
-			if (idQuestion == 0) {
+			else if (idQuestion == 0) {
 				
 				// On va chercher les sections du test à passer
 				ArrayList<SectionTest> sectionTests = stm.selectByIdTest(idTest);
