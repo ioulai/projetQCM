@@ -22,7 +22,7 @@ private static EpreuveDAOImpl singleton;
 	private static final String SELECT_ALL = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur";
 	private static final String INSERT_QUERY = "INSERT INTO Epreuve (dateDebutValidite,dateFinValidite,etat,utilisateur_idUtilisateur,test_idTest) VALUES (?,?,?,?,?)";
 	private static final String SELECT_BY_ID_UTILISATEUR_TEST = "SELECT * FROM epreuve WHERE utilisateur_idUtilisateur = ? AND test_idTest = ?";
-	private static final String SELECT_BY_ID_UTILISATEUR = "SELECT * FROM epreuve INNER JOIN Test ON test_idTest = idTest WHERE utilisateur_idUtilisateur = ? AND etat = 'EA'";
+	private static final String SELECT_BY_ID_UTILISATEUR = "SELECT * FROM epreuve INNER JOIN Test ON test_idTest = idTest WHERE utilisateur_idUtilisateur = ? AND etat = 'EA' AND dateFinValidite >= ?";
 	private static final String UPDATE_QUERY = "UPDATE epreuve SET noteObtenue = ?, niveauObtenu = ? WHERE idEpreuve = ?";
 	private static final String DELETE_QUERY_BY_ID = "DELETE FROM epreuve WHERE test_idTest = ?";
 	
@@ -257,7 +257,7 @@ private static EpreuveDAOImpl singleton;
 
 			statement = connexion.prepareStatement(SELECT_BY_ID_UTILISATEUR);
 			statement.setInt(1, id);
-			
+			statement.setDate(2, new java.sql.Date(new Date().getTime()));
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {

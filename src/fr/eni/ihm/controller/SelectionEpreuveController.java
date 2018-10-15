@@ -13,7 +13,6 @@ import fr.eni.bll.manager.EpreuveManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Candidat;
 import fr.eni.bo.Epreuve;
-import fr.eni.bo.Utilisateur;
 
 public class SelectionEpreuveController extends HttpServlet {
 	private EpreuveManager epreuveManager = ManagerFactory.epreuveManager();
@@ -31,10 +30,10 @@ public class SelectionEpreuveController extends HttpServlet {
 			try {
 				List<Epreuve> epreuves = epreuveManager.selectByUserId(utilisateurConnecte.getId());
 				req.setAttribute("epreuve", epreuves);
+				req.getRequestDispatcher("Epreuve").forward(req, resp);
 			} catch (Exception e) {
 				resp.sendError(500);
 			}
-			req.getRequestDispatcher("Epreuve").forward(req, resp);
 		}else{
 			req.getRequestDispatcher("authentification").forward(req, resp);
 		}

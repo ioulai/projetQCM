@@ -90,7 +90,7 @@ public class InscriptionTestController extends HttpServlet{
 					}
 				}
 				
-				if(inscription == false || epreuves.isEmpty())
+				if(inscription == true || epreuves.isEmpty())
 				{
 					epreuveManager.insert(idcandida, idtest, debutdate, findate);
 					req.getRequestDispatcher("InscriptionCandidat").forward(req, resp);
