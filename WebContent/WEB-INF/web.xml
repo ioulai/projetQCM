@@ -299,6 +299,16 @@
 		<servlet-name>SupprUtilisateur</servlet-name>
 		<url-pattern>/SupprUtilisateur</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UpdateTime</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.UpdateTempsController
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateTime</servlet-name>
+		<url-pattern>/UpdateTime</url-pattern>
+	</servlet-mapping>
 	<!-- gestion erreur -->
 	<error-page>
 		<error-code>400</error-code>

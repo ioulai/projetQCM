@@ -23,7 +23,7 @@ private static EpreuveDAOImpl singleton;
 	private static final String INSERT_QUERY = "INSERT INTO Epreuve (dateDebutValidite,dateFinValidite,etat,utilisateur_idUtilisateur,test_idTest) VALUES (?,?,?,?,?)";
 	private static final String SELECT_BY_ID_UTILISATEUR_TEST = "SELECT * FROM epreuve WHERE utilisateur_idUtilisateur = ? AND test_idTest = ?";
 	private static final String SELECT_BY_ID_UTILISATEUR = "SELECT * FROM epreuve INNER JOIN Test ON test_idTest = idTest WHERE utilisateur_idUtilisateur = ? AND etat = 'EA' AND dateFinValidite >= ?";
-	private static final String UPDATE_QUERY = "UPDATE epreuve SET noteObtenue = ?, niveauObtenu = ?, etat = ? WHERE idEpreuve = ?";
+	private static final String UPDATE_QUERY = "UPDATE epreuve SET noteObtenue = ?, niveauObtenu = ?, etat = ?,tempsEcoule = ? WHERE idEpreuve = ?";
 	private static final String DELETE_QUERY_BY_ID = "DELETE FROM epreuve WHERE test_idTest = ?";
 	
 	public static EpreuveDAO getInstance() {
@@ -50,6 +50,7 @@ private static EpreuveDAOImpl singleton;
 			
 			if(resultSet.next()) {
 				epr = map(resultSet);
+				epr.setTest(TestDAOImpl.map(resultSet));
 			}
 
 		} catch (Exception e) {
@@ -234,7 +235,8 @@ private static EpreuveDAOImpl singleton;
 			statement.setFloat(1, epreuve.getNoteObtenue());
 			statement.setString(2, epreuve.getNiveauObtenu());
 			statement.setString(3, epreuve.getEtat());
-			statement.setInt(4, epreuve.getIdEpreuve());
+			statement.setTime(4, epreuve.getTempsEcoule());
+			statement.setInt(5, epreuve.getIdEpreuve());
 			
 			statement.execute();
 		} catch (Exception e) {

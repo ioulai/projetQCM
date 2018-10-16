@@ -2,10 +2,7 @@ package fr.eni.ihm.controller;
 
 import java.io.IOException;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -157,7 +154,7 @@ public class QuestionController extends HttpServlet{
 			// Check si question marquée
 			QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
 			boolean isMarquee = questionTirage.isEstMarquee();
-
+			
 			// Attributs à envoyer
 			req.setAttribute("isMulti", isMulti);
 			req.setAttribute("propositions", propositions);
@@ -168,7 +165,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
 			req.setAttribute("duree", req.getParameter("chronoform"));
-			
+			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 			req.getRequestDispatcher("question").forward(req, resp);
 		}
 		catch (Exception e) {
@@ -312,6 +309,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("isMarquee", isMarquee);
 			req.setAttribute("isMulti", isMulti);
 			req.setAttribute("duree", sec);
+			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {

@@ -19,6 +19,7 @@
 
 			<p id="chrono"></p>
 			<form method="POST" action="Marquage">
+				<input type="hidden" value="${idEpreuve }" id="idEpreuve">
 				<input type="hidden" value="${idTest}" name="idTest">
 				<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
 				<c:if test="${isMarquee == false}">
@@ -38,6 +39,7 @@
 				<c:set var="count" value="${count + 1}" scope="page"/>
 				
 				<form method="GET" action="Questions">
+					<input type="hidden" value="${idEpreuve }" id="idEpreuve">
 					<input type="hidden" value="${idTest}" name="idTest">
 					<input type="hidden" value="${question.id}" name="idQuestionCourante">
 					<input type="submit" id="nomListe" value="Q${count}">
@@ -75,6 +77,7 @@
 				</c:forEach>
 				
 				<br><br>
+				<input type="hidden" value="${idEpreuve }" id="idEpreuve">
 				<input type="hidden" name="chronoform" id="chronoform">
 				<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
 				<input type="hidden" value="${idTest}" name="idTest">
