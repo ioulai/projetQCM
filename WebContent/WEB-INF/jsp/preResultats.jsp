@@ -21,7 +21,7 @@
 		  		<tr>
 				    <td>Numéro</td>
 				    <td>Marquée</td>
-				    <td>Résolue</td>
+				    <td>Répondue</td>
 				    <td></td>
 			  	</tr>
 			  	

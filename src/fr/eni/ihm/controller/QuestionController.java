@@ -19,6 +19,7 @@ import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Epreuve;
 import fr.eni.bo.Proposition;
 import fr.eni.bo.Question;
+import fr.eni.bo.QuestionResultat;
 import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.bo.SectionTest;
@@ -105,6 +106,28 @@ public class QuestionController extends HttpServlet{
 					questionSuivante = qt.getQuestion();
 					break;
 				}
+				else {
+					ArrayList<QuestionResultat> listeQuestions = new ArrayList<QuestionResultat>();
+					boolean isResolue = false;
+					
+					// On cherche les questions
+					for (QuestionTirage q : questionTirages) {
+						ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), q.getQuestion().getId());
+						isResolue = false;
+						
+						if (lrt != null && lrt.size() > 0) {
+							isResolue = true;
+						}
+						
+						listeQuestions.add(new QuestionResultat(q.getQuestion().getId(), q.isEstMarquee(), isResolue));
+					}
+					
+					// Attributs à envoyer
+					req.setAttribute("questions", listeQuestions);
+					req.setAttribute("idTest", idTest);
+					
+					req.getRequestDispatcher("preResultats").forward(req, resp);
+				}
 			}
 			
 			// Recherche des propositions de la prochaine question
@@ -184,13 +207,16 @@ public class QuestionController extends HttpServlet{
 			epreuve = em.selectByIdTest(idTest);
 			
 			// Test si reprise en cours de route
-			if (epreuve.getEtat().equals("EC") && strIdQuestion != null) {
+			if (epreuve.getEtat().equals("EC") && strIdQuestion == null) {
 				ArrayList<QuestionTirage> lstQuestionTirage = null;
-				
-				questionEnCours = qm.selectById(idQuestion);
+
 				lstQuestionTirage = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
 				
 				for (QuestionTirage qt : lstQuestionTirage) {
+					if (questionEnCours == null || (qt.getNumOrdre() < qtm.selectByIds(epreuve, questionEnCours).getNumOrdre())) {
+						questionEnCours = qt.getQuestion();
+					}
+					
 					questions.add(qt.getQuestion());
 				}
 			}
