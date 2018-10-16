@@ -14,10 +14,14 @@
 	<body onload="IndiquerMinutes(${duree}); DemarrerChrono();">	
 		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 		
-		<div id="content" style="margin-left:30%;">	
-			<h1>${libelle}</h1><br><br>
+		<div class="container">
+		  <div class="row">
+		    <div class="col-xs"></div>
+		    <div class="col-lg">
+		    <br><h1>${libelle}</h1><br><br>
 
 			<p id="chrono"></p>
+			
 			<form method="POST" action="Marquage">
 				<input type="hidden" value="${idTest}" name="idTest">
 				<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
@@ -46,6 +50,7 @@
 			
 			<h3><c:out value="${questionEnCours.enonce}"></c:out></h3><br><br>
 			
+			<div>
 			<form method="POST" action="Questions">	
 				<c:forEach items="${propositions}" var="proposition">
 					<c:forEach items="${propSelected}" var="id">
@@ -71,7 +76,7 @@
 					<c:set var="haveFound" value="0" scope="page"/>
 					
 					${proposition.enonce}
-					<br><br>
+					<br>
 				</c:forEach>
 				
 				<br><br>
@@ -80,13 +85,15 @@
 				<input type="hidden" value="${idTest}" name="idTest">
 				<input type="submit" value="Valider">
 			</form>
-			<br>
+			</div>
 			<form method="GET" action="PreResultats">	
 				<input type="hidden" value="${idTest}" name="idTest">
 				<input type="submit" value="Terminer l'épreuve">
 			</form>
-		</div>
-		
+		    </div>
+		    <div class="col-xs"></div>
+		  </div>
+		</div>		
 		<jsp:include page="/WEB-INF/jsp/template/footer.jsp"></jsp:include>
 	</body>
 </html>

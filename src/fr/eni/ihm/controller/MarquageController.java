@@ -31,6 +31,8 @@ public class MarquageController extends HttpServlet{
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
 			ArrayList<Integer> propSelected = new ArrayList<Integer>();
 			
+			boolean isMulti = false;
+			
 			Question question;
 			Epreuve epreuve = null;
 			
@@ -64,6 +66,18 @@ public class MarquageController extends HttpServlet{
 			ArrayList<Proposition> propositions = pm.selectByIdQuestion(question.getId());
 			req.setAttribute("propositions", propositions);
 			
+			int count = 0;
+			
+			for (Proposition p : propositions) {
+				if (p.isEstBonne()) {
+					count++;
+				}
+			}
+			
+			if (count > 1) {
+				isMulti = true;
+			}
+			
 			// Check si question marquée
 			QuestionTirage questionTirage = qtm.selectByIds(epreuve, question);
 			
@@ -80,6 +94,7 @@ public class MarquageController extends HttpServlet{
 			req.setAttribute("propSelected", propSelected);
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
+			req.setAttribute("isMulti", isMulti);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
