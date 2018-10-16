@@ -49,22 +49,24 @@ private static final long serialVersionUID = -6970891575378677464L;
         temp = temp.replace("\"", "");
         debut = temp.indexOf(':');
         fin = temp.length();
-        idepreuve = Integer.parseInt(temp.substring(debut+1,fin));
+        
+        
+
+    	idepreuve = Integer.parseInt(temp.substring(debut+1,fin));
         //Prend le temps
         debut = json.indexOf(':');
         fin = json.indexOf(',');
         time = json.substring(debut+1, fin);
+       
+			try {
+				Epreuve epr = epreuveManager.selectById(idepreuve);
+				epr.setTempsEcoule(new Time((epr.getTest().getDuree().getSeconds() +  epr.getTest().getDuree().getHours()*3600 + epr.getTest().getDuree().getMinutes()*60)*1000 - Integer.parseInt(time)*1000-3600000));
+				epreuveManager.update(epr);
+			} catch (ManagerException e) {
+				e.printStackTrace();
+			}
         
-		try {
-			Epreuve epr = epreuveManager.selectById(idepreuve);
-			epr.setTempsEcoule(new Time((epr.getTest().getDuree().getSeconds() +  epr.getTest().getDuree().getHours()*3600 + epr.getTest().getDuree().getMinutes()*60)*1000 - Integer.parseInt(time)*1000-3600000));
-			epreuveManager.update(epr);
-		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
+      }
 
 }
+
