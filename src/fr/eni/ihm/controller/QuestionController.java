@@ -36,6 +36,7 @@ public class QuestionController extends HttpServlet{
 		try {
 			ArrayList<Integer> propSelected = new ArrayList<Integer>();
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
+			int duree = Integer.parseInt(req.getParameter("chronoform"));
 			
 			// Gestion des ids propositions
 			String[] idsProposition = req.getParameterValues("idPropositionUser");
@@ -172,7 +173,7 @@ public class QuestionController extends HttpServlet{
 				req.setAttribute("propSelected", propSelected);
 				req.setAttribute("libelle", libelle);
 				req.setAttribute("isMarquee", isMarquee);
-				req.setAttribute("duree", req.getParameter("chronoform"));
+				req.setAttribute("duree", duree);
 				
 				req.getRequestDispatcher("question").forward(req, resp);
 			}
@@ -227,7 +228,6 @@ public class QuestionController extends HttpServlet{
 			SectionTestManager stm = ManagerFactory.sectionTestManager();
 			QuestionManager qm = ManagerFactory.questionManager();
 			PropositionManager pm = ManagerFactory.propositionManager();
-			TestManager tm = ManagerFactory.TestManager();
 			
 			Epreuve epreuve = null;
 			Question questionEnCours = null;
@@ -239,8 +239,14 @@ public class QuestionController extends HttpServlet{
 			// Recherche de l'épreuve du test
 			epreuve = em.selectByIdTest(idTest);
 			
+			// Duree à set
+			int sec = epreuve.getTest().getDuree().getSeconds() +  epreuve.getTest().getDuree().getHours()*3600 + epreuve.getTest().getDuree().getMinutes()*60;
+			
 			// Test si reprise en cours de route
 			if (epreuve.getEtat().equals("EC") && strIdQuestion == null) {
+
+				sec = sec - (epreuve.getTempsEcoule().getSeconds() +  epreuve.getTempsEcoule().getHours()*3600 + epreuve.getTempsEcoule().getMinutes()*60);
+				
 				ArrayList<QuestionTirage> lstQuestionTirage = null;
 
 				lstQuestionTirage = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
@@ -256,7 +262,7 @@ public class QuestionController extends HttpServlet{
 			
 			// Tirage au sort et insertion si les questions n'ont pas été tirées
 			else if (idQuestion == 0) {
-				
+
 				// On va chercher les sections du test à passer
 				ArrayList<SectionTest> sectionTests = stm.selectByIdTest(idTest);
 				
@@ -294,6 +300,10 @@ public class QuestionController extends HttpServlet{
 				}
 			}
 			else { // Si on change de question
+
+				sec = epreuve.getTest().getDuree().getSeconds() +  epreuve.getTest().getDuree().getHours()*3600 + epreuve.getTest().getDuree().getMinutes()*60;
+				sec = sec - (epreuve.getTempsEcoule().getSeconds() +  epreuve.getTempsEcoule().getHours()*3600 + epreuve.getTempsEcoule().getMinutes()*60);
+				
 				ArrayList<QuestionTirage> lstQuestionTirage = null;
 				
 				questionEnCours = qm.selectById(idQuestion);
@@ -327,12 +337,9 @@ public class QuestionController extends HttpServlet{
 			if (count > 1) {
 				isMulti = true;
 			}
-			//Récupération de la durée du test
-			Test test = tm.selectById(idTest);
 			
-			req.setAttribute("propositions", propositions);
-			int sec = test.getDuree().getSeconds() +  test.getDuree().getHours()*3600 + test.getDuree().getMinutes()*60;
 			// Attributs à envoyer
+			req.setAttribute("propositions", propositions);
 			req.setAttribute("listeQuestions", questions);
 			req.setAttribute("questionEnCours", questionEnCours);
 			req.setAttribute("idTest", idTest);
