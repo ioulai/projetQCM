@@ -1,7 +1,11 @@
 package fr.eni.ihm.controller;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -153,7 +157,7 @@ public class QuestionController extends HttpServlet{
 			// Check si question marquée
 			QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
 			boolean isMarquee = questionTirage.isEstMarquee();
-			
+
 			// Attributs à envoyer
 			req.setAttribute("isMulti", isMulti);
 			req.setAttribute("propositions", propositions);
@@ -163,7 +167,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("propSelected", propSelected);
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
-			//req.setAttribute("duree", arg1);
+			req.setAttribute("duree", req.getParameter("chronoform"));
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		}
@@ -298,7 +302,7 @@ public class QuestionController extends HttpServlet{
 			Test test = tm.selectById(idTest);
 			
 			req.setAttribute("propositions", propositions);
-			
+			int sec = test.getDuree().getSeconds() +  test.getDuree().getHours()*3600 + test.getDuree().getMinutes()*60;
 			// Attributs à envoyer
 			req.setAttribute("listeQuestions", questions);
 			req.setAttribute("questionEnCours", questionEnCours);
@@ -307,7 +311,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
 			req.setAttribute("isMulti", isMulti);
-			req.setAttribute("duree", test.getDuree().getMinutes());
+			req.setAttribute("duree", sec);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
