@@ -80,7 +80,7 @@ var JSONObject= {
 			console.log(jqXHR);
         }
 	});
-	setTimeout(Updatetimer,2000);
+	setTimeout(Updatetimer,5000);
 }
 
 
