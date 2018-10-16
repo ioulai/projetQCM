@@ -87,6 +87,9 @@ public class MarquageController extends HttpServlet{
 
 			boolean isMarquee = questionTirage.isEstMarquee();
 			
+			int sec = epreuve.getTest().getDuree().getSeconds() +  epreuve.getTest().getDuree().getHours()*3600 + epreuve.getTest().getDuree().getMinutes()*60;
+			sec = sec - (epreuve.getTempsEcoule().getSeconds() +  epreuve.getTempsEcoule().getHours()*3600 + epreuve.getTempsEcoule().getMinutes()*60);
+			
 			// Attributs à envoyer
 			req.setAttribute("listeQuestions", questions);
 			req.setAttribute("questionEnCours", question);
@@ -96,6 +99,7 @@ public class MarquageController extends HttpServlet{
 			req.setAttribute("isMarquee", isMarquee);
 			req.setAttribute("isMulti", isMulti);
 			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
+			req.setAttribute("duree", sec);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
