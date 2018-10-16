@@ -80,6 +80,7 @@ public class MarquageController extends HttpServlet{
 			req.setAttribute("propSelected", propSelected);
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
+			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {

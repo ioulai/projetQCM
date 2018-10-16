@@ -23,4 +23,5 @@ public interface EpreuveDAO {
 	void update(Epreuve epreuve) throws DaoException;
 	
 	void deleteById(int id) throws DaoException;
+	
 }

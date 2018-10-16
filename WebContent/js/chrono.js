@@ -46,11 +46,42 @@ function Chrono()
 	    text = "Le temps est écoulé";
 	}
 		document.getElementById('chrono').innerHTML = text;
+		// @ts-ignore
 		document.getElementById('chronoform').value = secondes;
 	}
 	
 function DemarrerChrono()
 {
-    timer = setInterval('Chrono()', 1000);
+	timer = setInterval('Chrono()', 1000);
+	Updatetimer();
 }
-             
+
+function Updatetimer() {
+
+var JSONObject= {
+	'time': secondes,
+	// @ts-ignore
+	'idEpreuve': document.getElementById('idEpreuve').value
+    };
+
+	// @ts-ignore
+	$.ajax({
+        type: 'POST',
+        url:  "UpdateTime",
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(JSONObject),
+        dataType: 'json',
+		async: true,
+		succes(data)
+		{alert("ok")
+	},
+        error: function(jqXHR, textStatus, errorThrown) {
+			console.log(errorThrown);
+			console.log(jqXHR);
+        }
+	});
+	setTimeout(Updatetimer,2000);
+}
+
+
+
