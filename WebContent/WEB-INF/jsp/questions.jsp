@@ -75,6 +75,7 @@
 				</c:forEach>
 				
 				<br><br>
+				<input type="hidden" name="chronoform" id="chronoform">
 				<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
 				<input type="hidden" value="${idTest}" name="idTest">
 				<input type="submit" value="Valider">
