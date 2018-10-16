@@ -1,6 +1,7 @@
 package fr.eni.ihm.controller;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -175,6 +176,29 @@ public class QuestionController extends HttpServlet{
 				
 				req.getRequestDispatcher("question").forward(req, resp);
 			}
+			
+			// Cochage de la prochaine question
+			propSelected = searchPropSelected(epreuve, questionSuivante);
+			
+			// Libellé du test à afficher
+			String libelle = epreuve.getTest().getLibelle();
+			
+			// Check si question marquée
+			QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
+			boolean isMarquee = questionTirage.isEstMarquee();
+			
+			// Attributs à envoyer
+			req.setAttribute("isMulti", isMulti);
+			//req.setAttribute("propositions", propositions);
+			req.setAttribute("listeQuestions", questions);
+			req.setAttribute("questionEnCours", questionSuivante);
+			req.setAttribute("idTest", idTest);
+			req.setAttribute("propSelected", propSelected);
+			req.setAttribute("libelle", libelle);
+			req.setAttribute("isMarquee", isMarquee);
+			req.setAttribute("duree", req.getParameter("chronoform"));
+			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
+			req.getRequestDispatcher("question").forward(req, resp);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -317,6 +341,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("isMarquee", isMarquee);
 			req.setAttribute("isMulti", isMulti);
 			req.setAttribute("duree", sec);
+			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {

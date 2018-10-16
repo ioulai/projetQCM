@@ -95,6 +95,7 @@ public class MarquageController extends HttpServlet{
 			req.setAttribute("libelle", libelle);
 			req.setAttribute("isMarquee", isMarquee);
 			req.setAttribute("isMulti", isMulti);
+			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
