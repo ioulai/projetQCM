@@ -17,6 +17,7 @@ import fr.eni.bo.Epreuve;
 import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.bo.Test;
+import fr.eni.bo.ThemeResultat;
 
 public class FinEpreuveController extends HttpServlet{
 	private static final long serialVersionUID = -6970893575378675464L;
@@ -34,6 +35,8 @@ public class FinEpreuveController extends HttpServlet{
 			QuestionTirageManager qtm = ManagerFactory.questionTirageManager();
 			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
 			TestManager tm = ManagerFactory.TestManager();
+			
+			ArrayList<ThemeResultat> themeResultats = new ArrayList<ThemeResultat>();
 			
 			// Recherche de l'épreuve du test
 			epreuve = em.selectByIdTest(idTest);
@@ -96,6 +99,7 @@ public class FinEpreuveController extends HttpServlet{
 			
 			req.setAttribute("niveau", niveau);
 			req.setAttribute("note", epreuve.getNoteObtenue());
+			req.setAttribute("themeResultats", themeResultats);
 			req.getRequestDispatcher("finEpreuve").forward(req, resp);
 		} catch (Exception e) {
 			resp.sendError(500);

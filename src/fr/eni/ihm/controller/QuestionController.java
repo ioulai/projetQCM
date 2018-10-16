@@ -1,11 +1,7 @@
 package fr.eni.ihm.controller;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,42 +40,47 @@ public class QuestionController extends HttpServlet{
 			String[] idsProposition = req.getParameterValues("idPropositionUser");
 			ArrayList<Integer> idsIntProposition = new ArrayList<Integer>();
 			
-			for (String id : idsProposition) {
-				idsIntProposition.add(Integer.parseInt(id));
-			}
+			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
+			PropositionManager pm = ManagerFactory.propositionManager();
 			
+			String strIdQuestion = req.getParameter("idQuestionCourante");
+			int idQuestion = Integer.parseInt(strIdQuestion);
+			
+			boolean isDispatchResults = false;
 			boolean isMulti = false;
 			
 			// On cherche l'épreuve du test
 			EpreuveManager em = ManagerFactory.epreuveManager();
 			Epreuve epreuve = null;
 			epreuve = em.selectByIdTest(idTest);
+			
+			// Si on valide bien avec une réponse de cochée
+			if (idsProposition != null){
+				for (String id : idsProposition) {
+					idsIntProposition.add(Integer.parseInt(id));
+				}
 
-			// On cherche la proposition pour prendre la question
-			PropositionManager pm = ManagerFactory.propositionManager();
-			ArrayList<Proposition> propositionsUser = new ArrayList<Proposition>();
-			
-			for (int i : idsIntProposition) {
-				propositionsUser.add(pm.selectById(i));
-			}
-			
-			String strIdQuestion = req.getParameter("idQuestionCourante");
-			int idQuestion = Integer.parseInt(strIdQuestion);
-			
-			// Supprime les reponsesTirages pour cette question
-			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
-			rtm.deleteByIds(epreuve.getIdEpreuve(), idQuestion);
-			
-			QuestionManager qm = ManagerFactory.questionManager();
-			Question questionValidee = qm.selectById(idQuestion);
-			
-			// Pour chaque id proposition, on ajoute une ligne dans ReponseTirage
-			for (Proposition p : propositionsUser) {
-				ReponseTirage rt = new ReponseTirage();
-				rt.setEpreuve(epreuve);
-				rt.setProposition(p);
-				rt.setQuestion(questionValidee);
-				rtm.insert(rt);
+				// On cherche la proposition pour prendre la question
+				ArrayList<Proposition> propositionsUser = new ArrayList<Proposition>();
+				
+				for (int i : idsIntProposition) {
+					propositionsUser.add(pm.selectById(i));
+				}
+				
+				// Supprime les reponsesTirages pour cette question
+				rtm.deleteByIds(epreuve.getIdEpreuve(), idQuestion);
+				
+				QuestionManager qm = ManagerFactory.questionManager();
+				Question questionValidee = qm.selectById(idQuestion);
+				
+				// Pour chaque id proposition, on ajoute une ligne dans ReponseTirage
+				for (Proposition p : propositionsUser) {
+					ReponseTirage rt = new ReponseTirage();
+					rt.setEpreuve(epreuve);
+					rt.setProposition(p);
+					rt.setQuestion(questionValidee);
+					rtm.insert(rt);
+				}
 			}
 			
 			/* GESTION DES DONNEES A ENVOYER A L'IHM */
@@ -111,6 +112,7 @@ public class QuestionController extends HttpServlet{
 					break;
 				}
 				else {
+					isDispatchResults = true;
 					ArrayList<QuestionResultat> listeQuestions = new ArrayList<QuestionResultat>();
 					boolean isResolue = false;
 					
@@ -131,45 +133,48 @@ public class QuestionController extends HttpServlet{
 					req.setAttribute("idTest", idTest);
 					
 					req.getRequestDispatcher("preResultats").forward(req, resp);
+					break;
 				}
 			}
 			
-			// Recherche des propositions de la prochaine question
-			ArrayList<Proposition> propositions = pm.selectByIdQuestion(questionSuivante.getId());
-			int count = 0;
-			
-			for (Proposition p : propositions) {
-				if (p.isEstBonne()) {
-					count++;
+			if (!isDispatchResults) {
+				// Recherche des propositions de la prochaine question
+				ArrayList<Proposition> propositions = pm.selectByIdQuestion(questionSuivante.getId());
+				int count = 0;
+				
+				for (Proposition p : propositions) {
+					if (p.isEstBonne()) {
+						count++;
+					}
 				}
-			}
-			
-			if (count > 1) {
-				isMulti = true;
-			}
-			
-			// Cochage de la prochaine question
-			propSelected = searchPropSelected(epreuve, questionSuivante);
-			
-			// Libellé du test à afficher
-			String libelle = epreuve.getTest().getLibelle();
-			
-			// Check si question marquée
-			QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
-			boolean isMarquee = questionTirage.isEstMarquee();
+				
+				if (count > 1) {
+					isMulti = true;
+				}
+				
+				// Cochage de la prochaine question
+				propSelected = searchPropSelected(epreuve, questionSuivante);
+				
+				// Libellé du test à afficher
+				String libelle = epreuve.getTest().getLibelle();
+				
+				// Check si question marquée
+				QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
+				boolean isMarquee = questionTirage.isEstMarquee();
 
-			// Attributs à envoyer
-			req.setAttribute("isMulti", isMulti);
-			req.setAttribute("propositions", propositions);
-			req.setAttribute("listeQuestions", questions);
-			req.setAttribute("questionEnCours", questionSuivante);
-			req.setAttribute("idTest", idTest);
-			req.setAttribute("propSelected", propSelected);
-			req.setAttribute("libelle", libelle);
-			req.setAttribute("isMarquee", isMarquee);
-			req.setAttribute("duree", req.getParameter("chronoform"));
-			
-			req.getRequestDispatcher("question").forward(req, resp);
+				// Attributs à envoyer
+				req.setAttribute("isMulti", isMulti);
+				req.setAttribute("propositions", propositions);
+				req.setAttribute("listeQuestions", questions);
+				req.setAttribute("questionEnCours", questionSuivante);
+				req.setAttribute("idTest", idTest);
+				req.setAttribute("propSelected", propSelected);
+				req.setAttribute("libelle", libelle);
+				req.setAttribute("isMarquee", isMarquee);
+				req.setAttribute("duree", req.getParameter("chronoform"));
+				
+				req.getRequestDispatcher("question").forward(req, resp);
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
