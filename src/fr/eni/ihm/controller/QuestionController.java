@@ -15,7 +15,6 @@ import fr.eni.bll.manager.QuestionManager;
 import fr.eni.bll.manager.QuestionTirageManager;
 import fr.eni.bll.manager.ReponseTirageManager;
 import fr.eni.bll.manager.SectionTestManager;
-import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Epreuve;
 import fr.eni.bo.Proposition;
@@ -24,7 +23,6 @@ import fr.eni.bo.QuestionResultat;
 import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.bo.SectionTest;
-import fr.eni.bo.Test;
 import fr.eni.robot.Robot;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 
@@ -173,33 +171,11 @@ public class QuestionController extends HttpServlet{
 				req.setAttribute("propSelected", propSelected);
 				req.setAttribute("libelle", libelle);
 				req.setAttribute("isMarquee", isMarquee);
+				req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 				req.setAttribute("duree", duree);
 				
 				req.getRequestDispatcher("question").forward(req, resp);
 			}
-			
-			// Cochage de la prochaine question
-			propSelected = searchPropSelected(epreuve, questionSuivante);
-			
-			// Libellé du test à afficher
-			String libelle = epreuve.getTest().getLibelle();
-			
-			// Check si question marquée
-			QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
-			boolean isMarquee = questionTirage.isEstMarquee();
-			
-			// Attributs à envoyer
-			req.setAttribute("isMulti", isMulti);
-			//req.setAttribute("propositions", propositions);
-			req.setAttribute("listeQuestions", questions);
-			req.setAttribute("questionEnCours", questionSuivante);
-			req.setAttribute("idTest", idTest);
-			req.setAttribute("propSelected", propSelected);
-			req.setAttribute("libelle", libelle);
-			req.setAttribute("isMarquee", isMarquee);
-			req.setAttribute("duree", req.getParameter("chronoform"));
-			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
-			req.getRequestDispatcher("question").forward(req, resp);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
