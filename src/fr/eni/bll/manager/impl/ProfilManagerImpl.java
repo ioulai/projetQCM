@@ -46,5 +46,17 @@ public class ProfilManagerImpl implements ProfilManager{
 		
 		return profil;
 	}
+	@Override
+	public Profil selectById(int id) throws ManagerException {
+	Profil profil = null;
+		
+		try {
+			profil = profilDAO.selectById(id);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return profil;
+	}
 
 }

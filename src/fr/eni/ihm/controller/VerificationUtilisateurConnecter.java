@@ -28,11 +28,12 @@ public class VerificationUtilisateurConnecter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-
+		HttpSession session = req.getSession();
 		String uri = req.getRequestURI();
 		this.context.log("chemin demandé::" + uri);
-		HttpSession session = req.getSession(false);
-//		System.out.println("candidatConnecter" + session.getAttribute("candidatConnecter"));
+		
+		
+//		System.out.println("utilisateurConnecte [" + session.getAttribute("utilisateurConnecte"));
 		if (session == null) {			
 			req.getRequestDispatcher("authentification").forward(req, res);
 			this.context.log("acces non autoriser");

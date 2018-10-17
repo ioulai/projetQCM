@@ -17,6 +17,7 @@ private static ProfilDAOImpl singleton;
 	
 	private static final String SELECT_ALL = "SELECT * FROM profil";
 	private static final String SELECT_BY_NAME = "SELECT * FROM profil WHERE libelle = ?";
+	private static final String SELECT_BY_ID = "SELECT * FROM profil WHERE codeProfil = ?";
 	
 	public static ProfilDAO getInstance() {
 		if (singleton == null)
@@ -42,7 +43,7 @@ private static ProfilDAOImpl singleton;
 			
 			while(resultSet.next()) {
 				
-				prof = new Profil();
+//				prof = new Profil();
 				prof = map(resultSet);
 				
 				profils.add(prof);
@@ -85,6 +86,35 @@ private static ProfilDAOImpl singleton;
 			
 			statement = connexion.prepareStatement(SELECT_BY_NAME);
 			statement.setString(1, name);
+			
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				profil = map(resultSet);
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return profil;
+	}
+
+	@Override
+	public Profil selectById(int id) throws DaoException {
+		Profil profil = null;
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_BY_ID);
+			statement.setInt(1, id);
 			
 			resultSet = statement.executeQuery();
 			
