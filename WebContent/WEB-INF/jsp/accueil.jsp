@@ -9,36 +9,32 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 	<div class="container-fluid">
-
-		<div id="content" style="text-align: center;">
+<br>
+		<div style="text-align: center;">
 			<h1>Accueil</h1>
-		</div><br>
+		</div><br><br>
+		
 		<div class="container-fluid">
 			<div class="row ">
-				<div class="card col-lg-6 col-md-9 "
-					style="width: 18rem; margin: 0 auto">
-					<div class="card-body">
+				<div class="card col-lg-6 col-md-9"	style="width: 18rem; margin: 0 auto">
+					<div class="card-body" style="text-align: center; margin: 30px;">
 						<c:choose>
 							<c:when test="${profil == 'CANDIDAT'}">
 								<h5 class="card-title">Profil candidat</h5>
 								<i class="far fa-user"></i>
-								<i>${utilisateurConnecte.nom} ${utilisateurConnecte.prenom}</i>
-								<p class="card-text">Afficher le.s épreuve·s ci-dessous</p>
+								<i>${utilisateurConnecte.nom} ${utilisateurConnecte.prenom}</i><br><br>
+								<p class="card-text">Afficher le(s) épreuve(s) ci-dessous</p>
 								<a href="ListeEpreuve" class="btn btn-primary">Afficher</a>
 							</c:when>
 							<c:when test="${profil == 'COLLABORATEUR'}">
-								<h5 class="card-title">Profil collaborateur</h5>
+								<h5 class="card-title">Profil collaborateur</h5><br>
 								<i class="far fa-user"></i>
-								<i>${utilisateurConnecte.nom} ${utilisateurConnecte.prenom}</i>
+								<i>${utilisateurConnecte.nom} ${utilisateurConnecte.prenom}</i><br><br>
 								<p class="card-text">Administration ci-dessous</p>
-
-								<a href="AjoutUtilisateur" class="btn btn-primary">Creation
-									utilisateur</a>
-								<a href="SupprUtilisateur" class="btn btn-primary">Suppression&nbsp;utilisateur</a>
+								<a href="AjoutUtilisateur" class="btn btn-primary">Création	utilisateur</a>
+								<a href="SupprUtilisateur" class="btn btn-primary">Suppression utilisateur</a>
 								<a href="Inscription" class="btn btn-primary">Inscription</a>
-
-								<a href="Desinscription" class="btn btn-primary">Desinscription</a>
-
+								<a href="Desinscription" class="btn btn-primary">Désinscription</a>
 								<a href="AjoutPromo" class="btn btn-primary">Ajout promotion</a>
 							</c:when>
 						</c:choose>

@@ -3,6 +3,7 @@ package fr.eni.ihm.controller;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -220,6 +221,9 @@ public class QuestionController extends HttpServlet{
 					QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
 					boolean isMarquee = questionTirage.isEstMarquee();
 
+					// Random ordre propositions
+					Collections.shuffle(propositions);
+					
 					// Attributs à envoyer
 					req.setAttribute("isMulti", isMulti);
 					req.setAttribute("propositions", propositions);
@@ -397,6 +401,9 @@ public class QuestionController extends HttpServlet{
 			if (count > 1) {
 				isMulti = true;
 			}
+			
+			// Random ordre propositions
+			Collections.shuffle(propositions);
 			
 			// Attributs à envoyer
 			req.setAttribute("propositions", propositions);

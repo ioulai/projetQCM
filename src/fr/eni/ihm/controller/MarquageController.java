@@ -2,6 +2,7 @@ package fr.eni.ihm.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -65,6 +66,10 @@ public class MarquageController extends HttpServlet{
 			
 			// Recherche des propositions
 			ArrayList<Proposition> propositions = pm.selectByIdQuestion(question.getId());
+			
+			// Random ordre propositions
+			Collections.shuffle(propositions);
+			
 			req.setAttribute("propositions", propositions);
 			
 			int count = 0;
