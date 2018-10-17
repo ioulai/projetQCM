@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.bll.manager.EpreuveManager;
+import fr.eni.bll.manager.PropositionManager;
 import fr.eni.bll.manager.QuestionTirageManager;
 import fr.eni.bll.manager.ReponseTirageManager;
 import fr.eni.bll.manager.SectionTestManager;
@@ -16,6 +17,7 @@ import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.ThemeManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Epreuve;
+import fr.eni.bo.Proposition;
 import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.bo.Test;
@@ -41,19 +43,35 @@ public class FinEpreuveController extends HttpServlet{
 			TestManager tm = ManagerFactory.TestManager();
 			ThemeManager thm = ManagerFactory.themeManager();
 			SectionTestManager stm = ManagerFactory.sectionTestManager();
+			PropositionManager pm = ManagerFactory.propositionManager();
+			
 			// Recherche de l'épreuve du test
 			epreuve = em.selectByIdTest(idTest);
 			
 			// Recherche des questionsTirage
 			ArrayList<QuestionTirage> questionTirages = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
 			
+			int nbRepAttendues = 0;
+			int nbRepUser = 0;
+			
 			// Calcul de la note /20
 			for (QuestionTirage qt : questionTirages) {
 				boolean isValid = true;
 				
+				nbRepAttendues = 0;
+				nbRepUser = 0;
+				
 				ArrayList<ReponseTirage> reponseTirages = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
+				ArrayList<Proposition> propositions = pm.selectByIdQuestion(qt.getQuestion().getId());
+				
+				for (Proposition p : propositions) {
+					if (p.isEstBonne()) {
+						nbRepAttendues++;
+					}
+				}
 				
 				for (ReponseTirage reponseTirage : reponseTirages) {
+					nbRepUser++;
 					if (!reponseTirage.getProposition().isEstBonne()) {
 						isValid = false;
 						break;
@@ -64,7 +82,7 @@ public class FinEpreuveController extends HttpServlet{
 					isValid = false;
 				}
 				
-				if (isValid) {
+				if (isValid && nbRepAttendues == nbRepUser) {
 					note += qt.getQuestion().getPoints();
 				}
 			}

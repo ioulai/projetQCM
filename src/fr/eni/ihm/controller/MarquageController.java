@@ -57,17 +57,6 @@ public class MarquageController extends HttpServlet{
 			
 			boolean isResolue = false;
 			
-			for (QuestionTirage qt : lstQuestionTirage) {
-				ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
-				isResolue = false;
-				
-				if (lrt != null && lrt.size() > 0) {
-					isResolue = true;
-				}
-				
-				questions.add(new QuestionResultat(qt.getQuestion(), qt.isEstMarquee(), isResolue));
-			}
-			
 			// Recherche proposition sélectionnée
 			propSelected = searchPropSelected(epreuve, question);
 
@@ -104,6 +93,19 @@ public class MarquageController extends HttpServlet{
 			
 			int sec = epreuve.getTest().getDuree().getSeconds() +  epreuve.getTest().getDuree().getHours()*3600 + epreuve.getTest().getDuree().getMinutes()*60;
 			sec = sec - (epreuve.getTempsEcoule().getSeconds() +  epreuve.getTempsEcoule().getHours()*3600 + epreuve.getTempsEcoule().getMinutes()*60);
+			
+			lstQuestionTirage = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
+			
+			for (QuestionTirage qt : lstQuestionTirage) {
+				ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
+				isResolue = false;
+				
+				if (lrt != null && lrt.size() > 0) {
+					isResolue = true;
+				}
+				
+				questions.add(new QuestionResultat(qt.getQuestion(), qt.isEstMarquee(), isResolue));
+			}
 			
 			// Attributs à envoyer
 			req.setAttribute("listeQuestions", questions);
