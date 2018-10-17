@@ -82,15 +82,15 @@ public class InscriptionTestController extends HttpServlet{
 			if(findate.after(debutdate)){
 				epreuves = epreuveManager.selectByIdCandidatTest(idcandida, idtest);
 				
-				for(Epreuve epr : epreuves)
-				{
-					if(epr.getEtat().equals("EA") && epr.getDateFinValidite().after(date))
-					{
-						inscription = false;
-					}
-				}
+//				for(Epreuve epr : epreuves)
+//				{
+//					if(epr.getEtat().equals("EA") && epr.getDateFinValidite().after(date) || )
+//					{
+//						inscription = false;
+//					}
+//				}
 				
-				if(inscription == true || epreuves.isEmpty())
+				if(epreuves.isEmpty())
 				{
 					epreuveManager.insert(idcandida, idtest, debutdate, findate);
 					req.getRequestDispatcher("InscriptionCandidat").forward(req, resp);

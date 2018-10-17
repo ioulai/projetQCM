@@ -46,7 +46,7 @@
 							    <form method="GET" action="Questions">
 							    	<input type="hidden" value="${idEpreuve }" id="idEpreuve">
 									<input type="hidden" value="${idTest}" name="idTest">
-									<input type="hidden" value="${question.id}" name="idQuestionCourante">
+									<input type="hidden" value="${question.question.id}" name="idQuestionCourante">
 									<input type="submit" id="nomListe" value="Modifier"><br>
 								</form>
 							</td>
