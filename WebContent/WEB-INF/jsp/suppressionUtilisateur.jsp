@@ -20,11 +20,11 @@
 		<div id="content" style="display: block;width:200px;float: left; margin-left:45%;">	
 				<form name="form" method="Post" action="SupprUtilisateur">
 						Collaborateur <select name="candidatbox" id="candidatbox">	
-						<c:forEach var="candidat"  items="${candidat}">
-					    	<option  value="${candidat.id}" selected="selected">${candidat.nom} ${candidat.prenom}</option>
+						<c:forEach var="collaborateurs"  items="${collaborateurs}">
+					    	<option  value="${collaborateurs.id}" selected="selected">${collaborateurs.nom} ${collaborateurs.prenom}</option>
 						</c:forEach>
 					    </select><br><br>
-					<input type="submit" value="Supprimer"><br>
+					<input class="btn btn-default" type="submit" value="Supprimer"><br>
 				</form>	
 		</div>
 		

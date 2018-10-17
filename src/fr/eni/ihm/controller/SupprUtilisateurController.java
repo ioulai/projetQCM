@@ -10,21 +10,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.bll.manager.CandidatManager;
+import fr.eni.bll.manager.CollaborateurManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Candidat;
+import fr.eni.bo.Collaborateur;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 
 public class SupprUtilisateurController extends HttpServlet{
 	private CandidatManager candidatManager = ManagerFactory.candidatManager();
+	private CollaborateurManager collaborateurManager = ManagerFactory.CollaborateurManager();
 	
 	private static final long serialVersionUID = -6970893575375675464L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			List<Candidat> candidats = new ArrayList<>();
+			List<Collaborateur> collaborateurs = new ArrayList<>();
 			try {
 				candidats = candidatManager.selectAllCollaborateur();
-				req.setAttribute("candidat", candidats);	
+				collaborateurs = collaborateurManager.selectAllCollaborateur();
+				req.setAttribute("collaborateurs", collaborateurs);	
 			} catch (ManagerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

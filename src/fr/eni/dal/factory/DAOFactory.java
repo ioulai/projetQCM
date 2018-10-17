@@ -1,6 +1,7 @@
 package fr.eni.dal.factory;
 
 import fr.eni.dal.dao.impl.CandidatDAOImpl;
+import fr.eni.dal.dao.impl.CollaborateurDAOImpl;
 import fr.eni.dal.dao.impl.EpreuveDAOImpl;
 import fr.eni.dal.dao.impl.ProfilDAOImpl;
 import fr.eni.dal.dao.impl.PromotionDAOImpl;
@@ -13,6 +14,7 @@ import fr.eni.dal.dao.impl.ThemeDAOImpl;
 import fr.eni.dal.dao.impl.SectionTestDAOImpl;
 import fr.eni.dal.dao.impl.TestDAOImpl;
 import fr.eni.dal.dao.CandidatDAO;
+import fr.eni.dal.dao.CollaborateurDAO;
 import fr.eni.dal.dao.EpreuveDAO;
 import fr.eni.dal.dao.ProfilDAO;
 import fr.eni.dal.dao.PromotionDAO;
@@ -66,6 +68,11 @@ public class DAOFactory {
 	}
 	public static TestDAO TestDAO(){
 		return TestDAOImpl.getInstance();
+	}
+
+	public static CollaborateurDAO collaborateurDao() {
+		// TODO Auto-generated method stub
+		return CollaborateurDAOImpl.getInstance();
 	}
 
 }

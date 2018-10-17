@@ -13,7 +13,7 @@ public abstract class Utilisateur{
 	private String prenom;
 	private String email;
 	private String password;
-	private Profil profil;
+	private int profil;
 
 	/**
 	 * 
@@ -22,26 +22,33 @@ public abstract class Utilisateur{
 		// TODO Auto-generated constructor stub
 	}
 
+
+	
 	/**
+	 * @param id
 	 * @param nom
 	 * @param prenom
 	 * @param email
 	 * @param password
+	 * @param profil
 	 */
-	public Utilisateur(String nom, String prenom, String email, String password) {
+	public Utilisateur(int id, String nom, String prenom, String email, String password, int profil) {
 		super();
+		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
 		this.password = password;
+		this.profil = profil;
 	}
 
-	
-	public Profil getProfil() {
+
+
+	public int getProfil() {
 		return profil;
 	}
 
-	public void setProfil(Profil profil) {
+	public void setProfil(int profil) {
 		this.profil = profil;
 	}
 
@@ -109,42 +116,19 @@ public abstract class Utilisateur{
 		this.password = password;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Utilisateur [id=");
-		builder.append(id);
-		builder.append(", ");
-		if (nom != null) {
-			builder.append("nom=");
-			builder.append(nom);
-			builder.append(", ");
-		}
-		if (prenom != null) {
-			builder.append("prenom=");
-			builder.append(prenom);
-			builder.append(", ");
-		}
-		if (email != null) {
-			builder.append("email=");
-			builder.append(email);
-			builder.append(", ");
-		}
-		if (password != null) {
-			builder.append("password=");
-			builder.append(password);
-			builder.append(", ");
-		}
-		if (profil != null) {
-			builder.append("profil=");
-			builder.append(profil);
-		}
-		builder.append("]");
+		builder.append("Utilisateur [id=").append(id).append(", nom=").append(nom).append(", prenom=").append(prenom)
+				.append(", email=").append(email).append(", password=").append(password).append(", profil=")
+				.append(profil).append(", getProfil()=").append(getProfil()).append(", getId()=").append(getId())
+				.append(", getNom()=").append(getNom()).append(", getPrenom()=").append(getPrenom())
+				.append(", getEmail()=").append(getEmail()).append(", getPassword()=").append(getPassword())
+				.append(", toString()=").append(super.toString()).append("]");
 		return builder.toString();
 	}
+
+
 
 	
 	

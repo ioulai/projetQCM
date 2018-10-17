@@ -6,6 +6,7 @@ import fr.eni.bll.manager.ProfilManager;
 import fr.eni.bll.manager.PromotionManager;
 import fr.eni.bll.manager.PropositionManager;
 import fr.eni.bll.manager.impl.CandidatManagerImpl;
+import fr.eni.bll.manager.impl.CollaborateurManagerImpl;
 import fr.eni.bll.manager.impl.EpreuveManagerImpl;
 import fr.eni.bll.manager.impl.ProfilManagerImpl;
 import fr.eni.bll.manager.impl.PromotionManagerImpl;
@@ -22,6 +23,7 @@ import fr.eni.bll.manager.impl.ReponseTirageManagerImpl;
 import fr.eni.bll.manager.impl.SectionTestManagerImpl;
 import fr.eni.bll.manager.impl.TestManagerImpl;
 import fr.eni.bll.manager.impl.ThemeManagerImpl;
+import fr.eni.bll.manager.CollaborateurManager;
 
 public class ManagerFactory {
 	public static QuestionManager questionManager() {
@@ -66,5 +68,8 @@ public class ManagerFactory {
 	
 	public static TestManager TestManager(){
 		return TestManagerImpl.getInstance();
+	}
+	public static CollaborateurManager CollaborateurManager(){
+		return CollaborateurManagerImpl.getInstance();
 	}
 }
