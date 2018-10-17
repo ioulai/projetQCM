@@ -1,6 +1,7 @@
 package fr.eni.robot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import fr.eni.bll.manager.QuestionManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
@@ -29,6 +30,8 @@ public abstract class Robot {
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
+		
+		Collections.shuffle(questionsTirees);
 		
 		return questionsTirees;
 	}

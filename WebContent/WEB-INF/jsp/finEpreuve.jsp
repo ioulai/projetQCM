@@ -18,12 +18,12 @@
 				  	<div class="card-body">
 					    <h3 class="card-title">Résultats</h3><br><br>
 					    <div class="card-text">
-							<h4>${niveau}</h4><br><br>
-							Note : <c:out value="${note}"></c:out>/20<br><br>
+							<h4>${niveau}</h4><br>
+							<h2><c:out value="${note}"></c:out>/20</h2><br><br>
 		
-							<ul style="list-style-type:circle;">
+							<ul style="list-style-type:none;">
 								<c:forEach var="themeResultats" items="${themeResultats}">
-									<li>${themeResultats.getTauxReussite()} % de bonne reponse pour le theme ${themeResultats.theme}</li>
+									<li>${themeResultats.getTauxReussite()} % de bonne reponse pour le theme "${themeResultats.theme}"</li>
 								</c:forEach>
 							</ul>
 						</div>
