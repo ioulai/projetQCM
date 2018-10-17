@@ -20,7 +20,7 @@
 						<c:choose>
 							<c:when test="${profil == 'CANDIDAT'}">
 								<h5 class="card-title">Profil candidat</h5>
-								<i class="far fa-user fa-3x"></i>
+								<i class="far fa-user"></i>
 								<i>${utilisateurConnecte.nom} ${utilisateurConnecte.prenom}</i>
 								<p class="card-text">Afficher le.s épreuve·s ci-dessous</p>
 								<a href="ListeEpreuve" class="btn btn-primary">Afficher</a>
