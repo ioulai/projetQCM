@@ -102,7 +102,7 @@
 							<input type="hidden" name="chronoform" id="chronoform">
 							<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
 							<input type="hidden" value="${idTest}" name="idTest">
-							<input type="submit" class="btn btn-success" value="Enregistrer">
+							<input type="submit" class="btn btn-success" value="Valider">
 						</form>
 			
 						<form method="POST" action="Marquage">
