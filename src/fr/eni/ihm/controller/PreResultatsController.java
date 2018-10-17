@@ -62,6 +62,7 @@ public class PreResultatsController extends HttpServlet{
 			// Attributs à envoyer
 			req.setAttribute("questions", listeQuestions);
 			req.setAttribute("idTest", idTest);
+			req.setAttribute("isModifiable", true);
 			
 			req.getRequestDispatcher("preResultats").forward(req, resp);
 		} catch (Exception e) {

@@ -4,7 +4,7 @@ public class QuestionResultat {
 	private int id;
 	private boolean isMarquee;
 	private boolean isResolue;
-	
+
 	public QuestionResultat(int id, boolean isMarquee, boolean isResolue) {
 		super();
 		this.id = id;

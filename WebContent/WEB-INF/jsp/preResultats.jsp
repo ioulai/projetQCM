@@ -22,7 +22,7 @@
 				    <td>Numéro</td>
 				    <td>Marquée</td>
 				    <td>Répondue</td>
-				    <td></td>
+				    <c:if test="${isModifiable}"><td></td></c:if>
 			  	</tr>
 			  	
 				<c:forEach items="${questions}" var="question">
@@ -39,13 +39,16 @@
 						    <c:if test="${question.isResolue()}"><span style="color:green">Oui</span></c:if>
 						    <c:if test="${!question.isResolue()}"><span style="color:red">Non</span></c:if>
 					    </td>
-					    <td>
-						    <form method="GET" action="Questions">
-								<input type="hidden" value="${idTest}" name="idTest">
-								<input type="hidden" value="${question.id}" name="idQuestionCourante">
-								<input type="submit" id="nomListe" value="Modifier"><br>
-							</form>
-					    </td>
+					    
+				    	<c:if test="${isModifiable}">
+				    		<td>
+							    <form method="GET" action="Questions">
+									<input type="hidden" value="${idTest}" name="idTest">
+									<input type="hidden" value="${question.id}" name="idQuestionCourante">
+									<input type="submit" id="nomListe" value="Modifier"><br>
+								</form>
+							</td>
+						</c:if>
 				  	</tr>
 				</c:forEach>
 			</table>

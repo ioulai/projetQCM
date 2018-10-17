@@ -32,149 +32,189 @@ public class QuestionController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			ArrayList<Integer> propSelected = new ArrayList<Integer>();
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
-			int duree = Integer.parseInt(req.getParameter("chronoform"));
-			
-			// Gestion des ids propositions
-			String[] idsProposition = req.getParameterValues("idPropositionUser");
-			ArrayList<Integer> idsIntProposition = new ArrayList<Integer>();
-			
-			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
-			PropositionManager pm = ManagerFactory.propositionManager();
-			
-			String strIdQuestion = req.getParameter("idQuestionCourante");
-			int idQuestion = Integer.parseInt(strIdQuestion);
-			
-			boolean isDispatchResults = false;
-			boolean isMulti = false;
 			
 			// On cherche l'épreuve du test
 			EpreuveManager em = ManagerFactory.epreuveManager();
 			Epreuve epreuve = null;
 			epreuve = em.selectByIdTest(idTest);
 			
-			// Si on valide bien avec une réponse de cochée
-			if (idsProposition != null){
-				for (String id : idsProposition) {
-					idsIntProposition.add(Integer.parseInt(id));
-				}
+			int sec = epreuve.getTest().getDuree().getSeconds() +  epreuve.getTest().getDuree().getHours()*3600 + epreuve.getTest().getDuree().getMinutes()*60;
+			sec = sec - (epreuve.getTempsEcoule().getSeconds() +  epreuve.getTempsEcoule().getHours()*3600 + epreuve.getTempsEcoule().getMinutes()*60);
 
-				// On cherche la proposition pour prendre la question
-				ArrayList<Proposition> propositionsUser = new ArrayList<Proposition>();
+			// Si plus de temps, redirection sur preResultats
+			if (sec <= 0) {
+				ArrayList<QuestionResultat> listeQuestions = new ArrayList<QuestionResultat>();
 				
-				for (int i : idsIntProposition) {
-					propositionsUser.add(pm.selectById(i));
-				}
+				// Recherche des questionTirages
+				QuestionTirageManager qtm = ManagerFactory.questionTirageManager();
+				ArrayList<QuestionTirage> questionTirages = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
 				
-				// Supprime les reponsesTirages pour cette question
-				rtm.deleteByIds(epreuve.getIdEpreuve(), idQuestion);
+				ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
 				
-				QuestionManager qm = ManagerFactory.questionManager();
-				Question questionValidee = qm.selectById(idQuestion);
+				boolean isResolue = false;
 				
-				// Pour chaque id proposition, on ajoute une ligne dans ReponseTirage
-				for (Proposition p : propositionsUser) {
-					ReponseTirage rt = new ReponseTirage();
-					rt.setEpreuve(epreuve);
-					rt.setProposition(p);
-					rt.setQuestion(questionValidee);
-					rtm.insert(rt);
-				}
-			}
-			
-			/* GESTION DES DONNEES A ENVOYER A L'IHM */
-			
-			// Grâce à l'épreuve, on cherche ses questionsTirage
-			QuestionTirageManager qtm = ManagerFactory.questionTirageManager();
-			ArrayList<QuestionTirage> questionTirages = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
-			
-			int ordreQuestPrec = 0;
-			ArrayList<Question> questions = new ArrayList<Question>();
-			Question questionSuivante = null;
-
-			for (QuestionTirage qt : questionTirages) {
-				// Si c'est la questionTirage précédent, on recup son ordre pour trouver la question suivante
-				if (qt.getEpreuve().getIdEpreuve() == epreuve.getIdEpreuve() && qt.getQuestion().getId() == idQuestion) {
-					ordreQuestPrec = qt.getNumOrdre();
-				}
-				// On a besoin de la liste des questions
-				questions.add(qt.getQuestion());
-			}
-			
-			// On reboucle pour chercher la prochaine question
-			for (QuestionTirage qt : questionTirages) {
-				if (questionSuivante == null && qt.getNumOrdre() == 1) {
-					questionSuivante = qt.getQuestion();
-				}
-				else if (qt.getNumOrdre() == (ordreQuestPrec + 1)) {
-					questionSuivante = qt.getQuestion();
-					break;
-				}
-				else {
-					isDispatchResults = true;
-					ArrayList<QuestionResultat> listeQuestions = new ArrayList<QuestionResultat>();
-					boolean isResolue = false;
+				// On cherche les questions
+				for (QuestionTirage q : questionTirages) {
+					ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), q.getQuestion().getId());
+					isResolue = false;
 					
-					// On cherche les questions
-					for (QuestionTirage q : questionTirages) {
-						ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), q.getQuestion().getId());
-						isResolue = false;
+					if (lrt != null && lrt.size() > 0) {
+						isResolue = true;
+					}
+					
+					listeQuestions.add(new QuestionResultat(q.getQuestion().getId(), q.isEstMarquee(), isResolue));
+				}
+				
+				// Attributs à envoyer
+				req.setAttribute("questions", listeQuestions);
+				req.setAttribute("idTest", idTest);
+				req.setAttribute("isModifiable", false);
+				
+				req.getRequestDispatcher("preResultats").forward(req, resp);
+			}
+			// Sinon on fait normal
+			else {
+				ArrayList<Integer> propSelected = new ArrayList<Integer>();
+				int duree = Integer.parseInt(req.getParameter("chronoform"));
+				
+				// Gestion des ids propositions
+				String[] idsProposition = req.getParameterValues("idPropositionUser");
+				ArrayList<Integer> idsIntProposition = new ArrayList<Integer>();
+				
+				ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
+				PropositionManager pm = ManagerFactory.propositionManager();
+				
+				String strIdQuestion = req.getParameter("idQuestionCourante");
+				int idQuestion = Integer.parseInt(strIdQuestion);
+				
+				boolean isDispatchResults = false;
+				boolean isMulti = false;
+				
+				// Si on valide bien avec une réponse de cochée
+				if (idsProposition != null){
+					for (String id : idsProposition) {
+						idsIntProposition.add(Integer.parseInt(id));
+					}
+
+					// On cherche la proposition pour prendre la question
+					ArrayList<Proposition> propositionsUser = new ArrayList<Proposition>();
+					
+					for (int i : idsIntProposition) {
+						propositionsUser.add(pm.selectById(i));
+					}
+					
+					// Supprime les reponsesTirages pour cette question
+					rtm.deleteByIds(epreuve.getIdEpreuve(), idQuestion);
+					
+					QuestionManager qm = ManagerFactory.questionManager();
+					Question questionValidee = qm.selectById(idQuestion);
+					
+					// Pour chaque id proposition, on ajoute une ligne dans ReponseTirage
+					for (Proposition p : propositionsUser) {
+						ReponseTirage rt = new ReponseTirage();
+						rt.setEpreuve(epreuve);
+						rt.setProposition(p);
+						rt.setQuestion(questionValidee);
+						rtm.insert(rt);
+					}
+				}
+				
+				/* GESTION DES DONNEES A ENVOYER A L'IHM */
+				
+				// Grâce à l'épreuve, on cherche ses questionsTirage
+				QuestionTirageManager qtm = ManagerFactory.questionTirageManager();
+				ArrayList<QuestionTirage> questionTirages = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
+				
+				int ordreQuestPrec = 0;
+				ArrayList<Question> questions = new ArrayList<Question>();
+				Question questionSuivante = null;
+
+				for (QuestionTirage qt : questionTirages) {
+					// Si c'est la questionTirage précédent, on recup son ordre pour trouver la question suivante
+					if (qt.getEpreuve().getIdEpreuve() == epreuve.getIdEpreuve() && qt.getQuestion().getId() == idQuestion) {
+						ordreQuestPrec = qt.getNumOrdre();
+					}
+					// On a besoin de la liste des questions
+					questions.add(qt.getQuestion());
+				}
+				
+				// On reboucle pour chercher la prochaine question
+				for (QuestionTirage qt : questionTirages) {
+					if (questionSuivante == null && qt.getNumOrdre() == 1) {
+						questionSuivante = qt.getQuestion();
+					}
+					else if (qt.getNumOrdre() == (ordreQuestPrec + 1)) {
+						questionSuivante = qt.getQuestion();
+						break;
+					}
+					// Si dernière question, on va aux résultats
+					else {
+						isDispatchResults = true;
+						ArrayList<QuestionResultat> listeQuestions = new ArrayList<QuestionResultat>();
+						boolean isResolue = false;
 						
-						if (lrt != null && lrt.size() > 0) {
-							isResolue = true;
+						// On cherche les questions
+						for (QuestionTirage q : questionTirages) {
+							ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), q.getQuestion().getId());
+							isResolue = false;
+							
+							if (lrt != null && lrt.size() > 0) {
+								isResolue = true;
+							}
+							
+							listeQuestions.add(new QuestionResultat(q.getQuestion().getId(), q.isEstMarquee(), isResolue));
 						}
 						
-						listeQuestions.add(new QuestionResultat(q.getQuestion().getId(), q.isEstMarquee(), isResolue));
-					}
-					
-					// Attributs à envoyer
-					req.setAttribute("questions", listeQuestions);
-					req.setAttribute("idTest", idTest);
-					
-					req.getRequestDispatcher("preResultats").forward(req, resp);
-					break;
-				}
-			}
-			
-			if (!isDispatchResults) {
-				// Recherche des propositions de la prochaine question
-				ArrayList<Proposition> propositions = pm.selectByIdQuestion(questionSuivante.getId());
-				int count = 0;
-				
-				for (Proposition p : propositions) {
-					if (p.isEstBonne()) {
-						count++;
+						// Attributs à envoyer
+						req.setAttribute("questions", listeQuestions);
+						req.setAttribute("idTest", idTest);
+						req.setAttribute("isModifiable", true);
+						
+						req.getRequestDispatcher("preResultats").forward(req, resp);
+						break;
 					}
 				}
 				
-				if (count > 1) {
-					isMulti = true;
-				}
-				
-				// Cochage de la prochaine question
-				propSelected = searchPropSelected(epreuve, questionSuivante);
-				
-				// Libellé du test à afficher
-				String libelle = epreuve.getTest().getLibelle();
-				
-				// Check si question marquée
-				QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
-				boolean isMarquee = questionTirage.isEstMarquee();
+				if (!isDispatchResults) {
+					// Recherche des propositions de la prochaine question
+					ArrayList<Proposition> propositions = pm.selectByIdQuestion(questionSuivante.getId());
+					int count = 0;
+					
+					for (Proposition p : propositions) {
+						if (p.isEstBonne()) {
+							count++;
+						}
+					}
+					
+					if (count > 1) {
+						isMulti = true;
+					}
+					
+					// Cochage de la prochaine question
+					propSelected = searchPropSelected(epreuve, questionSuivante);
+					
+					// Libellé du test à afficher
+					String libelle = epreuve.getTest().getLibelle();
+					
+					// Check si question marquée
+					QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionSuivante);
+					boolean isMarquee = questionTirage.isEstMarquee();
 
-				// Attributs à envoyer
-				req.setAttribute("isMulti", isMulti);
-				req.setAttribute("propositions", propositions);
-				req.setAttribute("listeQuestions", questions);
-				req.setAttribute("questionEnCours", questionSuivante);
-				req.setAttribute("idTest", idTest);
-				req.setAttribute("propSelected", propSelected);
-				req.setAttribute("libelle", libelle);
-				req.setAttribute("isMarquee", isMarquee);
-				req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
-				req.setAttribute("duree", duree);
-				
-				req.getRequestDispatcher("question").forward(req, resp);
+					// Attributs à envoyer
+					req.setAttribute("isMulti", isMulti);
+					req.setAttribute("propositions", propositions);
+					req.setAttribute("listeQuestions", questions);
+					req.setAttribute("questionEnCours", questionSuivante);
+					req.setAttribute("idTest", idTest);
+					req.setAttribute("propSelected", propSelected);
+					req.setAttribute("libelle", libelle);
+					req.setAttribute("isMarquee", isMarquee);
+					req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
+					req.setAttribute("duree", duree);
+					
+					req.getRequestDispatcher("question").forward(req, resp);
+				}
 			}
 		}
 		catch (Exception e) {
