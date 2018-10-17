@@ -84,7 +84,7 @@ public class InscriptionTestController extends HttpServlet{
 				
 				for(Epreuve epr : epreuves)
 				{
-					if(epr.getEtat().equals("EA") && date.after(epr.getDateFinValidite()))
+					if(epr.getEtat().equals("EA") && epr.getDateFinValidite().after(date))
 					{
 						inscription = false;
 					}

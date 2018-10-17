@@ -136,7 +136,7 @@ private static EpreuveDAOImpl singleton;
 			epr = new Epreuve();
 			epr.setIdEpreuve(resultSet.getInt("idEpreuve"));
 			epr.setDateDebutValidite(resultSet.getDate("dateDebutValidite"));
-			epr.setDateFinValidite(resultSet.getDate("dateDebutValidite"));
+			epr.setDateFinValidite(resultSet.getDate("dateFinValidite"));
 			epr.setEtat(resultSet.getString("etat"));
 			epr.setNiveauObtenu(resultSet.getString("niveauObtenu"));
 			epr.setNoteObtenue(resultSet.getInt("noteObtenue"));
