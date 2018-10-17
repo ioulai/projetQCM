@@ -20,7 +20,91 @@
 		    <div class="col-lg">
 		    <br><h1>${libelle}</h1><br><br>
 
-			<p id="chrono"></p>
+			<p id="chrono"></p><br>
+			
+			<c:set var="count" value="0" scope="page" />
+			<c:set var="haveFound" value="0" scope="page" />
+
+			<c:forEach items="${listeQuestions}" var="question">
+				<c:set var="count" value="${count + 1}" scope="page"/>
+				
+				<form method="GET" action="Questions">
+					<input type="hidden" value="${idEpreuve }" id="idEpreuve">
+					<input type="hidden" value="${idTest}" name="idTest">
+					<input type="hidden" value="${question.question.id}" name="idQuestionCourante">
+					
+					<!-- Si question en cours -->
+					<c:if test="${question.question.id == questionEnCours.id && question.isMarquee() && question.isResolue()}">
+						<input type="submit" class="btn btn-success" id="nomListe" value="Q${count}*">
+					</c:if>
+					<c:if test="${question.question.id == questionEnCours.id && !question.isMarquee() && question.isResolue()}">
+						<input type="submit" class="btn btn-success" id="nomListe" value="Q${count}">
+					</c:if>
+					<c:if test="${question.question.id == questionEnCours.id && !question.isMarquee() && !question.isResolue()}">
+						<input type="submit" class="btn btn-dark" id="nomListe" value="Q${count}">
+					</c:if>
+					<c:if test="${question.question.id == questionEnCours.id && question.isMarquee() && !question.isResolue()}">
+						<input type="submit" class="btn btn-dark" id="nomListe" value="Q${count}*">
+					</c:if>
+					
+					<!-- Si question pas en cours -->
+					<c:if test="${question.question.id != questionEnCours.id && question.isMarquee() && question.isResolue()}">
+						<input type="submit" class="btn btn-outline-success" id="nomListe" value="Q${count}*">
+					</c:if>
+					<c:if test="${question.question.id != questionEnCours.id && !question.isMarquee() && question.isResolue()}">
+						<input type="submit" class="btn btn-outline-success" id="nomListe" value="Q${count}">
+					</c:if>
+					<c:if test="${question.question.id != questionEnCours.id && !question.isMarquee() && !question.isResolue()}">
+						<input type="submit" class="btn btn-outline-dark" id="nomListe" value="Q${count}">
+					</c:if>
+					<c:if test="${question.question.id != questionEnCours.id && question.isMarquee() && !question.isResolue()}">
+						<input type="submit" class="btn btn-outline-dark" id="nomListe" value="Q${count}*">
+					</c:if>
+				</form>
+			</c:forEach><br><br>
+
+			<h3>Question <c:out value="${ordreQuestion}"></c:out></h3><br>
+			
+			<h4><c:out value="${questionEnCours.enonce}"></c:out></h4><br><br>
+			
+			<div>
+				<form method="POST" action="Questions">	
+					<c:forEach items="${propositions}" var="proposition">
+						<c:forEach items="${propSelected}" var="id">
+							<c:if test="${proposition.id == id}">
+								<c:set var="haveFound" value="1" scope="page"/>
+								
+								<c:if test="${isMulti}">
+									<input type="checkbox" name="idPropositionUser" value="${proposition.id}" checked>
+								</c:if>
+								<c:if test="${!isMulti}">
+									<input type="radio" name="idPropositionUser" value="${proposition.id}" checked>
+								</c:if>
+							</c:if>
+						</c:forEach>
+						
+						<c:if test="${haveFound == 0 && isMulti}">
+							<input type="checkbox" name="idPropositionUser" value="${proposition.id}">
+						</c:if>
+						
+						<c:if test="${haveFound == 0 && !isMulti}">
+							<input type="radio" name="idPropositionUser" value="${proposition.id}">
+						</c:if>
+						<c:set var="haveFound" value="0" scope="page"/>
+						
+						${proposition.enonce}
+						<br>
+					</c:forEach>
+					
+					<br><br>
+					<input type="hidden" value="${idEpreuve }" id="idEpreuve">
+					<input type="hidden" name="chronoform" id="chronoform">
+					<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
+					<input type="hidden" value="${idTest}" name="idTest">
+					<input type="submit" value="Valider">
+				</form>
+			
+			<br>
 			
 			<form method="POST" action="Marquage">
 				<input type="hidden" value="${idEpreuve }" id="idEpreuve">
@@ -32,61 +116,6 @@
 				<c:if test="${isMarquee == true}">
 					<input type="submit" id="marquage" value="Démarquer">
 				</c:if>
-			</form>
-			
-			<br>
-			
-			<c:set var="count" value="0" scope="page" />
-			<c:set var="haveFound" value="0" scope="page" />
-
-			<c:forEach items="${listeQuestions}" var="question">
-				<c:set var="count" value="${count + 1}" scope="page"/>
-				
-				<form method="GET" action="Questions">
-					<input type="hidden" value="${idEpreuve }" id="idEpreuve">
-					<input type="hidden" value="${idTest}" name="idTest">
-					<input type="hidden" value="${question.id}" name="idQuestionCourante">
-					<input type="submit" id="nomListe" value="Q${count}">
-				</form>
-			</c:forEach><br><br>
-			
-			<h3><c:out value="${questionEnCours.enonce}"></c:out></h3><br><br>
-			
-			<div>
-			<form method="POST" action="Questions">	
-				<c:forEach items="${propositions}" var="proposition">
-					<c:forEach items="${propSelected}" var="id">
-						<c:if test="${proposition.id == id}">
-							<c:set var="haveFound" value="1" scope="page"/>
-							
-							<c:if test="${isMulti}">
-								<input type="checkbox" name="idPropositionUser" value="${proposition.id}" checked>
-							</c:if>
-							<c:if test="${!isMulti}">
-								<input type="radio" name="idPropositionUser" value="${proposition.id}" checked>
-							</c:if>
-						</c:if>
-					</c:forEach>
-					
-					<c:if test="${haveFound == 0 && isMulti}">
-						<input type="checkbox" name="idPropositionUser" value="${proposition.id}">
-					</c:if>
-					
-					<c:if test="${haveFound == 0 && !isMulti}">
-						<input type="radio" name="idPropositionUser" value="${proposition.id}">
-					</c:if>
-					<c:set var="haveFound" value="0" scope="page"/>
-					
-					${proposition.enonce}
-					<br>
-				</c:forEach>
-				
-				<br><br>
-				<input type="hidden" value="${idEpreuve }" id="idEpreuve">
-				<input type="hidden" name="chronoform" id="chronoform">
-				<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
-				<input type="hidden" value="${idTest}" name="idTest">
-				<input type="submit" value="Valider">
 			</form>
 			</div>
 			<form method="GET" action="PreResultats">	

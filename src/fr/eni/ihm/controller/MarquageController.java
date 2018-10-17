@@ -17,6 +17,7 @@ import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Epreuve;
 import fr.eni.bo.Proposition;
 import fr.eni.bo.Question;
+import fr.eni.bo.QuestionResultat;
 import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
@@ -29,6 +30,7 @@ public class MarquageController extends HttpServlet{
 		try {
 			int idQuestion = Integer.parseInt(req.getParameter("idQuestionCourante"));
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
+			int ordreQuestion = 1;
 			ArrayList<Integer> propSelected = new ArrayList<Integer>();
 			
 			boolean isMulti = false;
@@ -37,12 +39,13 @@ public class MarquageController extends HttpServlet{
 			Epreuve epreuve = null;
 			
 			ArrayList<QuestionTirage> lstQuestionTirage = null;
-			ArrayList<Question> questions = new ArrayList<Question>();
+			ArrayList<QuestionResultat> questions = new ArrayList<QuestionResultat>();
 			
 			// Création des managers
 			EpreuveManager em = ManagerFactory.epreuveManager();
 			QuestionTirageManager qtm = ManagerFactory.questionTirageManager();
 			QuestionManager qm = ManagerFactory.questionManager();
+			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
 			PropositionManager pm = ManagerFactory.propositionManager();
 			
 			// Recherche de l'épreuve du test
@@ -52,8 +55,17 @@ public class MarquageController extends HttpServlet{
 			question = qm.selectById(idQuestion);
 			lstQuestionTirage = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
 			
+			boolean isResolue = false;
+			
 			for (QuestionTirage qt : lstQuestionTirage) {
-				questions.add(qt.getQuestion());
+				ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
+				isResolue = false;
+				
+				if (lrt != null && lrt.size() > 0) {
+					isResolue = true;
+				}
+				
+				questions.add(new QuestionResultat(qt.getQuestion(), qt.isEstMarquee(), isResolue));
 			}
 			
 			// Recherche proposition sélectionnée
@@ -81,6 +93,9 @@ public class MarquageController extends HttpServlet{
 			// Check si question marquée
 			QuestionTirage questionTirage = qtm.selectByIds(epreuve, question);
 			
+			// Num ordre question
+			ordreQuestion = questionTirage.getNumOrdre();
+			
 			// Modifier le marquage
 			questionTirage.setEstMarquee(!questionTirage.isEstMarquee());
 			qtm.update(questionTirage);
@@ -100,6 +115,7 @@ public class MarquageController extends HttpServlet{
 			req.setAttribute("isMulti", isMulti);
 			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 			req.setAttribute("duree", sec);
+			req.setAttribute("ordreQuestion", ordreQuestion);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {

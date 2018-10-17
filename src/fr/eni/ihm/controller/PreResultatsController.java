@@ -59,7 +59,7 @@ public class PreResultatsController extends HttpServlet{
 					isResolue = true;
 				}
 				
-				listeQuestions.add(new QuestionResultat(q.getQuestion().getId(), q.isEstMarquee(), isResolue));
+				listeQuestions.add(new QuestionResultat(q.getQuestion(), q.isEstMarquee(), isResolue));
 			}
 			
 			// Attributs à envoyer

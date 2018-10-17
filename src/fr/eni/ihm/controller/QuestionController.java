@@ -63,7 +63,7 @@ public class QuestionController extends HttpServlet{
 						isResolue = true;
 					}
 					
-					listeQuestions.add(new QuestionResultat(q.getQuestion().getId(), q.isEstMarquee(), isResolue));
+					listeQuestions.add(new QuestionResultat(q.getQuestion(), q.isEstMarquee(), isResolue));
 				}
 				
 				// Attributs à envoyer
@@ -77,6 +77,7 @@ public class QuestionController extends HttpServlet{
 			else {
 				ArrayList<Integer> propSelected = new ArrayList<Integer>();
 				int duree = Integer.parseInt(req.getParameter("chronoform"));
+				int ordreQuestion = 1;
 				
 				// Gestion des ids propositions
 				String[] idsProposition = req.getParameterValues("idPropositionUser");
@@ -127,32 +128,50 @@ public class QuestionController extends HttpServlet{
 				ArrayList<QuestionTirage> questionTirages = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
 				
 				int ordreQuestPrec = 0;
-				ArrayList<Question> questions = new ArrayList<Question>();
+				int ordreMax = 0;
+				
+				ArrayList<QuestionResultat> questions = new ArrayList<QuestionResultat>();
 				Question questionSuivante = null;
 
+				boolean isResolue = false;
+				
 				for (QuestionTirage qt : questionTirages) {
 					// Si c'est la questionTirage précédent, on recup son ordre pour trouver la question suivante
 					if (qt.getEpreuve().getIdEpreuve() == epreuve.getIdEpreuve() && qt.getQuestion().getId() == idQuestion) {
 						ordreQuestPrec = qt.getNumOrdre();
 					}
+					
+					// Mise de l'ordre max au max
+					if (qt.getNumOrdre() > ordreMax) {
+						ordreMax = qt.getNumOrdre();
+					}
+					
 					// On a besoin de la liste des questions
-					questions.add(qt.getQuestion());
+					ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
+					isResolue = false;
+					
+					if (lrt != null && lrt.size() > 0) {
+						isResolue = true;
+					}
+					
+					questions.add(new QuestionResultat(qt.getQuestion(), qt.isEstMarquee(), isResolue));
 				}
 				
 				// On reboucle pour chercher la prochaine question
 				for (QuestionTirage qt : questionTirages) {
 					if (questionSuivante == null && qt.getNumOrdre() == 1) {
 						questionSuivante = qt.getQuestion();
+						ordreQuestion = qt.getNumOrdre();
 					}
 					else if (qt.getNumOrdre() == (ordreQuestPrec + 1)) {
 						questionSuivante = qt.getQuestion();
+						ordreQuestion = qt.getNumOrdre();
 						break;
 					}
 					// Si dernière question, on va aux résultats
-					else {
+					else if (qt.getNumOrdre() == ordreMax) {
 						isDispatchResults = true;
 						ArrayList<QuestionResultat> listeQuestions = new ArrayList<QuestionResultat>();
-						boolean isResolue = false;
 						
 						// On cherche les questions
 						for (QuestionTirage q : questionTirages) {
@@ -163,7 +182,7 @@ public class QuestionController extends HttpServlet{
 								isResolue = true;
 							}
 							
-							listeQuestions.add(new QuestionResultat(q.getQuestion().getId(), q.isEstMarquee(), isResolue));
+							listeQuestions.add(new QuestionResultat(q.getQuestion(), q.isEstMarquee(), isResolue));
 						}
 						
 						// Attributs à envoyer
@@ -212,6 +231,7 @@ public class QuestionController extends HttpServlet{
 					req.setAttribute("isMarquee", isMarquee);
 					req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 					req.setAttribute("duree", duree);
+					req.setAttribute("ordreQuestion", ordreQuestion);
 					
 					req.getRequestDispatcher("question").forward(req, resp);
 				}
@@ -232,10 +252,11 @@ public class QuestionController extends HttpServlet{
 			ArrayList<Integer> propSelected = new ArrayList<Integer>();
 			int idQuestion = 0;
 			int compteurQuestion = 1;
+			int ordreQuestion = 1;
 			
 			boolean isMulti = false;
 			
-			ArrayList<Question> questions = new ArrayList<Question>();
+			ArrayList<QuestionResultat> questions = new ArrayList<QuestionResultat>();
 			ArrayList<Question> questionsTemp = new ArrayList<Question>();
 			
 			// Création des managers
@@ -244,6 +265,7 @@ public class QuestionController extends HttpServlet{
 			SectionTestManager stm = ManagerFactory.sectionTestManager();
 			QuestionManager qm = ManagerFactory.questionManager();
 			PropositionManager pm = ManagerFactory.propositionManager();
+			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
 			
 			Epreuve epreuve = null;
 			Question questionEnCours = null;
@@ -266,13 +288,21 @@ public class QuestionController extends HttpServlet{
 				ArrayList<QuestionTirage> lstQuestionTirage = null;
 
 				lstQuestionTirage = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
+				boolean isResolue = true;
 				
 				for (QuestionTirage qt : lstQuestionTirage) {
 					if (questionEnCours == null || (qt.getNumOrdre() < qtm.selectByIds(epreuve, questionEnCours).getNumOrdre())) {
 						questionEnCours = qt.getQuestion();
 					}
 					
-					questions.add(qt.getQuestion());
+					ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
+					isResolue = false;
+					
+					if (lrt != null && lrt.size() > 0) {
+						isResolue = true;
+					}
+					
+					questions.add(new QuestionResultat(qt.getQuestion(), qt.isEstMarquee(), isResolue));
 				}
 			}
 			
@@ -293,8 +323,11 @@ public class QuestionController extends HttpServlet{
 					questionsTemp = new ArrayList<Question>();
 					
 					// On va chercher des questions aléatoire dans le thème de la section
-					questionsTemp.addAll(Robot.tirageAuSort(st));
-					questions.addAll(Robot.tirageAuSort(st));
+					questionsTemp = Robot.tirageAuSort(st);
+					
+					for (Question q : questionsTemp) {
+						questions.add(new QuestionResultat(q, false, false));
+					}
 					
 					questionTirage = new QuestionTirage();
 					
@@ -324,15 +357,26 @@ public class QuestionController extends HttpServlet{
 				
 				questionEnCours = qm.selectById(idQuestion);
 				lstQuestionTirage = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
+				boolean isResolue = false;
 				
 				for (QuestionTirage qt : lstQuestionTirage) {
-					questions.add(qt.getQuestion());
+					ArrayList<ReponseTirage> lrt = rtm.selectByAll(epreuve.getIdEpreuve(), qt.getQuestion().getId());
+					isResolue = false;
+					
+					if (lrt != null && lrt.size() > 0) {
+						isResolue = true;
+					}
+					
+					questions.add(new QuestionResultat(qt.getQuestion(), qt.isEstMarquee(), isResolue));
 				}
 			}
 			
 			// Check si question marquée
 			QuestionTirage questionTirage = qtm.selectByIds(epreuve, questionEnCours);
 			boolean isMarquee = questionTirage.isEstMarquee();
+			
+			// Num ordre question en cours
+			ordreQuestion = questionTirage.getNumOrdre();
 			
 			// Recherche proposition sélectionnée
 			propSelected = searchPropSelected(epreuve, questionEnCours);
@@ -365,6 +409,7 @@ public class QuestionController extends HttpServlet{
 			req.setAttribute("isMulti", isMulti);
 			req.setAttribute("duree", sec);
 			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
+			req.setAttribute("ordreQuestion", ordreQuestion);
 			
 			req.getRequestDispatcher("question").forward(req, resp);
 		} catch (Exception e) {
