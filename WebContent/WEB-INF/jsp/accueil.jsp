@@ -12,10 +12,11 @@
 
 		<div id="content" style="text-align: center;">
 			<h1>Accueil</h1>
-		</div>
-		<div class="container-fluid" >
+		</div><br>
+		<div class="container-fluid">
 			<div class="row ">
-				<div class="card col-lg-6 col-md-9 " style="width: 18rem;margin:0 auto">
+				<div class="card col-lg-6 col-md-9 "
+					style="width: 18rem; margin: 0 auto">
 					<div class="card-body">
 						<c:choose>
 							<c:when test="${profil == 'CANDIDAT'}">
@@ -39,11 +40,6 @@
 								<a href="Desinscription" class="btn btn-primary">Desinscription</a>
 
 								<a href="AjoutPromo" class="btn btn-primary">Ajout promotion</a>
-
-
-
-
-
 							</c:when>
 						</c:choose>
 					</div>
