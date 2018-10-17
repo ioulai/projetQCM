@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import fr.eni.bo.Proposition;
+import fr.eni.bo.Question;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.dal.dao.ReponseTirageDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
@@ -22,7 +22,7 @@ private static ReponseTirageDAOImpl singleton;
 	private static final String UPDATE_QUERY = "UPDATE reponseTirage SET proposition_idProposition = ? WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_question_idQuestion = ?";
 	private static final String DELETE_QUERY = "DELETE FROM reponseTirage";
 	private static final String DELETE_BY_IDS_QUERY = "DELETE FROM reponseTirage WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_question_idQuestion = ?";
-	private static final String SELECT_PROPOSITION = "SELECT * FROM reponseTirage INNER JOIN proposition ON proposition_idProposition = idProposition INNER JOIN question ON proposition_question_idQuestion = idQuestion WHERE questionTirage_epreuve_idEpreuve = ? AND estBonne = 1 AND theme_idTheme = ?";
+	private static final String SELECT_PROPOSITION = "SELECT DISTINCT question_idQuestion FROM reponseTirage INNER JOIN proposition ON proposition_idProposition = idProposition INNER JOIN question ON proposition_question_idQuestion = idQuestion WHERE questionTirage_epreuve_idEpreuve = ? AND estBonne = 1 AND theme_idTheme = ?";
 	private static final String SELECT_COUNT_BY_PROPO = "SELECT COUNT (*) as NbrBonneRep FROM proposition WHERE question_idQuestion = ? AND estBonne = 1";
 	private static final String SELECT_COUNT_BY_REP = "SELECT COUNT (*) as NbrRep FROM reponseTirage INNER JOIN proposition ON idProposition = proposition_idProposition WHERE proposition_question_idQuestion = ? AND estBonne = 1";
 	
@@ -155,8 +155,8 @@ private static ReponseTirageDAOImpl singleton;
 		Connection connexion = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-		Proposition propo = null;
-		ArrayList<Proposition> propos = new ArrayList<Proposition>();	
+		Question question = null;
+		ArrayList<Question> questions = new ArrayList<Question>();	
 		int NbrBonneRep = 0;
 		
 		try {
@@ -169,11 +169,11 @@ private static ReponseTirageDAOImpl singleton;
 			resultSet = statement.executeQuery();
 			
 			while(resultSet.next()) {
-				propo = PropositionDAOImpl.map(resultSet);
-				propo.setQuestion(QuestionDAOImpl.map(resultSet));
-				propos.add(propo);
+			    question = new Question();
+				question.setId(resultSet.getInt("question_idQuestion"));
+				questions.add(question);
 			}
-			NbrBonneRep = check(propos);
+			NbrBonneRep = check(questions);
 			
 		} catch (Exception e) {
 			throw new DaoException(e.getMessage(), e);
@@ -185,14 +185,14 @@ private static ReponseTirageDAOImpl singleton;
 		return NbrBonneRep;
 	}
 	
-	public int check(ArrayList<Proposition> propos){
+	public int check(ArrayList<Question> questions){
 		int note = 0;
 		
-		for(Proposition propo : propos)
+		for(Question question : questions)
 		{
-			if(NbrPropoBonne(propo.getQuestion().getId()) > 1)
+			if(NbrPropoBonne(question.getId()) > 1)
 			{
-				if(NbrPropoBonne(propo.getQuestion().getId()) == NbrRepBonne(propo.getQuestion().getId()))
+				if(NbrPropoBonne(question.getId()) == NbrRepBonne(question.getId()))
 				{
 					note++;
 				}
