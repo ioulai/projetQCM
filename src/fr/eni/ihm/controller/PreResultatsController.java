@@ -19,7 +19,6 @@ import fr.eni.bo.ReponseTirage;
 
 public class PreResultatsController extends HttpServlet{
 	private static final long serialVersionUID = -6970893575378675464L;
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
@@ -34,10 +33,14 @@ public class PreResultatsController extends HttpServlet{
 		try {
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
 			ArrayList<QuestionResultat> listeQuestions = new ArrayList<QuestionResultat>();
-			
+
 			// On cherche l'épreuve du test
 			EpreuveManager em = ManagerFactory.epreuveManager();
 			Epreuve epreuve = em.selectByIdTest(idTest);
+			
+			//Timer
+			int sec = epreuve.getTest().getDuree().getSeconds() +  epreuve.getTest().getDuree().getHours()*3600 + epreuve.getTest().getDuree().getMinutes()*60;
+			sec = sec - (epreuve.getTempsEcoule().getSeconds() +  epreuve.getTempsEcoule().getHours()*3600 + epreuve.getTempsEcoule().getMinutes()*60);
 			
 			// Recherche des questionTirages
 			QuestionTirageManager qtm = ManagerFactory.questionTirageManager();
@@ -63,6 +66,8 @@ public class PreResultatsController extends HttpServlet{
 			req.setAttribute("questions", listeQuestions);
 			req.setAttribute("idTest", idTest);
 			req.setAttribute("isModifiable", true);
+			req.setAttribute("duree", sec);
+			req.setAttribute("idEpreuve", epreuve.getIdEpreuve());
 			
 			req.getRequestDispatcher("preResultats").forward(req, resp);
 		} catch (Exception e) {

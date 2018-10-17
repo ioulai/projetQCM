@@ -1,18 +1,17 @@
 package fr.eni.bo;
 
 public class ThemeResultat {
-	private Theme theme;
+	private String theme;
 	private String TauxReussite;
 	
-	public ThemeResultat(Theme theme, String tauxReussite) {
+	public ThemeResultat() {
 		super();
-		this.theme = theme;
-		TauxReussite = tauxReussite;
 	}
-	public Theme getTheme() {
+	
+	public String getTheme() {
 		return theme;
 	}
-	public void setTheme(Theme theme) {
+	public void setTheme(String theme) {
 		this.theme = theme;
 	}
 	public String getTauxReussite() {

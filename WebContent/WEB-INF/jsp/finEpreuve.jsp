@@ -20,8 +20,13 @@
 			<br><br>
 			
 			<h3>Note : <c:out value="${note}"></c:out>/20</h3><br><br>
-		</div>
 		
+		<ul style="list-style-type:circle;">
+		<c:forEach var="themeResultats" items="${themeResultats}">
+			<li>${themeResultats.getTauxReussite()} % de bonne reponse pour le theme ${themeResultats.theme}</li>
+		</c:forEach>
+		</ul>
+		</div>
 		<jsp:include page="/WEB-INF/jsp/template/footer.jsp"></jsp:include>
 	</body>
 </html>

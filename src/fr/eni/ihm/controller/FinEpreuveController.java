@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.bll.manager.EpreuveManager;
 import fr.eni.bll.manager.QuestionTirageManager;
 import fr.eni.bll.manager.ReponseTirageManager;
+import fr.eni.bll.manager.SectionTestManager;
 import fr.eni.bll.manager.TestManager;
+import fr.eni.bll.manager.ThemeManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Epreuve;
 import fr.eni.bo.QuestionTirage;
 import fr.eni.bo.ReponseTirage;
 import fr.eni.bo.Test;
+import fr.eni.bo.Theme;
 import fr.eni.bo.ThemeResultat;
 
 public class FinEpreuveController extends HttpServlet{
@@ -27,7 +30,8 @@ public class FinEpreuveController extends HttpServlet{
 		try {
 			int idTest = Integer.parseInt(req.getParameter("idTest"));
 			float note = 0;
-			
+			ThemeResultat themeresult = null;
+			ArrayList<ThemeResultat> themereuslts = new ArrayList<>();
 			Epreuve epreuve = null;
 			
 			// Création des managers
@@ -35,9 +39,8 @@ public class FinEpreuveController extends HttpServlet{
 			QuestionTirageManager qtm = ManagerFactory.questionTirageManager();
 			ReponseTirageManager rtm = ManagerFactory.reponseTirageManager();
 			TestManager tm = ManagerFactory.TestManager();
-			
-			ArrayList<ThemeResultat> themeResultats = new ArrayList<ThemeResultat>();
-			
+			ThemeManager thm = ManagerFactory.themeManager();
+			SectionTestManager stm = ManagerFactory.sectionTestManager();
 			// Recherche de l'épreuve du test
 			epreuve = em.selectByIdTest(idTest);
 			
@@ -92,6 +95,16 @@ public class FinEpreuveController extends HttpServlet{
 			
 			// Modif des resultats
 			em.update(epreuve);
+			ArrayList<Theme> listTheme =  thm.selectByIdTest(idTest);
+			//Affichage Pourcetage
+			for(Theme theme : listTheme)
+			{
+				themeresult = new ThemeResultat();
+				note = rtm.selectcount(epreuve.getIdEpreuve(),theme.getId());
+				themeresult.setTheme(theme.getLibelle());
+				themeresult.setTauxReussite(String.valueOf(Math.round((note/stm.nbQuestionATirerByThemeId(theme.getId()))*100)));
+				themereuslts.add(themeresult);
+			}
 			
 			// On vide les tables tampons de tirage
 			rtm.deleteAll();
@@ -99,10 +112,11 @@ public class FinEpreuveController extends HttpServlet{
 			
 			req.setAttribute("niveau", niveau);
 			req.setAttribute("note", epreuve.getNoteObtenue());
-			req.setAttribute("themeResultats", themeResultats);
-			req.getRequestDispatcher("finEpreuve").forward(req, resp);
+			req.setAttribute("themeResultats", themereuslts);
+			req.getRequestDispatcher("finEpreuve").forward(req, resp);		
 		} catch (Exception e) {
-			resp.sendError(500);
+			//resp.sendError(500);
+			e.printStackTrace();
 		}
 	}
 }

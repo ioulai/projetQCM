@@ -6,4 +6,6 @@ import fr.eni.tp.web.common.bll.exception.ManagerException;
 
 public interface SectionTestManager {	
 	ArrayList<SectionTest> selectByIdTest(int id) throws ManagerException;
+	
+	int nbQuestionATirerByThemeId(int idTheme)throws ManagerException;
 }

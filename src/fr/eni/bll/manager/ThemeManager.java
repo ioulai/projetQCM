@@ -7,4 +7,6 @@ import fr.eni.tp.web.common.bll.exception.ManagerException;
 
 public interface ThemeManager {	
 	ArrayList<Theme> selectAll() throws ManagerException;
+	
+	ArrayList<Theme> selectByIdTest(int idTest) throws ManagerException;
 }

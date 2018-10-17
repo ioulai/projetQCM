@@ -16,6 +16,7 @@ public class ThemeDAOImpl implements ThemeDAO{
 private static ThemeDAOImpl singleton;
 
 	private static final String SELECT_ALL = "SELECT * FROM theme";
+	private static final String SELECT_BY_ID_EPREUVE = "SELECT * FROM theme INNER JOIN sectionTest ON idTheme = theme_idTheme INNER JOIN test ON test_idTest = idTest WHERE idTest = ?";
 	
 	public static ThemeDAO getInstance() {
 		if (singleton == null)
@@ -57,5 +58,33 @@ private static ThemeDAOImpl singleton;
 		theme.setLibelle(resultSet.getString("libelle"));
 		
 		return theme;
+	}
+
+	@Override
+	public ArrayList<Theme> selectByIdTest(int idTest) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		ArrayList<Theme> themes = new ArrayList<Theme>();
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_BY_ID_EPREUVE);
+			statement.setInt(1, idTest);
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				themes.add(map(resultSet));
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return themes;
 	}
 }

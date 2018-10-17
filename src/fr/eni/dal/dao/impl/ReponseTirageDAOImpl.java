@@ -21,6 +21,7 @@ private static ReponseTirageDAOImpl singleton;
 	private static final String UPDATE_QUERY = "UPDATE reponseTirage SET proposition_idProposition = ? WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_question_idQuestion = ?";
 	private static final String DELETE_QUERY = "DELETE FROM reponseTirage";
 	private static final String DELETE_BY_IDS_QUERY = "DELETE FROM reponseTirage WHERE questionTirage_epreuve_idEpreuve = ? AND proposition_question_idQuestion = ?";
+	private static final String SELECT_COUNT = "SELECT COUNT (*) as NbrRep FROM reponseTirage INNER JOIN proposition ON proposition_idProposition = idProposition INNER JOIN question ON proposition_question_idQuestion = idQuestion WHERE questionTirage_epreuve_idEpreuve = ? AND estBonne = 1 AND theme_idTheme = ?";
 	
 	public static ReponseTirageDAO getInstance() {
 		if (singleton == null)
@@ -144,5 +145,35 @@ private static ReponseTirageDAOImpl singleton;
 		finally {
 			ResourceUtil.safeClose(statement, connexion);
 		}
+	}
+
+	@Override
+	public int selectcount(int idEpreuve, int idtheme) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		int NbrBonneRep = 0;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_COUNT);
+			statement.setInt(1, idEpreuve);
+			statement.setInt(2, idtheme);
+			
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				NbrBonneRep = resultSet.getInt("NbrRep");
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return NbrBonneRep;
 	}
 }

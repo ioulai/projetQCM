@@ -7,6 +7,7 @@ import fr.eni.dal.dao.ThemeDAO;
 import fr.eni.dal.factory.DAOFactory;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 import fr.eni.tp.web.common.dal.exception.DaoException;
+import fr.eni.tp.web.common.util.ValidationUtil;
 
 public class ThemeManagerImpl implements ThemeManager {
 	private static ThemeManager singleton = null;
@@ -25,6 +26,20 @@ public class ThemeManagerImpl implements ThemeManager {
 		
 		try {
 			themes = themeDAO.selectAll();
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return themes;
+	}
+
+	@Override
+	public ArrayList<Theme> selectByIdTest(int idTest) throws ManagerException {
+		ArrayList<Theme> themes = new ArrayList<Theme>();
+		ValidationUtil.checkNotNull(idTest);
+		
+		try {
+			themes = themeDAO.selectByIdTest(idTest);
 		} catch (DaoException e) {
 			throw new ManagerException("Erreur DAO", e);
 		}

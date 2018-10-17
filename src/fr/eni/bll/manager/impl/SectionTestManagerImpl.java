@@ -7,6 +7,7 @@ import fr.eni.dal.dao.SectionTestDAO;
 import fr.eni.dal.factory.DAOFactory;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 import fr.eni.tp.web.common.dal.exception.DaoException;
+import fr.eni.tp.web.common.util.ValidationUtil;
 
 public class SectionTestManagerImpl implements SectionTestManager{
 
@@ -31,5 +32,19 @@ public class SectionTestManagerImpl implements SectionTestManager{
 		}
 		
 		return lst;
+	}
+
+	@Override
+	public int nbQuestionATirerByThemeId(int idTheme) throws ManagerException {
+		ValidationUtil.checkNotNull(idTheme);
+		int rep;
+		
+		try{
+			rep = sectionTestDAO.nbQuestionATirerByThemeId(idTheme);
+		}catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return rep;
 	}
 }

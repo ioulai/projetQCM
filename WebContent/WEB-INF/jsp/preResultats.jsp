@@ -7,16 +7,17 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Fin de test</title>
+		<script src="<%=request.getContextPath()%>/js/chrono.js"></script>
 		<jsp:include page="/WEB-INF/jsp/template/header.jsp"></jsp:include>
 	</head>
-	<body>
+	<body onload="IndiquerMinutes(${duree}); DemarrerChrono();">
 		<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 		
 		<div id="content" style="text-align: center;">
 			<h1>Fin de l'épreuve</h1><br><br>
 			
 			<c:set var="count" value="0" scope="page" />
-			
+			<p id="chrono"></p>
 			<table style="margin: 0px auto;">
 		  		<tr>
 				    <td>Numéro</td>
@@ -43,6 +44,7 @@
 				    	<c:if test="${isModifiable}">
 				    		<td>
 							    <form method="GET" action="Questions">
+							    	<input type="hidden" value="${idEpreuve }" id="idEpreuve">
 									<input type="hidden" value="${idTest}" name="idTest">
 									<input type="hidden" value="${question.id}" name="idQuestionCourante">
 									<input type="submit" id="nomListe" value="Modifier"><br>
@@ -53,7 +55,8 @@
 				</c:forEach>
 			</table>
 			<br><br>
-			<form method="POST" action="FinEpreuve">	
+			<form method="POST" action="FinEpreuve">
+				<input type="hidden" value="${idEpreuve }" id="idEpreuve">	
 				<input type="hidden" value="${idTest}" name="idTest">
 				<input type="submit" value="Terminer l'épreuve">
 			</form>

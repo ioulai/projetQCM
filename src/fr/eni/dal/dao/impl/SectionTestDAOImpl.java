@@ -16,7 +16,8 @@ public class SectionTestDAOImpl implements SectionTestDAO{
 private static SectionTestDAOImpl singleton;
 	
 	private static final String SELECT_BY_ID_TEST_QUERY = "SELECT * FROM sectionTest st INNER JOIN test t ON st.test_idTest = t.idTest INNER JOIN theme thm ON st.theme_idTheme = thm.idTheme WHERE t.idTest = ?";
-		
+	private static final String SELECT_BY_ID_THEM = "SELECT nbQuestionATirer From sectionTest WHERE theme_idTheme = ?";
+	
 	public static SectionTestDAO getInstance() {
 		if (singleton == null)
 			singleton = new SectionTestDAOImpl();
@@ -63,5 +64,34 @@ private static SectionTestDAOImpl singleton;
 		sectionTest.setNbQuestionATirer(resultSet.getInt("nbQuestionATirer"));
 		
 		return sectionTest;
+	}
+
+	@Override
+	public int nbQuestionATirerByThemeId(int idTheme) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		int rep = 0;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_BY_ID_THEM);
+			statement.setInt(1, idTheme);
+			
+			resultSet = statement.executeQuery();
+			
+			if(resultSet.next()) {
+				rep = resultSet.getInt("nbQuestionATirer");
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return rep;
 	}
 }

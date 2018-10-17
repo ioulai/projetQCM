@@ -15,4 +15,6 @@ public interface ReponseTirageDAO {
 	void deleteAll() throws DaoException;
 
 	void deleteByIds(int idEpreuve, int idQuestion) throws DaoException;
+	
+	int selectcount(int idEpreuve,int idtheme) throws DaoException;
 }

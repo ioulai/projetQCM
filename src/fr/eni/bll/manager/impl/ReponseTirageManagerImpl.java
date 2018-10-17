@@ -73,4 +73,19 @@ public class ReponseTirageManagerImpl implements ReponseTirageManager {
 			throw new ManagerException("Erreur DAO", e);
 		}
 	}
+
+	@Override
+	public int selectcount(int idEpreuve, int idtheme) throws ManagerException {
+		int rep;
+		ValidationUtil.checkNotNull(idEpreuve);
+		ValidationUtil.checkNotNull(idtheme);
+		
+		try {
+			rep = reponseTirageDAO.selectcount(idEpreuve, idtheme);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return rep;
+	}
 }

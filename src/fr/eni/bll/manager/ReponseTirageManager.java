@@ -16,4 +16,6 @@ public interface ReponseTirageManager {
 	void deleteAll() throws ManagerException;
 
 	void deleteByIds(int idEpreuve, int idQuestion) throws ManagerException;
+	
+	int selectcount(int idEpreuve,int idtheme) throws ManagerException;
 }
