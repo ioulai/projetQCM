@@ -1,7 +1,8 @@
 var secondes = 0;
 var timer;
 var text = "";
-var test;             
+var test;
+
 function IndiquerMinutes(sec)
 {
 	secondes = sec;
@@ -14,8 +15,9 @@ function Chrono()
 		var minutes = Math.floor(secondes/60);
 		var heures = Math.floor(minutes/60);
 		secondes -= minutes * 60;
-       if (heures > 0)
-       {
+		
+		if (heures > 0)
+		{
 		    minutes -= heures * 60;
 		    if (minutes > 0)
 		    {
@@ -25,9 +27,9 @@ function Chrono()
 		    {  
 		        text = "Il reste " + heures + ' h ' + secondes + ' sec';
 		    }
+		    
 		    minutes = minutes + (heures * 60);
 		    secondes = secondes + (minutes * 60) - 1;
-     
        }
 	   else if (minutes > 0)
 	   {
@@ -45,10 +47,10 @@ function Chrono()
 	    clearInterval(timer);
 	    text = "Le temps est écoulé";
 	}
-		document.getElementById('chrono').innerHTML = text;
-		// @ts-ignore
-		document.getElementById('chronoform').value = secondes;
-	}
+	
+	document.getElementById('chrono').innerHTML = text;
+	document.getElementById('chronoform').value = secondes;
+}
 	
 function DemarrerChrono()
 {
@@ -58,10 +60,9 @@ function DemarrerChrono()
 
 function Updatetimer() {
 
-var JSONObject= {
-	'time': secondes,
-	// @ts-ignore
-	'idEpreuve': document.getElementById('idEpreuve').value
+	var JSONObject= {
+		'time': secondes,
+		'idEpreuve': document.getElementById('idEpreuve').value
     };
 
 	// @ts-ignore
@@ -72,14 +73,13 @@ var JSONObject= {
         data: JSON.stringify(JSONObject),
         dataType: 'json',
 		async: true,
-		succes(data)
-		{alert("ok")
-	},
+		succes(data){},
         error: function(jqXHR, textStatus, errorThrown) {
 			console.log(errorThrown);
 			console.log(jqXHR);
         }
 	});
+	
 	setTimeout(Updatetimer,5000);
 }
 

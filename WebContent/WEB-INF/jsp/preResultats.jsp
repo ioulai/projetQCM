@@ -17,7 +17,9 @@
 			<h1>Fin de l'épreuve</h1><br><br>
 			
 			<c:set var="count" value="0" scope="page" />
-			<p id="chrono"></p>
+			
+			<p id="chrono">Il reste 0 min 0 sec</p>
+			
 			<table style="margin: 0px auto;">
 		  		<tr>
 				    <td>Numéro</td>
@@ -46,7 +48,7 @@
 							    <form method="GET" action="Questions">
 							    	<input type="hidden" value="${idEpreuve }" id="idEpreuve">
 									<input type="hidden" value="${idTest}" name="idTest">
-									<input type="hidden" value="${question.id}" name="idQuestionCourante">
+									<input type="hidden" value="${question.question.id}" name="idQuestionCourante">
 									<input type="submit" id="nomListe" value="Modifier"><br>
 								</form>
 							</td>
