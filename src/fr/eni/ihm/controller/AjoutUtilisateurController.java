@@ -9,12 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.bll.manager.CandidatManager;
-import fr.eni.bll.manager.CollaborateurManager;
 import fr.eni.bll.manager.ProfilManager;
 import fr.eni.bll.manager.PromotionManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
 import fr.eni.bo.Candidat;
-import fr.eni.bo.Collaborateur;
 import fr.eni.bo.Profil;
 import fr.eni.bo.Promotion;
 import fr.eni.bo.Utilisateur;
@@ -43,7 +41,6 @@ public class AjoutUtilisateurController extends HttpServlet {
 
 			req.getRequestDispatcher("AjoutCandidat").forward(req, resp);
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
 			throw new ServletException("erreur get ajout", e);
 		}
 
@@ -96,7 +93,6 @@ public class AjoutUtilisateurController extends HttpServlet {
 			}
 
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

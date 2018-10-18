@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.bll.manager.CandidatManager;
 import fr.eni.bll.manager.CollaborateurManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
-import fr.eni.bo.Candidat;
 import fr.eni.bo.Collaborateur;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 
@@ -29,7 +28,6 @@ public class SupprUtilisateurController extends HttpServlet{
 				collaborateurs = collaborateurManager.selectAllCollaborateur();
 				req.setAttribute("collaborateurs", collaborateurs);	
 			} catch (ManagerException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -49,7 +47,6 @@ public class SupprUtilisateurController extends HttpServlet{
 			
 			req.getRequestDispatcher("SupprimerUtilisateur").forward(req, resp);
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

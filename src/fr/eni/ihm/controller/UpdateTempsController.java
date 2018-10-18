@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import fr.eni.bll.manager.EpreuveManager;
 import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
