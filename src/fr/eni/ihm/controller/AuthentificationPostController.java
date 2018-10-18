@@ -37,7 +37,6 @@ public class AuthentificationPostController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Utilisateur utilisateur = null;
 		Candidat candidat = null;
 		Collaborateur collaborateur = null;
 		String messageErreur = "";
@@ -45,14 +44,13 @@ public class AuthentificationPostController extends HttpServlet {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		Object utilisateurConnecte = null;
+		Object profilUtilisateur = null;
 		Profil profil = null;
-
+		HttpSession session = req.getSession(true);
 		ValidationUtil.checkNotBlank(email);
 		ValidationUtil.checkNotBlank(password);
-
+//		System.out.println("tentative connexion");
 		try {
-			
-			
 
 			collaborateur = collaborateurManager.selectByEmailPassword(email, password);
 			candidat = candidatManager.selectByEmailPassword(email, password);
@@ -60,10 +58,10 @@ public class AuthentificationPostController extends HttpServlet {
 			/** ici verif avec la bdd **/
 			if (collaborateur != null) {
 				profil = profilManager.selectById(collaborateur.getProfil());
-				System.out.println("collaborateur [" + collaborateur+"], profil ["+profil.getLibelle()+"]");				
+				System.out.println("collaborateur [" + collaborateur + "], profil [" + profil.getLibelle() + "]");
 				// mise en session
-				HttpSession session = req.getSession(true);
 				session.setAttribute("utilisateurConnecte", collaborateur);
+				session.setAttribute("profilUtilisateur", profil.getLibelle());
 				// session expire dans 30min
 				session.setMaxInactiveInterval(30 * 60);
 				// creation cookie utilisateur courant
@@ -71,19 +69,20 @@ public class AuthentificationPostController extends HttpServlet {
 				// cookie expire dans 30min
 				cookieUtilisateurCourant.setMaxAge(30 * 60);
 				resp.addCookie(cookieUtilisateurCourant);
-				// recuperation du candidat connecter
+				// recuperation du collaborateur connecter
 				utilisateurConnecte = session.getAttribute("utilisateurConnecte");
+				profilUtilisateur = session.getAttribute("profilUtilisateur");
 				req.setAttribute("utilisateurConnecte", utilisateurConnecte);
-				req.setAttribute("profil", profil.getLibelle());
+				req.setAttribute("profil", profilUtilisateur);
 
 				req.getRequestDispatcher("accueil").forward(req, resp);
 			} else if (candidat != null) {
 				profil = profilManager.selectById(candidat.getProfil());
-				System.out.println("candidat [" + candidat+"], profil ["+profil.getLibelle()+"]");
-				
-				// mise en session
-				HttpSession session = req.getSession(true);
+				System.out.println("candidat [" + candidat + "], profil [" + profil.getLibelle() + "]");
+
+				// mise en session				
 				session.setAttribute("utilisateurConnecte", candidat);
+				session.setAttribute("profilUtilisateur", profil.getLibelle());
 				// session expire dans 30min
 				session.setMaxInactiveInterval(30 * 60);
 				// creation cookie utilisateur courant
@@ -93,8 +92,9 @@ public class AuthentificationPostController extends HttpServlet {
 				resp.addCookie(cookieUtilisateurCourant);
 				// recuperation du candidat connecter
 				utilisateurConnecte = session.getAttribute("utilisateurConnecte");
+				profilUtilisateur = session.getAttribute("profilUtilisateur");
 				req.setAttribute("utilisateurConnecte", utilisateurConnecte);
-				req.setAttribute("profil", profil.getLibelle());
+				req.setAttribute("profil", profilUtilisateur);
 
 				req.getRequestDispatcher("accueil").forward(req, resp);
 			} else {

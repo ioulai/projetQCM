@@ -12,8 +12,7 @@
 <br>
 		<div style="text-align: center;">
 			<h1>Accueil</h1>
-		</div><br><br>
-		
+		</div><br><br>		
 		<div class="container-fluid">
 			<div class="row ">
 				<div class="card col-lg-6 col-md-9"	style="width: 18rem; margin: 0 auto">
@@ -31,11 +30,11 @@
 								<i class="far fa-user"></i>
 								<i>${utilisateurConnecte.nom} ${utilisateurConnecte.prenom}</i><br><br>
 								<p class="card-text">Administration ci-dessous</p>
-								<a href="AjoutUtilisateur" class="btn btn-primary">Création	utilisateur</a>
-								<a href="SupprUtilisateur" class="btn btn-primary">Suppression utilisateur</a>
-								<a href="Inscription" class="btn btn-primary">Inscription</a>
-								<a href="Desinscription" class="btn btn-primary">Désinscription</a>
-								<a href="AjoutPromo" class="btn btn-primary">Ajout promotion</a>
+								<a href="AjoutUtilisateur" class="btn btn-link">Création	utilisateur</a>
+								<a href="SupprUtilisateur" class="btn btn-link">Suppression utilisateur</a>
+								<a href="Inscription" class="btn btn-link">Inscription</a>
+								<a href="Desinscription" class="btn btn-link">Désinscription</a>
+								<a href="AjoutPromo" class="btn btn-link">Ajout promotion</a>
 							</c:when>
 						</c:choose>
 					</div>

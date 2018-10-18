@@ -26,16 +26,24 @@
 		<servlet-name>authentification</servlet-name>
 		<url-pattern>/authentification</url-pattern>
 	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>accueil</servlet-name>
-		<jsp-file>/WEB-INF/jsp/accueil.jsp</jsp-file>
-	</servlet>
 	<servlet-mapping>
 		<servlet-name>accueil</servlet-name>
 		<url-pattern>/accueil</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>accueil</servlet-name>
+		<jsp-file>/WEB-INF/jsp/accueil.jsp</jsp-file>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>AccueilController</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.AccueilController
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AccueilController</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
 	<servlet>
 		<servlet-name>DeconnecterController</servlet-name>
 		<servlet-class>fr.eni.ihm.controller.DeconnecterController
@@ -75,7 +83,7 @@
 		<servlet-name>ListeEpreuve</servlet-name>
 		<url-pattern>/ListeEpreuve</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>Epreuve</servlet-name>
 		<jsp-file>/WEB-INF/jsp/listeEpreuve.jsp</jsp-file>
@@ -97,7 +105,7 @@
 		<servlet-name>Questions</servlet-name>
 		<url-pattern>/Questions</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Audric -->
 	<servlet>
 		<servlet-name>Marquage</servlet-name>
@@ -109,7 +117,7 @@
 		<servlet-name>Marquage</servlet-name>
 		<url-pattern>/Marquage</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Audric -->
 	<servlet>
 		<servlet-name>FinEpreuve</servlet-name>
@@ -121,7 +129,7 @@
 		<servlet-name>FinEpreuve</servlet-name>
 		<url-pattern>/FinEpreuve</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Audric -->
 	<servlet>
 		<servlet-name>finEpreuve</servlet-name>
@@ -131,8 +139,8 @@
 		<servlet-name>finEpreuve</servlet-name>
 		<url-pattern>/finEpreuve</url-pattern>
 	</servlet-mapping>
-	
-		<!-- Audric -->
+
+	<!-- Audric -->
 	<servlet>
 		<servlet-name>PreResultats</servlet-name>
 		<servlet-class>fr.eni.ihm.controller.PreResultatsController
@@ -143,7 +151,7 @@
 		<servlet-name>PreResultats</servlet-name>
 		<url-pattern>/PreResultats</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Audric -->
 	<servlet>
 		<servlet-name>preResultats</servlet-name>
@@ -153,7 +161,7 @@
 		<servlet-name>preResultats</servlet-name>
 		<url-pattern>/preResultats</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Audric -->
 	<servlet>
 		<servlet-name>question</servlet-name>
@@ -168,27 +176,28 @@
 		<servlet-name>AjoutPromotion</servlet-name>
 		<jsp-file>/WEB-INF/jsp/ajoutPromotion.jsp</jsp-file>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>AjoutPromotion</servlet-name>
 		<url-pattern>/AjoutPromotion</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
-    <servlet-name>Inscription</servlet-name>
-    <servlet-class>fr.eni.ihm.controller.InscriptionTestController</servlet-class> 
- 	</servlet>
- 
- 	<servlet-mapping>
+		<servlet-name>Inscription</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.InscriptionTestController
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
 		<servlet-name>Inscription</servlet-name>
 		<url-pattern>/Inscription</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>InscriptionCandidat</servlet-name>
 		<jsp-file>/WEB-INF/jsp/inscriptionCandidatTest.jsp</jsp-file>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>InscriptionCandidat</servlet-name>
 		<url-pattern>/InscriptionCandidat</url-pattern>
@@ -198,22 +207,23 @@
 		<servlet-name>DesinscriptionCandidat</servlet-name>
 		<jsp-file>/WEB-INF/jsp/desinscrireCandidat.jsp</jsp-file>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>DesinscriptionCandidat</servlet-name>
 		<url-pattern>/DesinscriptionCandidat</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
-    	<servlet-name>Desinscription</servlet-name>
-    	<servlet-class>fr.eni.ihm.controller.DesinscriptionCandidatController</servlet-class>
- 	</servlet>
- 	
- 	<servlet-mapping>
+		<servlet-name>Desinscription</servlet-name>
+		<servlet-class>fr.eni.ihm.controller.DesinscriptionCandidatController
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
 		<servlet-name>Desinscription</servlet-name>
 		<url-pattern>/Desinscription</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>AjoutCandidat</servlet-name>
 		<jsp-file>/WEB-INF/jsp/ajoutCandidat.jsp</jsp-file>
@@ -232,7 +242,7 @@
 		<servlet-name>AjoutUtilisateur</servlet-name>
 		<url-pattern>/AjoutUtilisateur</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ListeTest</servlet-name>
 		<servlet-class>fr.eni.ihm.controller.AfficheListeTestController
@@ -242,7 +252,7 @@
 		<servlet-name>ListeTest</servlet-name>
 		<url-pattern>/ListeTest</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>AfficheListe</servlet-name>
 		<jsp-file>/WEB-INF/jsp/listeTest.jsp</jsp-file>
@@ -251,7 +261,7 @@
 		<servlet-name>AfficheListe</servlet-name>
 		<url-pattern>/AfficheListe</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>AjoutTest</servlet-name>
 		<servlet-class>fr.eni.ihm.controller.AjoutQuestionController
@@ -261,7 +271,7 @@
 		<servlet-name>AjoutTest</servlet-name>
 		<url-pattern>/AjoutTest</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>AjouterTest</servlet-name>
 		<jsp-file>/WEB-INF/jsp/listeTest.jsp</jsp-file>
@@ -270,7 +280,7 @@
 		<servlet-name>AjouterTest</servlet-name>
 		<url-pattern>/AjouterTest</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>AjoutPromo</servlet-name>
 		<servlet-class>fr.eni.ihm.controller.AjoutPromotionController
@@ -280,7 +290,7 @@
 		<servlet-name>AjoutPromo</servlet-name>
 		<url-pattern>/AjoutPromo</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>SupprimerUtilisateur</servlet-name>
 		<jsp-file>/WEB-INF/jsp/suppressionUtilisateur.jsp</jsp-file>
@@ -289,7 +299,7 @@
 		<servlet-name>SupprimerUtilisateur</servlet-name>
 		<url-pattern>/SupprimerUtilisateur</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>SupprUtilisateur</servlet-name>
 		<servlet-class>fr.eni.ihm.controller.SupprUtilisateurController

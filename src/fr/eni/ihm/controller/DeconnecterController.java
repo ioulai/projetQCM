@@ -20,10 +20,8 @@ public class DeconnecterController extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html");
 		Cookie[] cookies = req.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {

@@ -7,7 +7,7 @@
 %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<a class="navbar-brand" href="AuthentificationPostController">QCM</a>
+	<a class="navbar-brand" href="home">QCM</a>
 
 	<div class="collapse navbar-collapse justify-content-end hidden"
 		id="navbarNav">
