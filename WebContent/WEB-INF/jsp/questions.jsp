@@ -49,10 +49,10 @@
 							
 							<!-- Si question pas en cours -->
 							<c:if test="${question.question.id != questionEnCours.id && question.isMarquee() && question.isResolue()}">
-								<input type="submit" class="btn btn-outline-success" id="nomListe" value="Q${count}*">
+								<input type="submit" class="btn btn-success" id="nomListe" value="Q${count}*">
 							</c:if>
 							<c:if test="${question.question.id != questionEnCours.id && !question.isMarquee() && question.isResolue()}">
-								<input type="submit" class="btn btn-outline-success" id="nomListe" value="Q${count}">
+								<input type="submit" class="btn btn-success" id="nomListe" value="Q${count}">
 							</c:if>
 							<c:if test="${question.question.id != questionEnCours.id && !question.isMarquee() && !question.isResolue()}">
 								<input type="submit" class="btn btn-outline-dark" id="nomListe" value="Q${count}">
