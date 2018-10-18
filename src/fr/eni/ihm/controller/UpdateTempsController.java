@@ -49,7 +49,7 @@ private static final long serialVersionUID = -6970891575378677464L;
         temp = temp.replace("\"", "");
         debut = temp.indexOf(':');
         fin = temp.length();
-        if(temp.substring(debut+1,fin) != ""){
+        if(temp.substring(debut+1,fin) != "" && isNumeric(temp.substring(debut+1,fin))){
 	    	idepreuve = Integer.parseInt(temp.substring(debut+1,fin));
 	        //Prend le temps
 	        debut = json.indexOf(':');
@@ -65,6 +65,11 @@ private static final long serialVersionUID = -6970891575378677464L;
 				}
         }
       }
+	
+	public static boolean isNumeric(String str)
+	{
+	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+	}
 
 }
 
