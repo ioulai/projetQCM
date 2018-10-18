@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.bo.Candidat;
+import fr.eni.bo.Utilisateur;
 import fr.eni.dal.dao.CandidatDAO;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 import fr.eni.tp.web.common.dal.factory.MSSQLConnectionFactory;
@@ -28,7 +29,7 @@ private static CandidatDAOImpl singleton;
 	private static final String SELECT_ALL_COLLABORATEUR = "SELECT * FROM utilisateur as util INNER JOIN collaborateur as co ON util.idUtilisateur = co.idUtilisateur";
 	private static final String DELETE_COLLABORATEUR_BY_ID = "DELETE FROM collaborateur WHERE idUtilisateur = ?";
 	private static final String DELETE_UTILISATEUR_BY_ID = "DELETE FROM utilisateur WHERE idUtilisateur = ?";
-	
+	private static final String SELECT_ALL = " SELECT * FROM Utilisateur";
 	
 	public static CandidatDAO getInstance() {
 		if (singleton == null)
@@ -332,6 +333,37 @@ private static CandidatDAOImpl singleton;
 			ResourceUtil.safeClose(statement, connexion);
 		}
 		
+	}
+	
+	@Override
+	public List<Utilisateur> selectAll() throws DaoException {
+		Utilisateur utilisateur = null;
+		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+			
+			statement = connexion.prepareStatement(SELECT_ALL);
+			
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				utilisateur = map(resultSet);
+				
+				utilisateurs.add(utilisateur);
+			}
+
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
+		return utilisateurs;
 	}
 		
 	}

@@ -3,6 +3,7 @@ package fr.eni.bll.manager;
 import java.util.List;
 
 import fr.eni.bo.Candidat;
+import fr.eni.bo.Utilisateur;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 
 public interface CandidatManager {
@@ -15,4 +16,5 @@ public interface CandidatManager {
 	List<Candidat> selectAllCandidat() throws ManagerException;
 	List<Candidat> selectAllCollaborateur() throws ManagerException;
 	void deleteCollaborateur(int id) throws ManagerException;
+	List<Utilisateur> selectAll() throws ManagerException;
 }

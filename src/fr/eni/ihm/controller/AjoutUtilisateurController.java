@@ -17,11 +17,11 @@ import fr.eni.bo.Candidat;
 import fr.eni.bo.Collaborateur;
 import fr.eni.bo.Profil;
 import fr.eni.bo.Promotion;
+import fr.eni.bo.Utilisateur;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
 
 public class AjoutUtilisateurController extends HttpServlet {
 	private CandidatManager candidatManager = ManagerFactory.candidatManager();
-	private CollaborateurManager collaborateurManager = ManagerFactory.CollaborateurManager();
 	private ProfilManager profilManager = ManagerFactory.ProfilManager();
 	private PromotionManager promotionManager = ManagerFactory.PromotionManager();
 
@@ -31,19 +31,16 @@ public class AjoutUtilisateurController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Profil> profils = null;
 		List<Promotion> promotions = null;
-		List<Candidat> candidats = null;
-		List<Collaborateur> collaborateurs = null;
+		List<Utilisateur> utilisateur = null;
 		try {
-			candidats = candidatManager.selectAllCandidat();
-			collaborateurs = collaborateurManager.selectAllCollaborateur();	
+			utilisateur = candidatManager.selectAll();
 			promotions = promotionManager.selectAll();
 			profils = profilManager.selectAll();
 
-			req.setAttribute("candidat", candidats);
-			req.setAttribute("collaborateur", collaborateurs);
+			req.setAttribute("utilisateur", utilisateur);
 			req.setAttribute("promotion", promotions);
 			req.setAttribute("profil", profils);
-			System.out.println("profils" + profils);
+
 			req.getRequestDispatcher("AjoutCandidat").forward(req, resp);
 		} catch (ManagerException e) {
 			// TODO Auto-generated catch block
@@ -60,11 +57,11 @@ public class AjoutUtilisateurController extends HttpServlet {
 		Candidat candidat = null;
 		List<Profil> profils = null;
 		List<Promotion> promotions = null;
-		List<Candidat> candidats = null;
+		List<Utilisateur> utilisateur = null;
 		try {
 			promotions = promotionManager.selectAll();
 			profils = profilManager.selectAll();
-
+			
 			req.setAttribute("profil", profils);
 			req.setAttribute("promotion", promotions);
 			candidat = new Candidat();
@@ -79,18 +76,20 @@ public class AjoutUtilisateurController extends HttpServlet {
 				candidat.setPassword(req.getParameter("mdp"));
 				candidat.setProfil(profil.getId());
 				candidat = candidatManager.insertUtilisateur(candidat);
-
+				
 				if (profil.getLibelle().equals("Candidat")) {
 					promotion = promotionManager.selectByName(req.getParameter("promotionbox"));
 					candidatManager.insertCandidat(candidat, promotion.getId());
 				} else {
 					candidatManager.insertCollaborateur(candidat);
 				}
-				candidats = candidatManager.selectAllCandidat();
-				req.setAttribute("candidat", candidats);
-
+				utilisateur = candidatManager.selectAll();
+				req.setAttribute("utilisateur", utilisateur);
+				req.setAttribute("validate", "Utilisateur bien créé");
 				req.getRequestDispatcher("AjoutCandidat").forward(req, resp);
 			} else {
+				utilisateur = candidatManager.selectAll();
+				req.setAttribute("utilisateur", utilisateur);
 				req.setAttribute("error", "Email déjà utilisé");
 				req.getRequestDispatcher("AjoutCandidat").forward(req, resp);
 

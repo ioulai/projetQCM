@@ -24,10 +24,8 @@ public class SupprUtilisateurController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			List<Candidat> candidats = new ArrayList<>();
 			List<Collaborateur> collaborateurs = new ArrayList<>();
 			try {
-				candidats = candidatManager.selectAllCollaborateur();
 				collaborateurs = collaborateurManager.selectAllCollaborateur();
 				req.setAttribute("collaborateurs", collaborateurs);	
 			} catch (ManagerException e) {
@@ -41,13 +39,13 @@ public class SupprUtilisateurController extends HttpServlet{
 	/* AJOUT PROMOTION */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Candidat> candidats = new ArrayList<>();
+		List<Collaborateur> collaborateurs = new ArrayList<>();
 		
 		try {
 			int idCandidat = Integer.parseInt(req.getParameter("candidatbox"));
 			candidatManager.deleteCollaborateur(idCandidat);
-			candidats = candidatManager.selectAllCollaborateur();
-			req.setAttribute("candidat", candidats);
+			collaborateurs = collaborateurManager.selectAllCollaborateur();
+			req.setAttribute("collaborateurs", collaborateurs);	
 			
 			req.getRequestDispatcher("SupprimerUtilisateur").forward(req, resp);
 		} catch (ManagerException e) {

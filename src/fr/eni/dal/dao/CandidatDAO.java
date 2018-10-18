@@ -3,6 +3,7 @@ package fr.eni.dal.dao;
 import java.util.List;
 
 import fr.eni.bo.Candidat;
+import fr.eni.bo.Utilisateur;
 import fr.eni.tp.web.common.dal.exception.DaoException;
 
 public interface CandidatDAO {
@@ -16,4 +17,5 @@ public interface CandidatDAO {
 	Candidat insertUtilisateur(Candidat candidat) throws DaoException;
 	void deleteCollaborateur(int id) throws DaoException;
 	void deleteUtilisateur(int id) throws DaoException;
+	List<Utilisateur> selectAll() throws DaoException;
 }

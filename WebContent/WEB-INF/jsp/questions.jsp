@@ -69,9 +69,10 @@
 					<c:if test="${!isMulti}">Une seule réponse est attendue</c:if></p><br>
 
 					<h4><c:out value="${questionEnCours.enonce}"></c:out></h4><br><br>
-			
-					<div>
-						<form method="POST" action="Questions">	
+					<div class="container">
+					<div class="row justify-content-around">
+    					<div class="col-4">
+    						<form method="POST" action="Questions" name="formProp">
 							<c:forEach items="${propositions}" var="proposition">
 								<c:forEach items="${propSelected}" var="id">
 									<c:if test="${proposition.id == id}">
@@ -97,14 +98,24 @@
 								<c:set var="haveFound" value="0" scope="page"/>
 								${proposition.enonce}<br>
 							</c:forEach><br><br>
-
+							
 							<input type="hidden" value="${idEpreuve }" id="idEpreuve">
 							<input type="hidden" name="chronoform" id="chronoform">
 							<input type="hidden" value="${questionEnCours.id}" name="idQuestionCourante">
 							<input type="hidden" value="${idTest}" name="idTest">
-							<input type="submit" class="btn btn-success" value="Valider">
 						</form>
-			
+						
+						</div>
+						<div class="col-4">
+					      <img width="150" height="150" src="<%=request.getContextPath()%>/img/${questionEnCours.media}">	
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col align-self-center">
+						<input type="submit" class="btn btn-success" value="Valider" onclick="document.formProp.submit()">
+					</div>
+				</div>
 						<form method="POST" action="Marquage">
 							<input type="hidden" value="${idEpreuve }" id="idEpreuve">
 							<input type="hidden" value="${idTest}" name="idTest">
@@ -116,15 +127,14 @@
 								<input type="submit" class="btn btn-info" id="marquage" value="Démarquer">
 							</c:if>
 						</form>
-					</div>
 				<form method="GET" action="PreResultats">	
 					<input type="hidden" value="${idTest}" name="idTest">
 					<input type="submit" class="btn btn-danger" value="Terminer l'épreuve">
 				</form>
+				</div>
 		    </div>
 		    <div class="col-xs"></div>
 		  </div>
-		</div>		
 		<jsp:include page="/WEB-INF/jsp/template/footer.jsp"></jsp:include>
 	</body>
 </html>
