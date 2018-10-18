@@ -11,7 +11,7 @@
 
 		<div id="content" style="text-align: center;">	
 			<h1>Erreur technique (500)</h1><br>
-			<a href="<%=request.getContextPath()%>/authentification"><button>Retour</button></a>
+			<a href="<%=request.getContextPath()%>/home"><button>Retour</button></a>
 		</div>
 		
 		

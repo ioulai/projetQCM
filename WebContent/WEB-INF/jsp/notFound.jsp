@@ -10,7 +10,7 @@
 	<body>
 		<div id="content" style="text-align: center;">	
 			<h1>Page introuvable (404)</h1><br>
-			<a href="<%=request.getContextPath()%>/authentification"><button>Retour</button></a>
+			<a href="<%=request.getContextPath()%>/home"><button>Retour</button></a>
 		</div>
 	</body>
 </html>
