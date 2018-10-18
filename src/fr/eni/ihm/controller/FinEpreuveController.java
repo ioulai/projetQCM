@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.bll.manager.EpreuveManager;
 import fr.eni.bll.manager.PropositionManager;
@@ -16,6 +17,7 @@ import fr.eni.bll.manager.SectionTestManager;
 import fr.eni.bll.manager.TestManager;
 import fr.eni.bll.manager.ThemeManager;
 import fr.eni.bll.manager.factory.ManagerFactory;
+import fr.eni.bo.Candidat;
 import fr.eni.bo.Epreuve;
 import fr.eni.bo.Proposition;
 import fr.eni.bo.QuestionTirage;
@@ -46,7 +48,9 @@ public class FinEpreuveController extends HttpServlet{
 			PropositionManager pm = ManagerFactory.propositionManager();
 			
 			// Recherche de l'épreuve du test
-			epreuve = em.selectByIdTest(idTest);
+			HttpSession session = req.getSession();
+			Candidat cand = (Candidat) session.getAttribute("utilisateurConnecte");
+			epreuve = em.selectByIdTestIdCandidat(idTest, cand.getId());
 			
 			// Recherche des questionsTirage
 			ArrayList<QuestionTirage> questionTirages = qtm.selectByIdEpreuve(epreuve.getIdEpreuve());
