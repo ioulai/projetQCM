@@ -50,7 +50,7 @@ public class VerificationUtilisateurConnecter implements Filter {
 				if (profilUtilisateur!=null && profilUtilisateur.equals("CANDIDAT") && (uri.contains("AjoutUtilisateur")
 						|| uri.contains("SupprUtilisateur") || uri.contains("Inscription")
 						|| uri.contains("Desinscription") || uri.contains("AjoutPromo"))) {
-					System.out.println("non autorise" + profilUtilisateur);
+					//System.out.println("non autorise" + profilUtilisateur);
 					 req.getRequestDispatcher("authorizationError").forward(req,
 					 res);
 				} else {

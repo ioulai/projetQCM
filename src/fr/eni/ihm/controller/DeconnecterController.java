@@ -26,7 +26,7 @@ public class DeconnecterController extends HttpServlet {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("JSESSIONID")) {
-					System.out.println("JSESSIONID" + cookie.getValue());
+					//System.out.println("JSESSIONID" + cookie.getValue());
 					break;
 				}
 			}

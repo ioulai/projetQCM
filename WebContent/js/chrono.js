@@ -62,6 +62,7 @@ function Updatetimer() {
 
 	var JSONObject= {
 		'time': secondes,
+		// @ts-ignore
 		'idEpreuve': document.getElementById('idEpreuve').value
     };
 
