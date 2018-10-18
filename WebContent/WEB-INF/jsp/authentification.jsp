@@ -72,21 +72,20 @@ body {
 			<h1 class="h3 mb-3 font-weight-normal">QCM</h1>
 		</div>
 			${messageErreur}
-		<label for="inputEmail">Email address</label>
+		<label for="inputEmail">Email</label>
 		<div class="form-label-group">
 
 			<input type="email" id="inputEmail" name="email" class="form-control"
 				placeholder="Email address" required autofocus>
 
 		</div>
-		<label for="inputPassword">Password</label>
+		<label for="inputPassword">Mot de passe</label>
 		<div class="form-label-group">
 			<input type="password" id="inputPassword" name="password"
 				class="form-control" placeholder="Password" required>
 
 		</div>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
-			in</button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
 			
 		<p class="mt-5 mb-3 text-muted text-center">&copy; TEAMROCKET
 			2018-2019</p>
