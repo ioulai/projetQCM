@@ -41,7 +41,6 @@ public class InscriptionTestController extends HttpServlet{
 				req.setAttribute("candidat", candidats);
 				req.setAttribute("test",tests);	
 			} catch (ManagerException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -56,8 +55,6 @@ public class InscriptionTestController extends HttpServlet{
 		List<Epreuve> epreuves = null;
 		Date debutdate = null;
 		Date findate = null;
-		final Date date = new Date();
-	    boolean inscription = true;
 	    
 		try {
 			tests = testManager.selectAll();
@@ -76,19 +73,10 @@ public class InscriptionTestController extends HttpServlet{
 				 debutdate = sdf.parse(debut);
 				 findate = sdf.parse(fin);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if(findate.after(debutdate)){
 				epreuves = epreuveManager.selectByIdCandidatTest(idcandida, idtest);
-				
-//				for(Epreuve epr : epreuves)
-//				{
-//					if(epr.getEtat().equals("EA") && epr.getDateFinValidite().after(date) || )
-//					{
-//						inscription = false;
-//					}
-//				}
 				
 				if(epreuves.isEmpty())
 				{
@@ -104,7 +92,6 @@ public class InscriptionTestController extends HttpServlet{
 				req.setAttribute("error","Selectionner une date cohérente");
 			}
 		} catch (ManagerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

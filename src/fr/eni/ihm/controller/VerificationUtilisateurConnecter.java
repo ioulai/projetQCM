@@ -42,7 +42,7 @@ public class VerificationUtilisateurConnecter implements Filter {
 				this.context.log("chemin demandé::" + uri);
 
 				this.context.log("acces non autoriser");
-				messageErreur = "<div class='alert alert-danger' role='alert'>Acces non autorisé!<br> Authentification requise !</div>";
+				messageErreur = "<div class='alert alert-danger' role='alert'>Acces non autorisé !<br> Authentification requise</div>";
 				req.setAttribute("messageErreur", messageErreur);
 				req.getRequestDispatcher("authentification").forward(req, res);
 			} else {

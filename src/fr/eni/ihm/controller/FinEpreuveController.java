@@ -118,6 +118,7 @@ public class FinEpreuveController extends HttpServlet{
 			// Modif des resultats
 			em.update(epreuve);
 			ArrayList<Theme> listTheme =  thm.selectByIdTest(idTest);
+			
 			//Affichage Pourcetage
 			for(Theme theme : listTheme)
 			{
