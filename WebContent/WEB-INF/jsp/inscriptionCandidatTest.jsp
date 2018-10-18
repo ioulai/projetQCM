@@ -15,6 +15,7 @@
 		<div style="text-align:center;">
 			<h1>Inscription d'un candidat</h1>
 			<h5 style="color: red;">${error}</h5>
+			<h5 style="color: green;">${validate}</h5>
 		</div>
 		<div id="content" style="display: block;width:200px;float: left; margin-left:45%;">	
 				<form name="form" method="Post" action="Inscription">
