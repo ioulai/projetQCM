@@ -78,7 +78,7 @@ public class AuthentificationPostController extends HttpServlet {
 				req.getRequestDispatcher("accueil").forward(req, resp);
 			} else if (candidat != null) {
 				profil = profilManager.selectById(candidat.getProfil());
-				System.out.println("candidat [" + candidat + "], profil [" + profil.getLibelle() + "]");
+				//System.out.println("candidat [" + candidat + "], profil [" + profil.getLibelle() + "]");
 
 				// mise en session				
 				session.setAttribute("utilisateurConnecte", candidat);

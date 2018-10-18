@@ -49,6 +49,7 @@ function Chrono()
 	}
 	
 	document.getElementById('chrono').innerHTML = text;
+	// @ts-ignore
 	document.getElementById('chronoform').value = secondes;
 }
 	
