@@ -25,11 +25,15 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 	<br>
-	<div style="text-align: center; margin: 0 auto">
-		<h1>Ajout d'un utilisateur</h1><br>
-		<h5 style="color: red;">${error}</h5>
-	</div>
 	<div class="container-fluid">
+	<div class="row" style="width: 35rem; margin: 0 auto">
+		<h1>Ajout d'un utilisateur</h1><br><br>
+	</div>
+	<div style="width: 20rem; margin: 0 auto">
+	<h5 style="color: red;">${error}</h5>
+	<h5 style="color: green;">${validate}</h5>
+	</div>
+	<br><br>
 		<div class="row ">
 			<div class="card col-lg-6 col-md-9 "
 				style="width: 18rem; margin: 0 auto">
@@ -64,13 +68,10 @@
 				</div>
 			</div>
 			
-			<div id="content" style="display: block; float: left;">
+			<div class="col-lg-3">
 				<ul style="list-style-type: circle;">
-					<c:forEach var="candidat" items="${candidat}">
-						<li>${candidat.nom} ${candidat.prenom}</li>
-					</c:forEach>
-					<c:forEach var="collaborateur" items="${collaborateur}">
-						<li>${collaborateur.nom} ${collaborateur.prenom}</li>
+					<c:forEach var="utilisateur" items="${utilisateur}">
+						<li>${utilisateur.nom} ${utilisateur.prenom}</li>
 					</c:forEach>
 				</ul>
 			</div>

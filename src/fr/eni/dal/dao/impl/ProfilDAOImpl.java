@@ -15,7 +15,7 @@ import fr.eni.tp.web.common.util.ResourceUtil;
 public class ProfilDAOImpl implements ProfilDAO{
 private static ProfilDAOImpl singleton;
 	
-	private static final String SELECT_ALL = "SELECT * FROM profil";
+	private static final String SELECT_ALL = "SELECT * FROM profil ORDER BY codeProfil DESC";
 	private static final String SELECT_BY_NAME = "SELECT * FROM profil WHERE libelle = ?";
 	private static final String SELECT_BY_ID = "SELECT * FROM profil WHERE codeProfil = ?";
 	

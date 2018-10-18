@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.eni.bll.manager.CandidatManager;
 import fr.eni.bo.Candidat;
+import fr.eni.bo.Utilisateur;
 import fr.eni.dal.dao.CandidatDAO;
 import fr.eni.dal.factory.DAOFactory;
 import fr.eni.tp.web.common.bll.exception.ManagerException;
@@ -116,6 +117,19 @@ public class CandidatManagerImpl implements CandidatManager {
 		} catch (DaoException e) {
 			throw new ManagerException("Erreur DAO", e);
 		}
+	}
+
+	@Override
+	public List<Utilisateur> selectAll() throws ManagerException {
+		List<Utilisateur> liste = new ArrayList<Utilisateur>();
+		
+		try {
+			liste = candidatDAO.selectAll();
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	
+		return liste;
 	}
 
 }
