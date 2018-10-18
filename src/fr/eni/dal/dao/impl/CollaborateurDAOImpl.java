@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl.SingletonIterator;
-
 import fr.eni.bo.Candidat;
 import fr.eni.bo.Collaborateur;
 import fr.eni.dal.dao.CollaborateurDAO;
@@ -19,8 +17,6 @@ import fr.eni.tp.web.common.util.ResourceUtil;
 public class CollaborateurDAOImpl implements CollaborateurDAO {
 	private static final String SELECT_ALL_COLLABORATEUR = "SELECT * FROM utilisateur as util INNER JOIN collaborateur as co ON util.idUtilisateur = co.idUtilisateur";
 	private static final String SELECT_BY_EMAIL_PASSWORD = " select * from utilisateur as util INNER JOIN collaborateur as ca ON util.idUtilisateur = ca.idUtilisateur  where email = ? and password = ? ";
-	private static final String INSERT_COLLABO = "INSERT INTO collaborateur VALUES (?)";
-	private static final String DELETE_COLLABORATEUR_BY_ID = "DELETE FROM collaborateur WHERE idUtilisateur = ?";
 
 	private static CollaborateurDAOImpl singleton;
 

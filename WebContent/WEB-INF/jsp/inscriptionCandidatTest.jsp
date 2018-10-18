@@ -12,11 +12,11 @@
 <body>
 	<jsp:include page="/WEB-INF/jsp/template/navbar.jsp"></jsp:include>
 	<br>
-	<div style="text-align: center;">
-		<h1>Inscription d'un candidat</h1>
-		<br>
-		<h5 style="color: red;">${error}</h5>
-	</div>
+	<div style="text-align:center;">
+			<h1>Inscription d'un candidat</h1>
+			<h5 style="color: red;">${error}</h5>
+			<h5 style="color: green;">${validate}</h5>
+		</div>
 	<div class="container-fluid">
 		<div class="row ">
 			<div class="card col-lg-6 col-md-9 "
@@ -43,7 +43,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+			</div>
 	</div>
 	<jsp:include page="/WEB-INF/jsp/template/footer.jsp"></jsp:include>
 </body>
