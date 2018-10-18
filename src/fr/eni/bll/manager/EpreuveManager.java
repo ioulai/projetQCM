@@ -25,4 +25,6 @@ public interface EpreuveManager {
 	void deleteById(int id) throws ManagerException;
 
 	Epreuve selectByIdTestIdCandidat(int idTest, int idCandidat) throws ManagerException;
+	
+	void updateTime(Epreuve epreuve) throws ManagerException;
 }

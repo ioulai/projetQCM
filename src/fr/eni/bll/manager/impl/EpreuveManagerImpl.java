@@ -135,4 +135,13 @@ public class EpreuveManagerImpl implements EpreuveManager{
 		
 		return epr;
 	}
+
+	@Override
+	public void updateTime(Epreuve epreuve) throws ManagerException {
+		try {
+			epreuveDAO.updateTime(epreuve);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+	}
 }

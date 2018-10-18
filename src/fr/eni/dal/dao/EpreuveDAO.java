@@ -26,4 +26,5 @@ public interface EpreuveDAO {
 
 	Epreuve selectByIdTestIdCandidat(int idTest, int idCandidat) throws DaoException;
 	
+	void updateTime(Epreuve epreuve) throws DaoException;
 }

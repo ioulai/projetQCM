@@ -26,7 +26,7 @@ private static EpreuveDAOImpl singleton;
 	private static final String UPDATE_QUERY = "UPDATE epreuve SET noteObtenue = ?, niveauObtenu = ?, etat = ?,tempsEcoule = ? WHERE idEpreuve = ?";
 	private static final String DELETE_QUERY_BY_ID = "DELETE FROM epreuve WHERE test_idTest = ?";
 	private static final String SELECT_BY_ID_TEST_ID_CANDIDAT_QUERY = "SELECT * FROM epreuve INNER JOIN Candidat as ca ON idUtilisateur = utilisateur_idUtilisateur INNER JOIN test ON test_idTest = idTest INNER JOIN utilisateur as util ON ca.idUtilisateur = util.idUtilisateur WHERE idTest = ? AND ca.idUtilisateur = ?";
-	
+	private static final String UPDATE_TIME = "UPDATE epreuve SET tempsEcoule = ? WHERE idEpreuve = ?";
 	public static EpreuveDAO getInstance() {
 		if (singleton == null)
 			singleton = new EpreuveDAOImpl();
@@ -329,5 +329,29 @@ private static EpreuveDAOImpl singleton;
 		finally {
 			ResourceUtil.safeClose(statement, connexion);
 		}
+	}
+
+	@Override
+	public void updateTime(Epreuve epreuve) throws DaoException {
+		Connection connexion = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connexion = MSSQLConnectionFactory.get();
+
+			statement = connexion.prepareStatement(UPDATE_TIME);
+
+			statement.setTime(1, epreuve.getTempsEcoule());
+			statement.setInt(2, epreuve.getIdEpreuve());
+			
+			statement.execute();
+		} catch (Exception e) {
+			throw new DaoException(e.getMessage(), e);
+		}
+		finally {
+			ResourceUtil.safeClose(resultSet, statement, connexion);
+		}
+		
 	}
 }

@@ -59,7 +59,7 @@ private static final long serialVersionUID = -6970891575378677464L;
 				try {
 					Epreuve epr = epreuveManager.selectById(idepreuve);
 					epr.setTempsEcoule(new Time((epr.getTest().getDuree().getSeconds() +  epr.getTest().getDuree().getHours()*3600 + epr.getTest().getDuree().getMinutes()*60)*1000 - Integer.parseInt(time)*1000-3600000));
-					epreuveManager.update(epr);
+					epreuveManager.updateTime(epr);
 				} catch (ManagerException e) {
 					e.printStackTrace();
 				}

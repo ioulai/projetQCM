@@ -58,7 +58,7 @@ public class AuthentificationPostController extends HttpServlet {
 			/** ici verif avec la bdd **/
 			if (collaborateur != null) {
 				profil = profilManager.selectById(collaborateur.getProfil());
-				System.out.println("collaborateur [" + collaborateur + "], profil [" + profil.getLibelle() + "]");
+				//System.out.println("collaborateur [" + collaborateur + "], profil [" + profil.getLibelle() + "]");
 				// mise en session
 				session.setAttribute("utilisateurConnecte", collaborateur);
 				session.setAttribute("profilUtilisateur", profil.getLibelle());

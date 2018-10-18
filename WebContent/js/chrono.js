@@ -80,7 +80,7 @@ function Updatetimer() {
         }
 	});
 	
-	setTimeout(Updatetimer,5000);
+	setTimeout(Updatetimer,1000);
 }
 
 
