@@ -122,4 +122,17 @@ public class EpreuveManagerImpl implements EpreuveManager{
 			throw new ManagerException("Erreur DAO", e);
 		}
 	}
+
+	@Override
+	public Epreuve selectByIdTestIdCandidat(int idTest, int idCandidat) throws ManagerException {
+		Epreuve epr = null;
+		
+		try {
+			epr = epreuveDAO.selectByIdTestIdCandidat(idTest, idCandidat);
+		} catch (DaoException e) {
+			throw new ManagerException("Erreur DAO", e);
+		}
+		
+		return epr;
+	}
 }
