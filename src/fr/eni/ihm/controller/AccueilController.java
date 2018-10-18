@@ -34,7 +34,7 @@ public class AccueilController extends HttpServlet {
 		Object profilUtilisateur = session.getAttribute("profilUtilisateur");
 		req.setAttribute("utilisateurConnecte", utilisateurConnecte);
 		req.setAttribute("profil", profilUtilisateur);
-		System.out.println("home");
+		//System.out.println("home");
 		req.getRequestDispatcher("accueil").forward(req, resp);
 	}
 
