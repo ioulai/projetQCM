@@ -23,7 +23,7 @@
 		
 							<ul style="list-style-type:none;">
 								<c:forEach var="themeResultats" items="${themeResultats}">
-									<li>${themeResultats.getTauxReussite()} % de bonne reponse pour le theme "${themeResultats.theme}"</li>
+									<li>${themeResultats.getTauxReussite()} % de bonnes reponses pour le thème "${themeResultats.theme}"</li>
 								</c:forEach>
 							</ul>
 						</div>

@@ -16,7 +16,7 @@
 			<h1>Ajout de promotion</h1>
 		</div>
 		<div id="content" style="text-align: center;">	
-
+		<h5 style="color: green;">${validate}</h5>
 				<form name="form" method="Post" action="AjoutPromo">
 				Libelle de la promo
 					<input type="text" name="message">

@@ -57,6 +57,7 @@
 										<option>${profil.libelle}</option>
 									</c:forEach>
 								</select>
+								<br>
 								<div id="div" style="visibility: hidden;">
 									<label for="promotionbox">Promotion</label> <select
 										class="form-control" id="promotionbox" name="promotionbox">
@@ -65,6 +66,7 @@
 										</c:forEach>
 									</select>
 								</div>
+								<br>
 								<input class="btn btn-default" type="submit" value="Ajouter">
 							</form>
 						</div>

@@ -74,7 +74,7 @@ public class AjoutUtilisateurController extends HttpServlet {
 				candidat.setProfil(profil.getId());
 				candidat = candidatManager.insertUtilisateur(candidat);
 				
-				if (profil.getLibelle().equals("Candidat")) {
+				if (profil.getLibelle().equals("CANDIDAT")) {
 					promotion = promotionManager.selectByName(req.getParameter("promotionbox"));
 					candidatManager.insertCandidat(candidat, promotion.getId());
 				} else {
