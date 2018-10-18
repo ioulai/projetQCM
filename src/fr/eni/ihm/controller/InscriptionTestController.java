@@ -92,7 +92,7 @@ public class InscriptionTestController extends HttpServlet{
 				
 				if(epreuves.isEmpty())
 				{
-					req.setAttribute("validate", "Utilisateur bien inscrit");
+					req.setAttribute("validate", "Utilisateur inscrit");
 					epreuveManager.insert(idcandida, idtest, debutdate, findate);
 					req.getRequestDispatcher("InscriptionCandidat").forward(req, resp);
 				}else

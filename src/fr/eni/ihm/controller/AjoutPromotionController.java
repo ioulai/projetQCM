@@ -41,8 +41,8 @@ public class AjoutPromotionController extends HttpServlet{
 			} catch (Exception e) {
 				resp.sendError(500);
 			}
-				
-			req.getRequestDispatcher("ListeEpreuve").forward(req, resp);
+			req.setAttribute("validate", "Promotion créé");
+			req.getRequestDispatcher("AjoutPromotion").forward(req, resp);
 		}else{
 			req.getRequestDispatcher("authentification").forward(req, resp);
 		}
